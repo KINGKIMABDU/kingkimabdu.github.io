@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>KINGKIMABDU // Crafted to Create</title>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">킹키마브두</a>
+    </header>
+
+    <section class="home">
+        <div class="home-img">
+            <!-- Update the path below to your relative image path -->
+            <img src="./ASSETS/Profile photo.png" alt="Abdullah Alhariri" />
+        </div>
+        <div class="home-content">
+            <h1>Hi, I'm <span>Abdullah,</span></h1>
+            <h3 class="typing-text">a <span></span></h3>
+            <p>
+                I'm Abdullah Alhariri— a 15-year-old creative soul, also known as KINGKIMABDU online — a tech enthusiast, science lover, fitness addict, casual Valorant player, and inventor of cool, self-made innovations.
+            </p>
+
+            <div class="social-icons">
+                <a href="https://discord.com/users/abdullah9191_5090" target="_blank" rel="noopener noreferrer" data-platform="Discord">
+                    <i class="fa-brands fa-discord"></i>
+                </a>
+                <a href="https://open.spotify.com/user/313xhtys5streqnj4z6kk5neiecy" target="_blank" rel="noopener noreferrer" data-platform="Spotify">
+                    <i class="fa-brands fa-spotify"></i>
+                </a>
+                <a href="https://www.google.com/maps/contrib/115666625407870451555" target="_blank" rel="noopener noreferrer" data-platform="Google Maps">
+                    <i class="fa-brands fa-google"></i>
+                </a>
+                <a href="https://github.com/KINGKIMABDU" target="_blank" rel="noopener noreferrer" data-platform="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://www.duolingo.com/profile/KINGKIMABDU" class="duo-icon" target="_blank" rel="noopener noreferrer" data-platform="Duolingo">
+                    <strong>D</strong>
+                </a>
+            </div>
+
+            <a href="#" class="btn">Don't put off until tomorrow what you can do today!</a>
+        </div>
+    </section>
+
+    <!-- JavaScript for typing effect -->
+    <script>
+        const words = [
+            "Tech Enthusiast",
+            "Creative Inventor",
+            "Disciplined Minimalist",
+            "Top Student",
+            "Bodybuilder"
+        ];
+
+        let index = 0;
+        const typingSpan = document.querySelector('.typing-text span');
+
+        function changeWord() {
+            typingSpan.textContent = words[index];
+            index = (index + 1) % words.length;
+        }
+
+        changeWord(); // Initial call
+        setInterval(changeWord, 4000); // Change word every 4 seconds
+    </script>
+</body>
+</html>

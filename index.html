@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -18,14 +18,13 @@
 
     <section class="home">
         <div class="home-img">
-            <!-- Update the path below to your relative image path -->
             <img src="Profile photo.png" alt="Abdullah Alhariri" />
         </div>
         <div class="home-content">
             <h1>Hi, I'm <span>Abdullah,</span></h1>
-            <h3 class="typing-text">a <span></span></h3>
+            <h3 class="typing-text">a <span class="typewriter-text"></span></h3>
             <p>
-               My name is Abdullah Alhariri, and I’m a 15-year-old creative person known online as KINGKIMABDU. I’m passionate about technology and science, addicted to fitness, and a casual Valorant player. On top of that, I love coming up with and building cool inventions all by myself.
+                I'm Abdullah Alhariri— a 15-year-old creative soul, also known as KINGKIMABDU online — a tech enthusiast, science lover, fitness addict, casual Valorant player, and inventor of cool, self-made innovations.
             </p>
 
             <div class="social-icons">
@@ -50,7 +49,6 @@
         </div>
     </section>
 
-    <!-- JavaScript for typing effect -->
     <script>
         const words = [
             "Tech Enthusiast",
@@ -60,16 +58,45 @@
             "Bodybuilder"
         ];
 
-        let index = 0;
-        const typingSpan = document.querySelector('.typing-text span');
+        let wordIndex = 0;
+        let charIndex = 0;
+        const typingTextElement = document.querySelector('.typewriter-text');
+        let isDeleting = false; // To handle backspace effect
 
-        function changeWord() {
-            typingSpan.textContent = words[index];
-            index = (index + 1) % words.length;
+        function typeWriterEffect() {
+            const currentWord = words[wordIndex];
+
+            if (isDeleting) {
+                // Deleting characters
+                typingTextElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                // Typing characters
+                typingTextElement.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = 100; // Speed of typing
+            if (isDeleting) {
+                typeSpeed /= 2; // Faster deletion
+            }
+
+            // Check if word is fully typed
+            if (!isDeleting && charIndex === currentWord.length) {
+                typeSpeed = 2000; // Pause at the end of typing
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length; // Move to the next word
+                typeSpeed = 500; // Pause before starting to type the next word
+            }
+
+            setTimeout(typeWriterEffect, typeSpeed);
         }
 
-        changeWord(); // Initial call
-        setInterval(changeWord, 4000); // Change word every 4 seconds
+        document.addEventListener('DOMContentLoaded', () => {
+            typeWriterEffect(); // Start the typewriter effect when the DOM is loaded
+        });
     </script>
 </body>
 </html>

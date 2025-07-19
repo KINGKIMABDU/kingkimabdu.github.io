@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap');
 
+/* Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -11,7 +12,7 @@
 }
 
 html {
-    font-size: 62.5%;
+    font-size: 62.5%; /* 1rem = 10px */
 }
 
 body {
@@ -22,6 +23,7 @@ body {
     color: #a2a569;
 }
 
+/* Header */
 header {
     margin-top: 20px;
     position: fixed;
@@ -49,6 +51,7 @@ header {
     transform: scale(1.1);
 }
 
+/* Navigation (if you add more links later) */
 nav a {
     font-size: 1.8rem;
     color: #a2a569;
@@ -64,11 +67,13 @@ nav a.active {
     border-bottom: 3px solid #5f643d;
 }
 
+/* Sections */
 section {
     min-height: 100vh;
     padding: 5rem 9% 5rem;
 }
 
+/* Home Section */
 .home {
     display: flex;
     justify-content: center;
@@ -114,6 +119,7 @@ span {
     transform: scale(1.05);
 }
 
+/* Social Icons */
 .social-icons {
     display: flex;
     flex-wrap: wrap;
@@ -171,6 +177,7 @@ span {
     font-weight: 800;
 }
 
+/* Button */
 .btn {
     display: inline-block;
     padding: 1rem 2.8rem;
@@ -193,6 +200,7 @@ span {
     box-shadow: 0 0 25px #5f643d;
 }
 
+/* Typing Text Effect */
 .typing-text {
     font-size: 3.4rem;
     font-weight: 600;

@@ -309,3 +309,9 @@ span {
         justify-content: center;
     }
 }
+
+/* 🔧 Mobile Tap Highlight Fix */
+a, img, button {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}

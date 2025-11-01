@@ -185,6 +185,8 @@ span {
     border: 2px solid var(--accent-color);
     white-space: normal;
     max-width: 100%;
+    /* FIX: Force this element to a very low stacking context */
+    z-index: 10;
 }
 
 .btn:hover {
@@ -205,7 +207,7 @@ span {
 .social-icons a {
     position: relative;
     /* FIX: Elevate the stacking context of the link itself to ensure its tooltip covers the button */
-    z-index: 1001;
+    z-index: 1010; /* Guaranteed to be above the button's z-index: 10 */
     display: inline-flex;
     justify-content: center;
     align-items: center;

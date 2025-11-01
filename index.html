@@ -1,53 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Cookiebot Consent Banner -->
-    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" 
-        data-cbid="f8ccb525-993b-4bd8-86b7-d0643ea76295" type="text/javascript" async>
-    </script>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0EZ08KV3F8"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      // Default GA consent denied; Cookiebot updates this on user acceptance
-      gtag('consent', 'default', {
-        'analytics_storage': 'denied'
-      });
-
-      gtag('config', 'G-0EZ08KV3F8');
-    </script>
-
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KINGKIMABDU // Crafted to Create</title>
 
-    <!-- Favicon for all platforms -->
-<link rel="icon" type="image/png" sizes="32x32" href="/32x32.png">
-<link rel="icon" type="image/png" sizes="128x128" href="/128x128.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/192x192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/512x512.png">
-<link rel="icon" href="favicon.ico" type="image/x-icon" />
-<link rel="apple-touch-icon" href="/512x512.png">
-
+    <!-- Font Awesome for social icons -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
-    <title>KINGKIMABDU // Crafted to Create</title>
 </head>
 <body>
+    <!-- Header with Logo -->
     <header>
-        <a href="#" class="logo">킹키마브두</a>
+        <a href="#home" class="logo side-btn" data-platform="Korean translation of KINGKIMABDU">킹키마브두</a>
     </header>
 
-    <section class="home">
+    <!-- Home Section -->
+    <section class="home" id="home">
+        <!-- Top-right buttons -->
+        <div class="side-options-topright">
+            <a href="#home" class="side-btn" data-platform="Back to Main Page">Home</a>
+            <a href="#projects" class="side-btn" data-platform="Check Out My Creations">Projects</a>
+            <a href="#contact" class="side-btn" data-platform="Reach Out & Say Hi">Contact</a>
+        </div>
+
+        <!-- Profile Image -->
         <div class="home-img">
             <img src="Profile photo.png" alt="Abdullah Alhariri" />
         </div>
+
+        <!-- Home Content -->
         <div class="home-content">
             <h1>Hi, I'm <span>Abdullah,</span></h1>
             <h3 class="typing-text">a <span class="typewriter-text"></span></h3>
@@ -55,6 +45,7 @@
                 I'm Abdullah Alhariri, a 15-year-old creative known online as KINGKIMABDU. I'm a tech and science enthusiast, a fitness addict, and a casual Valorant player who loves inventing cool new things.
             </p>
 
+            <!-- Social Icons -->
             <div class="social-icons">
                 <a href="https://discord.com/users/abdullah9191_5090" target="_blank" rel="noopener noreferrer" data-platform="Discord">
                     <i class="fa-brands fa-discord"></i>
@@ -73,10 +64,12 @@
                 </a>
             </div>
 
+            <!-- Motivational Quote Button -->
             <a href="#" class="btn">Don't put off until tomorrow what you can do today!</a>
         </div>
     </section>
 
+    <!-- Typewriter Effect Script -->
     <script>
         const words = [
             "Tech Enthusiast",
@@ -89,43 +82,38 @@
         let wordIndex = 0;
         let charIndex = 0;
         const typingTextElement = document.querySelector('.typewriter-text');
-        let isDeleting = false; // To handle backspace effect
+        let isDeleting = false;
 
         function typeWriterEffect() {
             const currentWord = words[wordIndex];
 
             if (isDeleting) {
-                // Deleting characters
                 typingTextElement.textContent = currentWord.substring(0, charIndex - 1);
                 charIndex--;
             } else {
-                // Typing characters
                 typingTextElement.textContent = currentWord.substring(0, charIndex + 1);
                 charIndex++;
             }
 
-            let typeSpeed = 100; // Speed of typing
-            if (isDeleting) {
-                typeSpeed /= 2; // Faster deletion
-            }
+            let typeSpeed = 100;
+            if (isDeleting) typeSpeed /= 2;
 
-            // Check if word is fully typed
             if (!isDeleting && charIndex === currentWord.length) {
-                typeSpeed = 2000; // Pause at the end of typing
+                typeSpeed = 2000;
                 isDeleting = true;
             } else if (isDeleting && charIndex === 0) {
                 isDeleting = false;
-                wordIndex = (wordIndex + 1) % words.length; // Move to the next word
-                typeSpeed = 500; // Pause before starting to type the next word
+                wordIndex = (wordIndex + 1) % words.length;
+                typeSpeed = 500;
             }
 
             setTimeout(typeWriterEffect, typeSpeed);
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            typeWriterEffect(); // Start the typewriter effect when the DOM is loaded
-        });
+        document.addEventListener('DOMContentLoaded', typeWriterEffect);
     </script>
+
+    <!-- NEW: Bottom-left development note -->
+    <p class="dev-note">Some functions might not work yet — still in development.</p>
 </body>
 </html>
-

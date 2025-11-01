@@ -1,217 +1,393 @@
 @import url('https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap');
 
-/* Base Styles */
-* { margin: 0; padding: 0; box-sizing: border-box; text-decoration: none; border: none; outline: none; font-family: 'Sen', sans-serif; }
-html { font-size: 62.5%; }
-body { width: 100%; min-height: 100vh; overflow-x: hidden; background-color: #27331f; color: #a2a569; }
+/* ===== CSS VARIABLES ===== */
+:root {
+    /* Colors */
+    --primary-bg: #27331f;
+    --primary-text: #a2a569;
+    --accent-color: #5f643d;
+    
+    /* Typography */
+    --font-family: 'Sen', sans-serif;
+    
+    /* Layout */
+    --section-padding: 5rem 9%;
+    --mobile-padding: 4rem 4%;
+    
+    /* Transitions */
+    --transition: all 0.3s ease;
+}
 
+/* ===== RESET & BASE STYLES ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    font-family: var(--font-family);
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+}
+
+/* ===== LAYOUT COMPONENTS ===== */
 /* Header */
-header { margin-top: 20px; position: fixed; top: 0; left: 0; width: 100%; padding: 1rem 9%; background-color: transparent; filter: drop-shadow(10px); display: flex; justify-content: flex-start; align-items: center; z-index: 100; }
+header {
+    position: fixed;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    padding: 1rem 9%;
+    background-color: transparent;
+    filter: drop-shadow(10px);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 100;
+}
 
-/* Logo – RING REMOVED */
-.logo.side-btn {
-    border-radius: 4rem;
-    /* border: 0.2rem solid #5f643d; */ /* ← REMOVED */
-    padding: 0.8rem 1.6rem;
+/* Sections */
+section {
+    min-height: 100vh;
+    padding: var(--section-padding);
+}
+
+/* Home Section */
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8rem;
+    background-color: var(--primary-bg);
+    position: relative;
+}
+
+.home-content {
+    max-width: 100%;
+    overflow-wrap: break-word;
+}
+
+.home-img {
+    border-radius: 50%;
+}
+
+.home-img img {
+    position: relative;
+    width: 32vw;
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
+    box-shadow: 0 0 25px var(--accent-color);
+    cursor: pointer;
+    transition: transform 0.2s linear;
+}
+
+.home-img img:hover {
+    transform: scale(1.05);
+}
+
+/* ===== TYPOGRAPHY ===== */
+.home-content h1 {
+    font-size: 6rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.home-content h3 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.home-content p {
+    font-size: 1.6rem;
+    max-width: 100%;
+    overflow-wrap: break-word;
+}
+
+span {
+    color: var(--accent-color);
+}
+
+/* ===== BUTTON COMPONENTS ===== */
+/* Base Button Styles */
+.side-btn, .btn {
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    border-radius: 4rem;
+    font-weight: 600;
+    text-decoration: none;
+    position: relative;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+/* Logo Button */
+.logo.side-btn {
+    padding: 0.8rem 1.6rem;
     background-color: transparent;
-    color: #a2a569;
+    color: var(--primary-text);
     font-weight: 800;
     font-size: 3rem;
-    position: relative;
-    transition: all 0.3s ease;
 }
+
 .logo.side-btn:hover {
-    color: #27331f;
-    background-color: #5f643d;
+    color: var(--primary-bg);
+    background-color: var(--accent-color);
     transform: scale(1.05) translateY(-2px);
-    box-shadow: 0 0 15px #5f643d;
+    box-shadow: 0 0 15px var(--accent-color);
 }
-.logo.side-btn::after {
+
+/* Navigation Buttons */
+.side-options-topright {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+    gap: 1rem;
+    z-index: 200;
+}
+
+.side-options-topright .side-btn {
+    padding: 0.8rem 1.6rem;
+    border: 0.2rem solid var(--accent-color);
+    background-color: transparent;
+    color: var(--accent-color);
+    font-size: 1.4rem;
+}
+
+.side-options-topright .side-btn:hover {
+    color: var(--primary-bg);
+    background-color: var(--accent-color);
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 0 15px var(--accent-color);
+}
+
+/* Motivational Quote Button */
+.btn {
+    padding: 1rem 2.8rem;
+    background-color: var(--primary-bg);
+    font-size: 1.6rem;
+    color: var(--accent-color);
+    letter-spacing: 0.3rem;
+    border: 2px solid var(--accent-color);
+    white-space: normal;
+    max-width: 100%;
+}
+
+.btn:hover {
+    transform: scale(1.03);
+    background-color: var(--accent-color);
+    color: black;
+    box-shadow: 0 0 25px var(--accent-color);
+}
+
+/* ===== SOCIAL ICONS ===== */
+.social-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin: 3rem 0;
+}
+
+.social-icons a {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 4rem;
+    background-color: transparent;
+    border: 0.2rem solid var(--accent-color);
+    font-size: 2rem;
+    border-radius: 50%;
+    color: var(--accent-color);
+    padding: 0;
+    transition: var(--transition);
+}
+
+.social-icons a:hover {
+    color: var(--primary-bg);
+    transform: scale(1.3) translateY(-5px);
+    background-color: var(--accent-color);
+    box-shadow: 0 0 25px var(--accent-color);
+    border-radius: 50%;
+}
+
+.duo-icon {
+    font-size: 2.4rem;
+    font-weight: 800;
+}
+
+/* ===== TOOLTIPS ===== */
+/* Base Tooltip Styles */
+.side-btn::after,
+.social-icons a::after {
     content: attr(data-platform);
     position: absolute;
     bottom: -30px;
     left: 50%;
     transform: translateX(-50%);
-    background: #5f643d;
-    color: #27331f;
+    background: var(--accent-color);
+    color: var(--primary-bg);
     padding: 4px 10px;
     border-radius: 6px;
     font-size: 1.2rem;
     font-weight: 600;
     opacity: 0;
-    transition: all 0.3s ease;
+    transition: var(--transition);
     pointer-events: none;
     white-space: nowrap;
 }
-.logo.side-btn:hover::after { opacity: 1; bottom: -35px; }
 
-/* Sections */
-section { min-height: 100vh; padding: 5rem 9% 5rem; }
-
-/* Home Section */
-.home { display: flex; justify-content: center; align-items: center; gap: 8rem; background-color: #27331f; position: relative; }
-.home-content { max-width: 100%; overflow-wrap: break-word; }
-.home-content h1 { font-size: 6rem; font-weight: 700; line-height: 1.3; }
-span { color: #5f643d; }
-.home-content h3 { font-size: 4rem; margin-bottom: 1rem; font-weight: 700; }
-.home-content p { font-size: 1.6rem; max-width: 100%; overflow-wrap: break-word; }
-.home-img { border-radius: 50%; }
-.home-img img { position: relative; width: 32vw; max-width: 100%; height: auto; border-radius: 50%; box-shadow: 0 0 25px #5f643d; cursor: pointer; transition: 0.2s linear; }
-.home-img img:hover { transform: scale(1.05); }
-
-/* Social Icons – FIXED: Ensure circular on hover & better centering */
-.social-icons { display: flex; flex-wrap: wrap; gap: 1.5rem; margin: 3rem 0; }
-.social-icons a { 
-    position: relative; 
-    display: inline-flex; 
-    justify-content: center; 
-    align-items: center; 
-    width: 4rem; 
-    height: 4rem; 
-    background-color: transparent; 
-    border: 0.2rem solid #5f643d; 
-    font-size: 2rem; 
-    border-radius: 50%; /* Ensure base is circular */
-    transition: all 0.3s ease; 
-    color: #5f643d; 
-    padding: 0; /* Fix any padding overflow */
+.side-btn:hover::after,
+.social-icons a:hover::after {
+    opacity: 1;
+    bottom: -35px;
 }
-.social-icons a:hover { 
-    color: #27331f; 
-    transform: scale(1.3) translateY(-5px); 
-    background-color: #5f643d; 
-    box-shadow: 0 0 25px #5f643d; 
-    border-radius: 50%; /* FIXED: Keep circular on hover */
-}
-.social-icons a::after { 
-    content: attr(data-platform); 
-    position: absolute; 
-    bottom: -30px; 
-    left: 50%; 
-    transform: translateX(-50%); 
-    background: #5f643d; 
-    color: #27331f; 
-    padding: 4px 10px; 
-    border-radius: 6px; 
-    font-size: 1.3rem; 
-    font-weight: 600; 
-    opacity: 0; 
-    transition: all 0.3s ease; 
-    pointer-events: none; 
-    white-space: nowrap; 
-}
-.social-icons a:hover::after { opacity: 1; bottom: -35px; }
-.duo-icon { font-size: 2.4rem; font-weight: 800; }
 
-/* Top-right Side Options Buttons */
-.side-options-topright { position: absolute; top: 2rem; right: 2rem; display: flex; gap: 1rem; z-index: 200; }
-.side-options-topright .side-btn { display: inline-flex; justify-content: center; align-items: center; padding: 0.8rem 1.6rem; border-radius: 4rem; border: 0.2rem solid #5f643d; background-color: transparent; color: #5f643d; font-weight: 600; font-size: 1.4rem; text-decoration: none; position: relative; transition: all 0.3s ease; }
-.side-options-topright .side-btn:hover { color: #27331f; background-color: #5f643d; transform: scale(1.05) translateY(-2px); box-shadow: 0 0 15px #5f643d; }
-
-/* DEFAULT: All top-right tooltips centered (Home, Projects) */
-.side-options-topright .side-btn::after { 
-    content: attr(data-platform); 
-    position: absolute; 
-    bottom: -30px; 
-    left: 50%; 
-    transform: translateX(-50%); 
-    background: #5f643d; 
-    color: #27331f; 
-    padding: 4px 10px; 
-    border-radius: 6px; 
-    font-size: 1.2rem; 
-    font-weight: 600; 
-    opacity: 0; 
-    transition: all 0.3s ease; 
-    pointer-events: none; 
-    white-space: nowrap; 
-}
-.side-options-topright .side-btn:hover::after { opacity: 1; bottom: -35px; }
-
-/* ONLY CONTACT: Shift left on desktop & mobile */
+/* Contact Button Tooltip Adjustment */
 .side-options-topright .side-btn[data-platform="Reach Out & Say Hi"]::after {
     left: 20% !important;
     transform: translateX(-50%);
 }
 
-/* Motivational Quote Button */
-.btn { display: inline-block; padding: 1rem 2.8rem; background-color: #27331f; border-radius: 4rem; font-size: 1.6rem; color: #5f643d; letter-spacing: 0.3rem; font-weight: 600; border: 2px solid #5f643d; transition: 0.3s ease; cursor: pointer; white-space: normal; max-width: 100%; }
-.btn:hover { transform: scale(1.03); background-color: #5f643d; color: black; box-shadow: 0 0 25px #5f643d; }
+/* ===== ANIMATIONS ===== */
+/* Typewriter Effect */
+.typing-text {
+    font-size: 3.4rem;
+    font-weight: 600;
+    min-width: 200px;
+    position: relative;
+    display: inline-block;
+}
 
-/* Typing Text Effect – FIXED: Reduce min-width for medium screens */
-.typing-text { font-size: 3.4rem; font-weight: 600; min-width: 200px; /* FIXED: Smaller to prevent overflow */ position: relative; display: inline-block; }
-.typing-text span { position: relative; padding-right: 10px; border-right: 3px solid #5f643d; animation: cursor 0.6s infinite; }
-@keyframes cursor { 0%, 100% { border-color: transparent; } 50% { border-color: #5f643d; } }
+.typing-text span {
+    position: relative;
+    padding-right: 10px;
+    border-right: 3px solid var(--accent-color);
+    animation: cursor 0.6s infinite;
+}
 
-/* Responsive */
-@media (max-width: 1200px) { /* NEW: Fix for screenshot-like viewports (900-1200px) */
+@keyframes cursor {
+    0%, 100% { border-color: transparent; }
+    50% { border-color: var(--accent-color); }
+}
+
+/* ===== UTILITY COMPONENTS ===== */
+/* Development Note */
+.dev-note {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    font-size: 1.1rem;
+    color: var(--accent-color);
+    font-weight: 400;
+    opacity: 0.8;
+    z-index: 10;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Mobile Tap Highlight Fix */
+a, img, button {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1200px) {
     .home { gap: 5rem; }
     .home-img img { width: 28vw; }
     .home-content h1 { font-size: 5.5rem; }
     .home-content h3 { font-size: 3.8rem; }
-    .typing-text { min-width: 180px; } /* Further reduce for medium screens */
+    .typing-text { min-width: 180px; }
 }
-@media (max-width: 1000px) { .home { gap: 4rem; } }
+
+@media (max-width: 1000px) {
+    .home { gap: 4rem; }
+}
+
 @media (max-width: 900px) {
-    .home { flex-direction: column-reverse; text-align: center; gap: 3rem; }
+    .home {
+        flex-direction: column-reverse;
+        text-align: center;
+        gap: 3rem;
+    }
+    
     .home-content h1 { font-size: 4rem; }
     .home-content h3 { font-size: 3rem; }
     .home-img img { width: 60vw; }
-    .side-options-topright { top: 1rem; right: 1rem; gap: 0.8rem; }
-    .side-options-topright .side-btn { font-size: 1.2rem; padding: 0.6rem 1.2rem; }
+    
+    .side-options-topright {
+        top: 1rem;
+        right: 1rem;
+        gap: 0.8rem;
+    }
+    
+    .side-options-topright .side-btn {
+        font-size: 1.2rem;
+        padding: 0.6rem 1.2rem;
+    }
 }
 
-/* MOBILE: Tooltip & layout fixes */
 @media (max-width: 600px) {
     html { font-size: 50%; }
+    
     header { padding: 1rem 4%; }
-    section { padding: 4rem 4%; }
-    .home { gap: 2rem; padding: 2rem 4%; }
-    .home-content h1 { font-size: 2.8rem; word-break: break-word; }
-    .home-content h3 { font-size: 2.2rem; word-break: break-word; }
-    .home-content p { font-size: 1.4rem; line-height: 1.5; word-wrap: break-word; }
+    section { padding: var(--mobile-padding); }
+    
+    .home {
+        gap: 2rem;
+        padding: 2rem 4%;
+    }
+    
+    .home-content h1 {
+        font-size: 2.8rem;
+        word-break: break-word;
+    }
+    
+    .home-content h3 {
+        font-size: 2.2rem;
+        word-break: break-word;
+    }
+    
+    .home-content p {
+        font-size: 1.4rem;
+        line-height: 1.5;
+        word-wrap: break-word;
+    }
+    
     .home-img img { width: 65vw; }
     .btn { font-size: 1.3rem; padding: 0.8rem 1.6rem; }
     .social-icons { justify-content: center; }
-
-    /* Logo – shift tooltip right on mobile */
+    .side-options-topright { gap: 0.6rem; }
+    
+    /* Mobile Tooltip Adjustments */
     .logo.side-btn::after {
         left: 80% !important;
         transform: translateX(-50%);
         font-size: 1.1rem !important;
         padding: 3px 8px !important;
     }
-
-    /* ONLY CONTACT: Smaller tooltip on mobile */
+    
     .side-options-topright .side-btn[data-platform="Reach Out & Say Hi"]::after {
         font-size: 1.1rem !important;
         padding: 3px 8px !important;
     }
-
-    .side-options-topright { gap: 0.6rem; }
-}
-
-/* Mobile tap highlight fix */
-a, img, button { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
-
-/* Bottom-left development note – FIXED: Slightly more opaque for readability */
-.dev-note {
-    position: fixed;
-    bottom: 1rem;
-    left: 1rem;
-    font-size: 1.1rem;
-    color: #5f643d;
-    font-weight: 400;
-    opacity: 0.8; /* FIXED: From 0.7 to 0.8 */
-    z-index: 10;
-    pointer-events: none;
-    user-select: none;
-}
-
-@media (max-width: 600px) {
+    
     .dev-note {
         font-size: 1rem;
         bottom: 0.8rem;

@@ -204,6 +204,8 @@ span {
 
 .social-icons a {
     position: relative;
+    /* FIX: Elevate the stacking context of the link itself to ensure its tooltip covers the button */
+    z-index: 1001;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -250,12 +252,16 @@ span {
     transition: var(--transition);
     pointer-events: none;
     white-space: nowrap;
+    /* CRITICAL FIX: Ensure tooltips are always on top of the quote button */
+    z-index: 1000 !important; /* FORCING LAYERING ON TOP */
 }
 
 .side-btn:hover::after,
 .social-icons a:hover::after {
     opacity: 1;
     bottom: -35px;
+    /* CRITICAL FIX: Ensure tooltips are always on top of the quote button */
+    z-index: 1000 !important; /* FORCING LAYERING ON TOP */
 }
 
 /* Contact Button Tooltip Adjustment */
@@ -375,7 +381,7 @@ a, img, button {
     .social-icons { justify-content: center; }
     .side-options-topright { gap: 0.6rem; }
     
-    /* Mobile Tooltip Adjustments */
+    /* Mobile Tooltip Adjustments for nav/logo */
     .logo.side-btn::after {
         left: 80% !important;
         transform: translateX(-50%);
@@ -387,6 +393,8 @@ a, img, button {
         font-size: 1.1rem !important;
         padding: 3px 8px !important;
     }
+    
+    /* Note: The Z-index fix is now global, so mobile overrides for z-index are removed. */
     
     .dev-note {
         font-size: 1rem;

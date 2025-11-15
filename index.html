@@ -9,13 +9,13 @@
     <meta name="description" content="Official website of Abdullah Alhariri, known online as KINGKIMABDU. Tech enthusiast, creative inventor, bodybuilder, and student at Gymnasium Georgianum in Vreden.">
     <meta name="keywords" content="Abdullah Alhariri, KINGKIMABDU, tech, projects, bodybuilding, student, creativity, AI, inventions, Gymnasium Georgianum, Samsung, Valorant, K-pop">
     <meta name="author" content="Abdullah Alhariri">
-    <meta property="og:title" content="Abdullah Alhariri | KINGKIMABDU">
+    <meta property="og:title" content="KINGKIMABDU // Crafted to Create">
     <meta property="og:description" content="Explore the official website of Abdullah Alhariri (KINGKIMABDU) — tech enthusiast, creative inventor, and bodybuilder.">
     <meta property="og:image" content="https://kingkimabdu.github.io/Profile-photo.png">
     <meta property="og:url" content="https://kingkimabdu.github.io/">
     <meta name="twitter:card" content="summary_large_image">
 
-    <!-- Structured Data for Google -->
+    <!-- Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -88,7 +88,11 @@
         </section>
     </main>
 
+    <!-- Dev Note -->
     <p class="dev-note">Some functions might not work yet — still in development.</p>
+
+    <!-- Copyright Note (Fixed, Dynamic Year) -->
+    <p class="copyright-note">© <span id="current-year"></span> Abdullah Alhariri | KINGKIMABDU</p>
 
     <script>
         // Typewriter Effect
@@ -139,7 +143,19 @@
             type();
         }
 
-        document.addEventListener('DOMContentLoaded', initTypewriter);
+        // Auto-update copyright year
+        function updateCopyrightYear() {
+            const yearSpan = document.getElementById('current-year');
+            if (yearSpan) {
+                yearSpan.textContent = new Date().getFullYear();
+            }
+        }
+
+        // Run on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initTypewriter();
+            updateCopyrightYear();
+        });
     </script>
 </body>
 </html>

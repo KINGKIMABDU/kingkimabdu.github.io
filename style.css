@@ -318,7 +318,7 @@ a, img, button {
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 1200px) {
     .home { gap: 5rem; }
-    .home-img img { width: 28vw; }
+    .home-img img { width: 55vw; }
     .home-content h1 { font-size: 5.5rem; }
     .home-content h3 { font-size: 3.8rem; }
     .typing-text { min-width: 180px; }
@@ -337,7 +337,7 @@ a, img, button {
     
     .home-content h1 { font-size: 4rem; }
     .home-content h3 { font-size: 3rem; }
-    .home-img img { width: 60vw; }
+    .home-img img { width: 70vw; }
     
     .side-options-topright {
         top: 1rem;
@@ -378,7 +378,7 @@ a, img, button {
         word-wrap: break-word;
     }
     
-    .home-img img { width: 65vw; }
+    .home-img img { width: 60vw; }
     .btn { font-size: 1.3rem; padding: 0.8rem 1.6rem; }
     .social-icons { justify-content: center; }
     .side-options-topright { gap: 0.6rem; }

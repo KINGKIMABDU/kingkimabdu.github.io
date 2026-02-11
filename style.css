@@ -314,3 +314,12 @@ a, img, button {
     .btn { font-size: 1.3rem; padding: 0.8rem 1.6rem; }
     .social-icons { justify-content: center; }
 }
+
+/* Fix for the logo tooltip alignment on mobile */
+@media (max-width: 600px) {
+    .logo.side-btn::after {
+        left: 0;
+        transform: translateX(0);
+        margin-left: 1rem; /* Adjusts it slightly to the right so it stays on screen */
+    }
+}

@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- SEO Meta Tags -->
     <title>KINGKIMABDU // Crafted to Create</title>
     <meta name="description" content="Official website of Abdullah Alhariri, known online as KINGKIMABDU. Tech enthusiast, creative inventor, bodybuilder, and student at Gymnasium Georgianum in Vreden.">
     <meta name="keywords" content="Abdullah Alhariri, KINGKIMABDU, tech, projects, bodybuilding, student, creativity, AI, inventions, Gymnasium Georgianum, Samsung, Valorant, K-pop">
@@ -14,142 +12,391 @@
     <meta property="og:image" content="https://kingkimabdu.github.io/Profile-photo.png">
     <meta property="og:url" content="https://kingkimabdu.github.io/">
     <meta name="twitter:card" content="summary_large_image">
-
-    <!-- Structured Data -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Abdullah Alhariri",
-      "alternateName": "KINGKIMABDU",
-      "url": "https://kingkimabdu.github.io/",
-      "image": "https://kingkimabdu.github.io/Profile-photo.png",
-      "sameAs": [
-        "https://github.com/KINGKIMABDU",
-        "https://discord.com/users/1115677175073480825",
-        "https://www.duolingo.com/profile/KINGKIMABDU",
-        "https://open.spotify.com/user/313xhtys5streqnj4z6kk5neiecy",
-        "https://www.google.com/maps/contrib/115666625407870451555"
-      ],
-      "jobTitle": "Student, Tech Enthusiast, Creative Inventor, Bodybuilder",
-      "description": "Official website of Abdullah Alhariri (KINGKIMABDU). Tech enthusiast, creative inventor, bodybuilder, and top student with a passion for science and innovation."
-    }
+    {"@context":"https://schema.org","@type":"Person","name":"Abdullah Alhariri","alternateName":"KINGKIMABDU","url":"https://kingkimabdu.github.io/","image":"https://kingkimabdu.github.io/Profile-photo.png","sameAs":["https://github.com/KINGKIMABDU","https://discord.com/users/1115677175073480825","https://www.duolingo.com/profile/KINGKIMABDU","https://open.spotify.com/user/313xhtys5streqnj4z6kk5neiecy","https://www.google.com/maps/contrib/115666625407870451555"],"jobTitle":"Student, Tech Enthusiast, Creative Inventor, Bodybuilder"}
     </script>
-
-    <!-- External Resources -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <a href="#home" class="logo side-btn" data-platform="Korean translation of KINGKIMABDU">킹키마브두</a>
-    </header>
 
-    <main>
-        <section class="home" id="home">
-            <div class="home-img">
-                <img src="Profile-photo.png" alt="Abdullah Alhariri">
+<!-- ░░ BOOT OVERLAY ░░ -->
+<div id="boot-overlay">
+    <div id="boot-lines"></div>
+    <div class="boot-progress-wrap"><div id="boot-bar"></div></div>
+    <div id="boot-tagline"></div>
+</div>
+
+<!-- ░░ TEXTURE OVERLAYS ░░ -->
+<div class="grain-overlay"></div>
+<div class="scanlines-overlay"></div>
+
+<!-- ░░ NETWORK CANVAS ░░ -->
+<canvas id="net-canvas"></canvas>
+
+<!-- ░░ CUSTOM CURSOR ░░ -->
+<div class="cur-dot"></div>
+<div class="cur-cross cur-cross--h"></div>
+<div class="cur-cross cur-cross--v"></div>
+<div class="cur-ring"></div>
+
+<!-- ░░ HEADER ░░ -->
+<header id="site-header">
+    <a href="#home" class="logo side-btn" data-platform="Korean translation of KINGKIMABDU">킹키마브두</a>
+</header>
+
+<!-- ░░ MAIN ░░ -->
+<main>
+    <section class="home" id="home">
+
+        <div class="home-img" id="home-img">
+            <div class="img-frame">
+                <img src="Profile-photo.png" alt="Abdullah Alhariri" id="profile-img">
+                <div class="scan-line"></div>
+            </div>
+            <span class="corner c-tl"></span>
+            <span class="corner c-tr"></span>
+            <span class="corner c-bl"></span>
+            <span class="corner c-br"></span>
+        </div>
+
+        <div class="home-content">
+            <h1 class="split-h1" data-reveal-delay="600">Hi, I'm <span class="accent-span">Abdullah,</span></h1>
+            <h3 class="typing-text rline" data-reveal-delay="950">a <span class="typewriter-text"></span></h3>
+            <p class="rline" data-reveal-delay="1150">
+                I'm Abdullah Alhariri, a 16-year-old creative known online as KINGKIMABDU. I'm a tech and science enthusiast, a fitness addict, and a casual Valorant player who loves inventing cool new things.
+            </p>
+
+            <div class="social-icons rline" data-reveal-delay="1350">
+                <a href="https://discord.com/users/1115677175073480825" target="_blank" rel="noopener noreferrer" data-platform="Discord" style="--si:0"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://open.spotify.com/user/313xhtys5streqnj4z6kk5neiecy" target="_blank" rel="noopener noreferrer" data-platform="Spotify" style="--si:1"><i class="fa-brands fa-spotify"></i></a>
+                <a href="https://www.google.com/maps/contrib/115666625407870451555" target="_blank" rel="noopener noreferrer" data-platform="Google Maps" style="--si:2"><i class="fa-brands fa-google"></i></a>
+                <a href="https://github.com/KINGKIMABDU" target="_blank" rel="noopener noreferrer" data-platform="GitHub" style="--si:3"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.duolingo.com/profile/KINGKIMABDU" class="duo-icon" target="_blank" rel="noopener noreferrer" data-platform="Duolingo" style="--si:4"><strong>D</strong></a>
             </div>
 
-            <div class="home-content">
-                <h1>Hi, I'm <span>Abdullah,</span></h1>
-                <h3 class="typing-text">a <span class="typewriter-text"></span></h3>
-                <p>
-                    I'm Abdullah Alhariri, a 16-year-old creative known online as KINGKIMABDU. I'm a tech and science enthusiast, a fitness addict, and a casual Valorant player who loves inventing cool new things.
-                </p>
+            <a href="#" class="btn rline ripple-btn" data-reveal-delay="1550">Don't put off until tomorrow what you can do today!</a>
+        </div>
 
-                <div class="social-icons">
-                    <a href="https://discord.com/users/1115677175073480825" target="_blank" rel="noopener noreferrer" data-platform="Discord">
-                        <i class="fa-brands fa-discord"></i>
-                    </a>
-                    <a href="https://open.spotify.com/user/313xhtys5streqnj4z6kk5neiecy" target="_blank" rel="noopener noreferrer" data-platform="Spotify">
-                        <i class="fa-brands fa-spotify"></i>
-                    </a>
-                    <a href="https://www.google.com/maps/contrib/115666625407870451555" target="_blank" rel="noopener noreferrer" data-platform="Google Maps">
-                        <i class="fa-brands fa-google"></i>
-                    </a> 
-                    <a href="https://github.com/KINGKIMABDU" target="_blank" rel="noopener noreferrer" data-platform="GitHub">
-                        <i class="fa-brands fa-github"></i>
-                    </a>
-                    <a href="https://www.duolingo.com/profile/KINGKIMABDU" class="duo-icon" target="_blank" rel="noopener noreferrer" data-platform="Duolingo">
-                        <strong>D</strong>
-                    </a>
-                </div>
+    </section>
+</main>
 
-                <a href="#" class="btn">Don't put off until tomorrow what you can do today!</a>
-            </div>
-        </section>
-    </main>
+<p class="copyright-note">© <span id="current-year"></span> Abdullah Alhariri | KINGKIMABDU</p>
 
-    <!-- Dev Note -->
-    <!--p class="dev-note">Some functions might not work yet — still in development.</p>-->
-    
-    <!-- Copyright Note (Fixed, Dynamic Year) -->
-    <p class="copyright-note">© <span id="current-year"></span> Abdullah Alhariri | KINGKIMABDU</p>
+<script>
+/* ========================================
+   BOOT SEQUENCE
+   ======================================== */
+(function bootSequence() {
+    const overlay = document.getElementById('boot-overlay');
+    const linesEl = document.getElementById('boot-lines');
+    const barEl   = document.getElementById('boot-bar');
+    const tagEl   = document.getElementById('boot-tagline');
 
-    <script>
-        // Typewriter Effect
-        const typewriterConfig = {
-            words: [
-                "Tech Enthusiast",
-                "Creative Inventor", 
-                "Disciplined Minimalist",
-                "Top Student",
-                "Bodybuilder"
-            ],
-            typingSpeed: 100,
-            deletingSpeed: 50,
-            pauseTime: 2000
-        };
+    const LINES = [
+        '> INITIALIZING KINGKIMABDU.SYS',
+        '> MOUNTING CORE MODULES ........ OK',
+        '> DISPLAY CALIBRATION .......... OK',
+        '> AUTH VERIFICATION ............ PASSED',
+        '> FIREWALL CHECK ............... CLEAN',
+        '> BOOT COMPLETE.',
+        '',
+        'KINGKIMABDU // CRAFTED TO CREATE'
+    ];
 
-        function initTypewriter() {
-            const typingTextElement = document.querySelector('.typewriter-text');
-            let wordIndex = 0;
-            let charIndex = 0;
-            let isDeleting = false;
+    let li = 0, ci = 0;
+    const CSPEED = 16, LPAUSE = 60;
 
-            function type() {
-                const currentWord = typewriterConfig.words[wordIndex];
-                let typeSpeed = typewriterConfig.typingSpeed;
-
-                if (isDeleting) {
-                    typingTextElement.textContent = currentWord.substring(0, charIndex - 1);
-                    charIndex--;
-                    typeSpeed = typewriterConfig.deletingSpeed;
-                } else {
-                    typingTextElement.textContent = currentWord.substring(0, charIndex + 1);
-                    charIndex++;
-                }
-
-                if (!isDeleting && charIndex === currentWord.length) {
-                    typeSpeed = typewriterConfig.pauseTime;
-                    isDeleting = true;
-                } else if (isDeleting && charIndex === 0) {
-                    isDeleting = false;
-                    wordIndex = (wordIndex + 1) % typewriterConfig.words.length;
-                    typeSpeed = 500;
-                }
-
-                setTimeout(type, typeSpeed);
-            }
-
-            type();
+    function tick() {
+        if (li >= LINES.length) {
+            barEl.style.width = '100%';
+            setTimeout(() => { tagEl.textContent = '[ SYSTEM ONLINE ]'; tagEl.style.opacity = '1'; }, 400);
+            setTimeout(() => {
+                overlay.classList.add('boot-exit');
+                document.body.classList.add('booted');
+                setTimeout(runPageAnimations, 350);
+            }, 1000);
+            return;
         }
-
-        // Auto-update copyright year
-        function updateCopyrightYear() {
-            const yearSpan = document.getElementById('current-year');
-            if (yearSpan) {
-                yearSpan.textContent = new Date().getFullYear();
-            }
+        const line = LINES[li];
+        if (ci === 0) {
+            const p = document.createElement('p');
+            if (li === LINES.length - 1) p.className = 'boot-final';
+            linesEl.appendChild(p);
         }
+        linesEl.lastElementChild.textContent = line.substring(0, ci + 1);
+        ci++;
+        barEl.style.width = Math.min((li / LINES.length) * 90, 90) + '%';
+        if (ci < line.length) { setTimeout(tick, CSPEED); }
+        else { li++; ci = 0; setTimeout(tick, LPAUSE); }
+    }
+    tick();
+})();
 
-        // Run on load
-        document.addEventListener('DOMContentLoaded', () => {
-            initTypewriter();
-            updateCopyrightYear();
+/* ========================================
+   PAGE ANIMATIONS (after boot)
+   ======================================== */
+function runPageAnimations() {
+    // Header slides down
+    setTimeout(() => document.getElementById('site-header').classList.add('hdr-in'), 50);
+
+    // Image scan-reveal
+    setTimeout(() => document.getElementById('home-img').classList.add('img-scanning'), 150);
+
+    // Corner brackets
+    setTimeout(() => document.querySelectorAll('.corner').forEach(c => c.classList.add('corner-in')), 200);
+
+    // H1 split reveal
+    setTimeout(splitRevealH1, 600);
+
+    // Lines fade up
+    document.querySelectorAll('.rline').forEach(el => {
+        const d = parseInt(el.dataset.revealDelay || 900);
+        setTimeout(() => el.classList.add('rline-in'), d);
+    });
+
+    // Social icons stagger pop
+    setTimeout(() => {
+        document.querySelectorAll('.social-icons a').forEach((a, i) => {
+            setTimeout(() => {
+                a.classList.add('icon-in');
+                // Lock in visible state after animation completes so they never disappear
+                setTimeout(() => {
+                    a.classList.add('icon-done');
+                }, 600);
+            }, i * 90);
         });
-    </script>
+    }, 1350);
+
+    // Copyright fade in
+    setTimeout(() => document.querySelector('.copyright-note').classList.add('cright-in'), 1700);
+
+    // Typewriter
+    setTimeout(initTypewriter, 1150);
+}
+
+/* ========================================
+   SPLIT H1 — char by char reveal
+   ======================================== */
+function splitRevealH1() {
+    const h1 = document.querySelector('.split-h1');
+    if (!h1) return;
+    // Tokenise preserving inner <span>
+    const raw = h1.innerHTML;
+    let out = '', inTag = false;
+    for (let i = 0; i < raw.length; i++) {
+        const c = raw[i];
+        if (c === '<') { inTag = true; }
+        if (inTag) { out += c; if (c === '>') inTag = false; continue; }
+        if (c === ' ') { out += `<span class="ch" aria-hidden="true"> </span>`; continue; }
+        out += `<span class="ch" aria-hidden="true">${c}</span>`;
+    }
+    h1.innerHTML = out;
+    h1.setAttribute('aria-label', 'Hi, I\'m Abdullah,');
+    h1.style.opacity = '1';
+
+    const chars = h1.querySelectorAll('.ch');
+    chars.forEach((ch, i) => {
+        setTimeout(() => ch.classList.add('ch-in'), i * 38);
+    });
+}
+
+/* ========================================
+   TYPEWRITER
+   ======================================== */
+function initTypewriter() {
+    const el = document.querySelector('.typewriter-text');
+    if (!el) return;
+    const words = ["Tech Enthusiast","Creative Inventor","Disciplined Minimalist","Top Student","Bodybuilder"];
+    let wi = 0, ci = 0, del = false;
+    function tick() {
+        const w = words[wi];
+        let speed = del ? 48 : 100;
+        if (!del) { el.textContent = w.substring(0, ++ci); if (ci === w.length) { speed = 2200; del = true; } }
+        else       { el.textContent = w.substring(0, --ci); if (ci === 0) { del = false; wi = (wi+1) % words.length; speed = 500; } }
+        setTimeout(tick, speed);
+    }
+    tick();
+}
+
+/* ========================================
+   INTERACTIVE NETWORK CANVAS
+   ======================================== */
+(function () {
+    const canvas = document.getElementById('net-canvas');
+    const ctx    = canvas.getContext('2d');
+    let W, H;
+    const mouse = { x: -9999, y: -9999 };
+    const RGB   = '95,100,61';
+    const N     = 65, LINK = 135, MPULL = 170;
+
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+
+    class Dot {
+        constructor() { this.init(true); }
+        init(rnd) {
+            this.x  = Math.random() * W;
+            this.y  = rnd ? Math.random() * H : H + 10;
+            this.vx = (Math.random() - 0.5) * 0.45;
+            this.vy = (Math.random() - 0.5) * 0.45;
+            this.r  = Math.random() * 1.7 + 0.4;
+            this.op = Math.random() * 0.55 + 0.2;
+        }
+        step() {
+            const dx = mouse.x - this.x, dy = mouse.y - this.y;
+            const d  = Math.hypot(dx, dy);
+            if (d < MPULL) {
+                const f = (1 - d/MPULL) * 0.014;
+                this.vx += dx * f; this.vy += dy * f;
+            }
+            this.vx *= 0.985; this.vy *= 0.985;
+            this.x += this.vx; this.y += this.vy;
+            if (this.x < -5) this.x = W + 5;
+            if (this.x > W+5) this.x = -5;
+            if (this.y < -5) this.y = H + 5;
+            if (this.y > H+5) this.y = -5;
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${RGB},${this.op})`;
+            ctx.fill();
+        }
+    }
+
+    const dots = Array.from({ length: N }, () => new Dot());
+
+    function frame() {
+        ctx.clearRect(0, 0, W, H);
+        for (let i = 0; i < dots.length; i++) {
+            for (let j = i + 1; j < dots.length; j++) {
+                const d = Math.hypot(dots[i].x - dots[j].x, dots[i].y - dots[j].y);
+                if (d < LINK) {
+                    ctx.beginPath();
+                    ctx.moveTo(dots[i].x, dots[i].y);
+                    ctx.lineTo(dots[j].x, dots[j].y);
+                    ctx.strokeStyle = `rgba(${RGB},${(1 - d/LINK) * 0.2})`;
+                    ctx.lineWidth = 0.8;
+                    ctx.stroke();
+                }
+            }
+        }
+        dots.forEach(d => { d.step(); d.draw(); });
+        requestAnimationFrame(frame);
+    }
+    frame();
+})();
+
+/* ========================================
+   CROSSHAIR CURSOR
+   ======================================== */
+(function () {
+    if ('ontouchstart' in window) { document.body.style.cursor = 'auto'; return; }
+    const dot = document.querySelector('.cur-dot');
+    const ch  = document.querySelector('.cur-cross--h');
+    const cv  = document.querySelector('.cur-cross--v');
+    const ring= document.querySelector('.cur-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        dot.style.transform = `translate(${mx}px,${my}px)`;
+        ch.style.transform  = `translate(0,${my}px)`;
+        cv.style.transform  = `translate(${mx}px,0)`;
+    });
+
+    (function animRing() {
+        rx += (mx - rx) * 0.1; ry += (my - ry) * 0.1;
+        ring.style.transform = `translate(${rx}px,${ry}px)`;
+        requestAnimationFrame(animRing);
+    })();
+
+    document.querySelectorAll('a,button').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            ring.classList.add('cur-hover');
+            ch.style.opacity = '0'; cv.style.opacity = '0';
+        });
+        el.addEventListener('mouseleave', () => {
+            ring.classList.remove('cur-hover');
+            ch.style.opacity = ''; cv.style.opacity = '';
+        });
+    });
+
+    document.addEventListener('click', e => {
+        const burst = document.createElement('div');
+        burst.className = 'click-burst';
+        burst.style.left = e.clientX + 'px';
+        burst.style.top  = e.clientY + 'px';
+        document.body.appendChild(burst);
+        setTimeout(() => burst.remove(), 600);
+    });
+})();
+
+/* ========================================
+   MAGNETIC ICONS
+   ======================================== */
+document.querySelectorAll('.social-icons a').forEach(el => {
+    el.addEventListener('mousemove', e => {
+        const r  = el.getBoundingClientRect();
+        const dx = (e.clientX - r.left - r.width/2) * 0.38;
+        const dy = (e.clientY - r.top  - r.height/2) * 0.38;
+        el.style.transform = `translate(${dx}px,${dy}px) scale(1.35)`;
+        el.style.opacity   = '1';
+    });
+    el.addEventListener('mouseleave', () => {
+        el.style.transform = 'scale(1) rotate(0)';
+        el.style.opacity   = '1';
+    });
+});
+
+/* ========================================
+   3D TILT ON PROFILE IMAGE
+   ======================================== */
+(function () {
+    const wrap = document.getElementById('home-img');
+    const img  = document.getElementById('profile-img');
+    if (!wrap || !img) return;
+    document.addEventListener('mousemove', e => {
+        const cx = window.innerWidth/2, cy = window.innerHeight/2;
+        const rx = ((e.clientY - cy) / cy) * -7;
+        const ry = ((e.clientX - cx) / cx) *  7;
+        img.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.03)`;
+    });
+    document.addEventListener('mouseleave', () => { img.style.transform = ''; });
+})();
+
+/* ========================================
+   RIPPLE BTN
+   ======================================== */
+document.querySelectorAll('.ripple-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+        const r   = btn.getBoundingClientRect();
+        const rip = document.createElement('span');
+        rip.className = 'ripple';
+        rip.style.left = (e.clientX - r.left) + 'px';
+        rip.style.top  = (e.clientY - r.top)  + 'px';
+        btn.appendChild(rip);
+        setTimeout(() => rip.remove(), 750);
+    });
+});
+
+/* ========================================
+   GLITCH LOGO
+   ======================================== */
+(function () {
+    const logo = document.querySelector('.logo.side-btn');
+    logo.addEventListener('mouseenter', () => {
+        logo.classList.add('glitching');
+        setTimeout(() => logo.classList.remove('glitching'), 700);
+    });
+})();
+
+/* Year */
+document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>

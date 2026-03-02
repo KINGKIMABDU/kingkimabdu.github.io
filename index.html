@@ -189,7 +189,7 @@ function splitRevealH1() {
         const c = raw[i];
         if (c === '<') { inTag = true; }
         if (inTag) { out += c; if (c === '>') inTag = false; continue; }
-        if (c === ' ') { out += `<span class="ch" aria-hidden="true"> </span>`; continue; }
+        if (c === ' ') { out += `<span class="ch ch-space" aria-hidden="true">&nbsp;</span>`; continue; }
         out += `<span class="ch" aria-hidden="true">${c}</span>`;
     }
     h1.innerHTML = out;

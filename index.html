@@ -57,6 +57,13 @@
         <span></span><span></span><span></span>
     </button>
 </header>
+<div class="mobile-menu-panel" id="mobile-menu" aria-hidden="true">
+    <a href="#hero">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact" class="mobile-nav-cta">Contact</a>
+</div>
 <div class="nav-scrim" id="nav-scrim"></div>
 
 <!-- ░░ HERO ░░ -->
@@ -517,31 +524,39 @@ function initTypewriter() {
    ======================================== */
 (function () {
     const toggle = document.getElementById('menu-toggle');
-    const nav = document.getElementById('main-nav');
+    const menu = document.getElementById('mobile-menu');
     const scrim = document.getElementById('nav-scrim');
 
     function openMenu() {
         toggle.classList.add('active');
-        nav.classList.add('nav-open');
+        toggle.setAttribute('aria-expanded', 'true');
+        menu.classList.add('mobile-open');
+        menu.setAttribute('aria-hidden', 'false');
         scrim.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
     function closeMenu() {
         toggle.classList.remove('active');
-        nav.classList.remove('nav-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.classList.remove('mobile-open');
+        menu.setAttribute('aria-hidden', 'true');
         scrim.classList.remove('active');
         document.body.style.overflow = '';
     }
 
     toggle.addEventListener('click', () => {
-        nav.classList.contains('nav-open') ? closeMenu() : openMenu();
+        menu.classList.contains('mobile-open') ? closeMenu() : openMenu();
     });
 
-    nav.querySelectorAll('a').forEach(a => {
+    menu.querySelectorAll('a').forEach(a => {
         a.addEventListener('click', closeMenu);
     });
 
     scrim.addEventListener('click', closeMenu);
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) closeMenu();
+    });
 })();
 
 /* ========================================

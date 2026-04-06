@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdullah Alhariri — Creative Developer &amp; Inventor</title>
+    <meta name="description" content="Portfolio of Abdullah Alhariri (KINGKIMABDU) — tech enthusiast, creative inventor, developer, and bodybuilder building the future one project at a time.">
+    <meta name="keywords" content="Abdullah Alhariri, KINGKIMABDU, developer, portfolio, tech, projects, Flutter, Python, AI">
+    <meta name="author" content="Abdullah Alhariri">
+    <meta property="og:title" content="Abdullah Alhariri — Creative Developer & Inventor">
+    <meta property="og:description" content="Explore the portfolio of Abdullah Alhariri (KINGKIMABDU) — tech enthusiast, creative inventor, and developer.">
+    <meta property="og:image" content="https://kingkimabdu.github.io/Profile-photo.png">
+    <meta property="og:url" content="https://kingkimabdu.github.io/">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Person","name":"Abdullah Alhariri","alternateName":"KINGKIMABDU","url":"https://kingkimabdu.github.io/","image":"https://kingkimabdu.github.io/Profile-photo.png","sameAs":["https://github.com/KINGKIMABDU","https://discord.com/users/1115677175073480825","https://www.duolingo.com/profile/KINGKIMABDU","https://open.spotify.com/user/313xhtys5streqnj4z6kk5neiecy","https://www.google.com/maps/contrib/115666625407870451555"],"jobTitle":"Student, Developer, Creative Inventor"}
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ░░ BOOT OVERLAY ░░ -->
+<div id="boot-overlay">
+    <div id="boot-content">
+        <div id="boot-lines"></div>
+        <div class="boot-progress-wrap"><div id="boot-bar"></div></div>
+        <div id="boot-tagline"></div>
+    </div>
+</div>
+
+<!-- ░░ AMBIENT EFFECTS ░░ -->
+<div class="grain-overlay"></div>
+<div class="glow-orb glow-orb-1"></div>
+<div class="glow-orb glow-orb-2"></div>
+<div class="glow-orb glow-orb-3"></div>
+<canvas id="net-canvas"></canvas>
+
+<!-- ░░ CUSTOM CURSOR ░░ -->
+<div id="cursor">
+    <div id="cur-cross"></div>
+    <div id="cur-glow"></div>
+</div>
+<div id="cur-trail"></div>
+
+<!-- ░░ HEADER ░░ -->
+<header id="site-header">
+    <a href="#hero" class="logo" data-tooltip="Korean translation of KINGKIMABDU">킹키마브두</a>
+    <nav id="main-nav">
+        <a href="#hero">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact" class="nav-cta">Contact</a>
+    </nav>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+
+<!-- ░░ HERO ░░ -->
+<section id="hero">
+    <div class="hero-grid">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                Available for projects
+            </div>
+
+            <h1 class="hero-title">
+                <span class="line">I'm Abdullah,</span>
+                <span class="line gradient-text">I craft the future.</span>
+            </h1>
+
+            <p class="hero-desc">
+                A <strong><span id="age-display">16</span>-year-old</strong> creative mind known online as
+                <strong>KINGKIMABDU</strong> — passionate about tech, AI, code, science &amp; fitness. Future doctor in the making.
+            </p>
+
+            <div class="typewriter-wrap">
+                <span class="typewriter-text"></span>
+            </div>
+
+            <div class="hero-actions">
+                <a href="#projects" class="btn-primary">
+                    View my work <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <a href="#contact" class="btn-secondary">
+                    Get in touch
+                </a>
+            </div>
+
+            <div class="hero-social">
+                <span class="hero-social-label">Find me</span>
+                <a href="https://github.com/KINGKIMABDU" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-tooltip="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="https://discord.com/users/1115677175073480825" target="_blank" rel="noopener noreferrer" aria-label="Discord" data-tooltip="Discord"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://open.spotify.com/user/313xhtys5streqnj4z6kk5neiecy" target="_blank" rel="noopener noreferrer" aria-label="Spotify" data-tooltip="Spotify"><i class="fa-brands fa-spotify"></i></a>
+                <a href="https://www.google.com/maps/contrib/115666625407870451555" target="_blank" rel="noopener noreferrer" aria-label="Google Maps" data-tooltip="Google Maps"><i class="fa-brands fa-google"></i></a>
+                <a href="https://www.duolingo.com/profile/KINGKIMABDU" target="_blank" rel="noopener noreferrer" aria-label="Duolingo" data-tooltip="Duolingo" class="duo-icon"><strong>D</strong></a>
+            </div>
+        </div>
+
+        <div class="hero-image">
+            <div class="hero-image-wrap">
+                <div class="hero-img-glow"></div>
+                <div class="hero-img-container">
+                    <img src="Profile-photo.png" alt="Abdullah Alhariri" loading="eager">
+                </div>
+                <div class="float-badge" style="top:10%;left:-60px;animation-delay:-0.5s"><i class="fa-brands fa-python"></i> Python</div>
+                <div class="float-badge" style="top:50%;right:-50px;animation-delay:-2s"><i class="fa-solid fa-mobile-screen"></i> Flutter</div>
+                <div class="float-badge" style="bottom:8%;left:-40px;animation-delay:-4s"><i class="fa-solid fa-robot"></i> AI / ML</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ░░ ABOUT ░░ -->
+<div class="section-divider"></div>
+<section id="about">
+    <div class="section-inner">
+        <div class="about-grid">
+            <div class="about-text reveal">
+                <span class="section-label">About Me</span>
+                <h2 class="section-title">More than just<br>a student.</h2>
+                <p>
+                    I'm <strong>Abdullah Alhariri</strong>, a <span id="age-display-2">16</span>-year-old originally from Syria 🇸🇾, now based in Germany. I have a deep passion for technology, science, and building things that matter. I go by <strong>KINGKIMABDU</strong> online. My dream is to become a doctor one day.
+                </p>
+                <p>
+                    From mobile apps with Flutter to Python-powered AI experiments, I love turning ideas into real products. When I'm not coding, you'll find me in the gym, learning languages on Duolingo, or competing in Valorant.
+                </p>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Projects Built</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Languages</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3+</div>
+                        <div class="stat-label">Years Coding</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-card reveal reveal-delay-2">
+                <div class="about-card-header">
+                    <i class="fa-solid fa-terminal"></i>
+                    <span>Quick Info</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-key">Name</span>
+                    <span class="detail-val">Abdullah Alhariri</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-key">Alias</span>
+                    <span class="detail-val">KINGKIMABDU</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-key">Origin</span>
+                    <span class="detail-val">Syria 🇸🇾</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-key">Location</span>
+                    <span class="detail-val">Germany 🇩🇪</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-key">Education</span>
+                    <span class="detail-val">Gymnasium Student</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-key">Focus</span>
+                    <span class="detail-val">Tech, AI, Code, Science, Fitness</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-key">Goal</span>
+                    <span class="detail-val">Become a Doctor</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-key">Status</span>
+                    <span class="detail-val"><span class="status-dot"></span>Building stuff</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ░░ SKILLS ░░ -->
+<div class="section-divider"></div>
+<section id="skills">
+    <div class="section-inner">
+        <span class="section-label reveal">What I Do</span>
+        <h2 class="section-title reveal reveal-delay-1">Skills &amp; Expertise</h2>
+        <p class="section-desc reveal reveal-delay-2">A growing toolkit of technologies and disciplines that I use to bring ideas to life.</p>
+
+        <div class="skills-grid">
+            <div class="skill-card reveal">
+                <div class="skill-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                <h3>Mobile Development</h3>
+                <p>Building cross-platform apps with Flutter &amp; Dart — from UI design to Firebase integration.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">Flutter</span>
+                    <span class="tech-tag">Dart</span>
+                    <span class="tech-tag">Firebase</span>
+                </div>
+            </div>
+            <div class="skill-card reveal reveal-delay-1">
+                <div class="skill-icon"><i class="fa-brands fa-python"></i></div>
+                <h3>Python &amp; Scripting</h3>
+                <p>From automation scripts to Telegram bots and data experiments — Python is my go-to language.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Bots</span>
+                    <span class="tech-tag">Automation</span>
+                </div>
+            </div>
+            <div class="skill-card reveal reveal-delay-2">
+                <div class="skill-icon"><i class="fa-solid fa-robot"></i></div>
+                <h3>AI &amp; Machine Learning</h3>
+                <p>Experimenting with Gemini API, prompt engineering, and integrating AI into real applications.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">Gemini</span>
+                    <span class="tech-tag">LLMs</span>
+                    <span class="tech-tag">APIs</span>
+                </div>
+            </div>
+            <div class="skill-card reveal reveal-delay-1">
+                <div class="skill-icon"><i class="fa-solid fa-code"></i></div>
+                <h3>Web Development</h3>
+                <p>HTML, CSS, and JavaScript — creating responsive, animated, and polished web experiences.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">HTML</span>
+                    <span class="tech-tag">CSS</span>
+                    <span class="tech-tag">JavaScript</span>
+                </div>
+            </div>
+            <div class="skill-card reveal reveal-delay-2">
+                <div class="skill-icon"><i class="fa-solid fa-dumbbell"></i></div>
+                <h3>Discipline &amp; Fitness</h3>
+                <p>Bodybuilding and disciplined routines that carry over into my work ethic and project consistency.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">Consistency</span>
+                    <span class="tech-tag">Focus</span>
+                    <span class="tech-tag">Growth</span>
+                </div>
+            </div>
+            <div class="skill-card reveal reveal-delay-3">
+                <div class="skill-icon"><i class="fa-solid fa-language"></i></div>
+                <h3>Multilingual</h3>
+                <p>Fluent in five languages — it's how I think globally and build for diverse audiences.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">Arabic</span>
+                    <span class="tech-tag">German</span>
+                    <span class="tech-tag">English</span>
+                    <span class="tech-tag">French</span>
+                    <span class="tech-tag">Korean</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ░░ PROJECTS ░░ -->
+<div class="section-divider"></div>
+<section id="projects">
+    <div class="section-inner">
+        <span class="section-label reveal">Selected Work</span>
+        <h2 class="section-title reveal reveal-delay-1">Featured Projects</h2>
+        <p class="section-desc reveal reveal-delay-2">A selection of projects I've built — from full-stack apps to creative experiments.</p>
+
+        <div class="projects-grid">
+            <div class="project-card reveal">
+                <div class="project-img"><i class="fa-solid fa-store"></i></div>
+                <div class="project-body">
+                    <span class="project-tag">Mobile App</span>
+                    <h3>Vertisova</h3>
+                    <p>A full-featured Flutter marketplace app with Firebase auth, Firestore database, real-time messaging, and localization.</p>
+                    <div class="project-tech">
+                        <span>Flutter</span><span>Dart</span><span>Firebase</span><span>i18n</span>
+                    </div>
+                    <a href="https://github.com/KINGKIMABDU" target="_blank" rel="noopener noreferrer" class="project-link">
+                        View on GitHub <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card reveal reveal-delay-1">
+                <div class="project-img"><i class="fa-solid fa-globe"></i></div>
+                <div class="project-body">
+                    <span class="project-tag">Web</span>
+                    <h3>Personal Portfolio</h3>
+                    <p>This very site — built from scratch with vanilla HTML, CSS &amp; JS. Custom animations, particle canvas, and premium design.</p>
+                    <div class="project-tech">
+                        <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Canvas</span>
+                    </div>
+                    <a href="https://kingkimabdu.github.io/" target="_blank" rel="noopener noreferrer" class="project-link">
+                        Visit live <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ░░ CONTACT ░░ -->
+<div class="section-divider"></div>
+<section id="contact">
+    <div class="contact-inner">
+        <span class="section-label reveal">Get in Touch</span>
+        <h2 class="contact-title reveal reveal-delay-1">
+            Let's build something<br><span class="gradient-text">amazing together.</span>
+        </h2>
+        <p class="section-desc reveal reveal-delay-2" style="text-align:center">
+            Got an idea, a question, or just want to connect? I'm always open to new conversations and collaborations.
+        </p>
+
+        <div class="contact-links">
+            <a href="https://github.com/KINGKIMABDU" target="_blank" rel="noopener noreferrer" class="contact-card reveal reveal-delay-1">
+                <i class="fa-brands fa-github"></i>
+                <div class="contact-card-info">
+                    <div class="contact-card-label">GitHub</div>
+                    <div class="contact-card-val">KINGKIMABDU</div>
+                </div>
+            </a>
+            <a href="https://discord.com/users/1115677175073480825" target="_blank" rel="noopener noreferrer" class="contact-card reveal reveal-delay-2">
+                <i class="fa-brands fa-discord"></i>
+                <div class="contact-card-info">
+                    <div class="contact-card-label">Discord</div>
+                    <div class="contact-card-val">Message me</div>
+                </div>
+            </a>
+            <a href="https://open.spotify.com/user/313xhtys5streqnj4z6kk5neiecy" target="_blank" rel="noopener noreferrer" class="contact-card reveal reveal-delay-3">
+                <i class="fa-brands fa-spotify"></i>
+                <div class="contact-card-info">
+                    <div class="contact-card-label">Spotify</div>
+                    <div class="contact-card-val">My playlists</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ░░ FOOTER ░░ -->
+<footer>
+    <span class="footer-copy">&copy; <span id="current-year"></span> Abdullah Alhariri. All rights reserved. Licensed 2026.</span>
+    <div class="footer-links">
+        <a href="#hero">Back to top</a>
+        <a href="https://github.com/KINGKIMABDU" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+</footer>
+
+<script>
+/* ========================================
+   AUTO AGE
+   ======================================== */
+(function () {
+    const today = new Date();
+    const birthYear = 2010;
+    const birthday = new Date(today.getFullYear(), 0, 27);
+    const age = today >= birthday ? today.getFullYear() - birthYear : today.getFullYear() - birthYear - 1;
+    document.querySelectorAll('#age-display, #age-display-2').forEach(el => el.textContent = age);
+})();
+
+/* ========================================
+   BOOT SEQUENCE
+   ======================================== */
+(function bootSequence() {
+    const overlay = document.getElementById('boot-overlay');
+    const linesEl = document.getElementById('boot-lines');
+    const barEl   = document.getElementById('boot-bar');
+    const tagEl   = document.getElementById('boot-tagline');
+
+    const LINES = [
+        '> INITIALIZING KINGKIMABDU.SYS',
+        '> MOUNTING CORE MODULES ........ OK',
+        '> DISPLAY CALIBRATION .......... OK',
+        '> AUTH VERIFICATION ............ PASSED',
+        '> FIREWALL CHECK ............... CLEAN',
+        '> BOOT COMPLETE.',
+        '',
+        'KINGKIMABDU // CRAFTED TO CREATE'
+    ];
+
+    let li = 0, ci = 0;
+    const CSPEED = 14, LPAUSE = 50;
+
+    function tick() {
+        if (li >= LINES.length) {
+            barEl.style.width = '100%';
+            setTimeout(() => { tagEl.textContent = '[ SYSTEM ONLINE ]'; tagEl.style.opacity = '1'; }, 300);
+            setTimeout(() => {
+                overlay.classList.add('boot-exit');
+                document.body.classList.add('booted');
+                setTimeout(runPageAnimations, 300);
+            }, 800);
+            return;
+        }
+        const line = LINES[li];
+        if (ci === 0) {
+            const p = document.createElement('p');
+            if (li === LINES.length - 1) p.className = 'boot-final';
+            linesEl.appendChild(p);
+        }
+        linesEl.lastElementChild.textContent = line.substring(0, ci + 1);
+        ci++;
+        barEl.style.width = Math.min((li / LINES.length) * 92, 92) + '%';
+        if (ci < line.length) { setTimeout(tick, CSPEED); }
+        else { li++; ci = 0; setTimeout(tick, LPAUSE); }
+    }
+    tick();
+})();
+
+/* ========================================
+   PAGE ANIMATIONS
+   ======================================== */
+function runPageAnimations() {
+    setTimeout(() => document.getElementById('site-header').classList.add('hdr-in'), 50);
+    setTimeout(initTypewriter, 800);
+}
+
+/* ========================================
+   TYPEWRITER
+   ======================================== */
+function initTypewriter() {
+    const el = document.querySelector('.typewriter-text');
+    if (!el) return;
+    const words = ["KINGKIMABDU", "Tech Enthusiast", "Creative Inventor", "Disciplined Minimalist", "Top Student", "Bodybuilder"];
+    let wi = 0, ci = 0, del = false;
+    function tick() {
+        const w = words[wi];
+        let speed = del ? 40 : 80;
+        if (!del) { el.textContent = w.substring(0, ++ci); if (ci === w.length) { speed = 2500; del = true; } }
+        else { el.textContent = w.substring(0, --ci); if (ci === 0) { del = false; wi = (wi + 1) % words.length; speed = 400; } }
+        setTimeout(tick, speed);
+    }
+    tick();
+}
+
+/* ========================================
+   SCROLL REVEAL
+   ======================================== */
+(function () {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+})();
+
+/* ========================================
+   HEADER SCROLL STATE
+   ======================================== */
+(function () {
+    const header = document.getElementById('site-header');
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                header.classList.toggle('scrolled', window.scrollY > 60);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+})();
+
+/* ========================================
+   ACTIVE NAV LINK
+   ======================================== */
+(function () {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+                });
+            }
+        });
+    }, { threshold: 0.3 });
+    sections.forEach(s => observer.observe(s));
+})();
+
+/* ========================================
+   MOBILE MENU
+   ======================================== */
+(function () {
+    const toggle = document.getElementById('menu-toggle');
+    const nav = document.getElementById('main-nav');
+    toggle.addEventListener('click', () => {
+        toggle.classList.toggle('active');
+        nav.classList.toggle('nav-open');
+    });
+    nav.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+            toggle.classList.remove('active');
+            nav.classList.remove('nav-open');
+        });
+    });
+})();
+
+/* ========================================
+   NETWORK CANVAS
+   ======================================== */
+(function () {
+    const canvas = document.getElementById('net-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H;
+    const mouse = { x: -9999, y: -9999 };
+    const N = 50, LINK = 150, MPULL = 180;
+
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+
+    class Dot {
+        constructor() { this.init(true); }
+        init(rnd) {
+            this.x = Math.random() * W;
+            this.y = rnd ? Math.random() * H : H + 10;
+            this.vx = (Math.random() - 0.5) * 0.3;
+            this.vy = (Math.random() - 0.5) * 0.3;
+            this.r = Math.random() * 1.5 + 0.3;
+            this.op = Math.random() * 0.4 + 0.1;
+        }
+        step() {
+            const dx = mouse.x - this.x, dy = mouse.y - this.y;
+            const d = Math.hypot(dx, dy);
+            if (d < MPULL) {
+                const f = (1 - d / MPULL) * 0.01;
+                this.vx += dx * f; this.vy += dy * f;
+            }
+            this.vx *= 0.99; this.vy *= 0.99;
+            this.x += this.vx; this.y += this.vy;
+            if (this.x < -5) this.x = W + 5;
+            if (this.x > W + 5) this.x = -5;
+            if (this.y < -5) this.y = H + 5;
+            if (this.y > H + 5) this.y = -5;
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(95,100,61,${this.op})`;
+            ctx.fill();
+        }
+    }
+
+    const dots = Array.from({ length: N }, () => new Dot());
+
+    function frame() {
+        ctx.clearRect(0, 0, W, H);
+        for (let i = 0; i < dots.length; i++) {
+            for (let j = i + 1; j < dots.length; j++) {
+                const d = Math.hypot(dots[i].x - dots[j].x, dots[i].y - dots[j].y);
+                if (d < LINK) {
+                    ctx.beginPath();
+                    ctx.moveTo(dots[i].x, dots[i].y);
+                    ctx.lineTo(dots[j].x, dots[j].y);
+                    ctx.strokeStyle = `rgba(95,100,61,${(1 - d / LINK) * 0.15})`;
+                    ctx.lineWidth = 0.6;
+                    ctx.stroke();
+                }
+            }
+        }
+        dots.forEach(d => { d.step(); d.draw(); });
+        requestAnimationFrame(frame);
+    }
+    frame();
+})();
+
+/* ========================================
+   CURSOR — crosshair + glow trail
+   ======================================== */
+(function () {
+    if ('ontouchstart' in window) return;
+
+    const cursor = document.getElementById('cursor');
+    const glow = document.getElementById('cur-glow');
+    const trail = document.getElementById('cur-trail');
+    let cx = -100, cy = -100, gx = -100, gy = -100;
+    const particles = [];
+    const MAX_TRAIL = 12;
+
+    document.addEventListener('mousemove', e => {
+        cx = e.clientX; cy = e.clientY;
+        // Spawn trail particle
+        const p = document.createElement('div');
+        p.className = 'trail-dot';
+        p.style.left = cx + 'px';
+        p.style.top = cy + 'px';
+        trail.appendChild(p);
+        particles.push({ el: p, t: 0 });
+        if (particles.length > MAX_TRAIL) {
+            const old = particles.shift();
+            old.el.remove();
+        }
+    });
+
+    function animate() {
+        gx += (cx - gx) * 0.12;
+        gy += (cy - gy) * 0.12;
+        cursor.style.transform = `translate(${cx}px, ${cy}px)`;
+        glow.style.transform = `translate(${gx - cx - 16}px, ${gy - cy - 16}px)`;
+
+        // Fade trail
+        for (let i = particles.length - 1; i >= 0; i--) {
+            particles[i].t += 0.06;
+            const a = 1 - particles[i].t;
+            if (a <= 0) {
+                particles[i].el.remove();
+                particles.splice(i, 1);
+            } else {
+                particles[i].el.style.opacity = a;
+                particles[i].el.style.transform = `translate(-50%,-50%) scale(${a})`;
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+    animate();
+
+    document.querySelectorAll('a, button, .skill-card, .project-card, .contact-card, .stat-card').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('cur-hover'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('cur-hover'));
+    });
+
+    document.addEventListener('mousedown', () => cursor.classList.add('cur-click'));
+    document.addEventListener('mouseup', () => cursor.classList.remove('cur-click'));
+})();
+
+/* ========================================
+   SMOOTH SCROLL
+   ======================================== */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+
+/* Year */
+document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

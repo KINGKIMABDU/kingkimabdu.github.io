@@ -368,7 +368,7 @@
 
 <!-- ░░ FOOTER ░░ -->
 <footer>
-    <span class="footer-copy">&copy; <span id="current-year"></span> Abdullah Alhariri. All rights reserved. Licensed 2026.</span>
+    <span class="footer-copy">&copy; <span id="current-year"></span> Abdullah Alhariri. All rights reserved. Licensed <span id="license-year"></span>.</span>
     <div class="footer-links">
         <a href="#hero">Back to top</a>
         <a href="https://github.com/KINGKIMABDU" target="_blank" rel="noopener noreferrer">GitHub</a>
@@ -688,6 +688,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
 /* Year */
 document.getElementById('current-year').textContent = new Date().getFullYear();
+document.getElementById('license-year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>

@@ -34,7 +34,6 @@
 <div class="glow-orb glow-orb-1"></div>
 <div class="glow-orb glow-orb-2"></div>
 <div class="glow-orb glow-orb-3"></div>
-<canvas id="net-canvas"></canvas>
 
 <!-- ░░ CUSTOM CURSOR ░░ -->
 <div id="cursor">
@@ -550,75 +549,7 @@ function initTypewriter() {
     });
 })();
 
-/* ========================================
-   NETWORK CANVAS
-   ======================================== */
-(function () {
-    const canvas = document.getElementById('net-canvas');
-    const ctx = canvas.getContext('2d');
-    let W, H;
-    const mouse = { x: -9999, y: -9999 };
-    const N = 50, LINK = 150, MPULL = 180;
 
-    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-    resize();
-    window.addEventListener('resize', resize);
-    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-
-    class Dot {
-        constructor() { this.init(true); }
-        init(rnd) {
-            this.x = Math.random() * W;
-            this.y = rnd ? Math.random() * H : H + 10;
-            this.vx = (Math.random() - 0.5) * 0.3;
-            this.vy = (Math.random() - 0.5) * 0.3;
-            this.r = Math.random() * 1.5 + 0.3;
-            this.op = Math.random() * 0.4 + 0.1;
-        }
-        step() {
-            const dx = mouse.x - this.x, dy = mouse.y - this.y;
-            const d = Math.hypot(dx, dy);
-            if (d < MPULL) {
-                const f = (1 - d / MPULL) * 0.01;
-                this.vx += dx * f; this.vy += dy * f;
-            }
-            this.vx *= 0.99; this.vy *= 0.99;
-            this.x += this.vx; this.y += this.vy;
-            if (this.x < -5) this.x = W + 5;
-            if (this.x > W + 5) this.x = -5;
-            if (this.y < -5) this.y = H + 5;
-            if (this.y > H + 5) this.y = -5;
-        }
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(95,100,61,${this.op})`;
-            ctx.fill();
-        }
-    }
-
-    const dots = Array.from({ length: N }, () => new Dot());
-
-    function frame() {
-        ctx.clearRect(0, 0, W, H);
-        for (let i = 0; i < dots.length; i++) {
-            for (let j = i + 1; j < dots.length; j++) {
-                const d = Math.hypot(dots[i].x - dots[j].x, dots[i].y - dots[j].y);
-                if (d < LINK) {
-                    ctx.beginPath();
-                    ctx.moveTo(dots[i].x, dots[i].y);
-                    ctx.lineTo(dots[j].x, dots[j].y);
-                    ctx.strokeStyle = `rgba(95,100,61,${(1 - d / LINK) * 0.15})`;
-                    ctx.lineWidth = 0.6;
-                    ctx.stroke();
-                }
-            }
-        }
-        dots.forEach(d => { d.step(); d.draw(); });
-        requestAnimationFrame(frame);
-    }
-    frame();
-})();
 
 /* ========================================
    CURSOR — crosshair + glow trail

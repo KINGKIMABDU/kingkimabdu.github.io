@@ -147,11 +147,7 @@ ul { list-style: none; }
     background-size: 128px;
 }
 
-#net-canvas {
-    position: fixed; inset: 0; z-index: 0;
-    pointer-events: none;
-    opacity: 0.5;
-}
+
 
 .glow-orb {
     position: fixed;

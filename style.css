@@ -1228,20 +1228,29 @@ footer {
         text-align: left;
         border-radius: 12px;
         border: none;
-        color: var(--text-muted);
+        color: var(--text-muted) !important;
+        background: transparent !important;
+        display: block !important;
+        width: 100%;
         transition: background 0.2s, color 0.2s;
     }
     nav a:active,
     nav a:hover {
-        background: rgba(162,165,105,0.12);
-        color: var(--text);
+        background: rgba(162,165,105,0.12) !important;
+        color: var(--text) !important;
     }
-    nav a i,
     nav .nav-cta {
         margin-left: 0;
         margin-top: 0.4rem;
         text-align: center;
         border-radius: 12px;
+        color: var(--text-muted) !important;
+        background: transparent !important;
+    }
+    nav .nav-cta:hover,
+    nav .nav-cta:active {
+        background: rgba(162,165,105,0.12) !important;
+        color: var(--text) !important;
     }
 
     /* Scrim behind bottom sheet */

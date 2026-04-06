@@ -57,6 +57,7 @@
         <span></span><span></span><span></span>
     </button>
 </header>
+<div class="nav-scrim" id="nav-scrim"></div>
 
 <!-- ░░ HERO ░░ -->
 <section id="hero">
@@ -358,7 +359,7 @@
                 <i class="fa-brands fa-spotify"></i>
                 <div class="contact-card-info">
                     <div class="contact-card-label">Spotify</div>
-                    <div class="contact-card-val">My playlists</div>
+                    <div class="contact-card-val">My playlist</div>
                 </div>
             </a>
         </div>
@@ -517,15 +518,18 @@ function initTypewriter() {
 (function () {
     const toggle = document.getElementById('menu-toggle');
     const nav = document.getElementById('main-nav');
+    const scrim = document.getElementById('nav-scrim');
 
     function openMenu() {
         toggle.classList.add('active');
         nav.classList.add('nav-open');
+        scrim.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
     function closeMenu() {
         toggle.classList.remove('active');
         nav.classList.remove('nav-open');
+        scrim.classList.remove('active');
         document.body.style.overflow = '';
     }
 
@@ -537,12 +541,7 @@ function initTypewriter() {
         a.addEventListener('click', closeMenu);
     });
 
-    // Close menu when tapping outside
-    document.addEventListener('click', e => {
-        if (nav.classList.contains('nav-open') && !nav.contains(e.target) && !toggle.contains(e.target)) {
-            closeMenu();
-        }
-    });
+    scrim.addEventListener('click', closeMenu);
 })();
 
 /* ========================================

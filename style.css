@@ -307,8 +307,8 @@ ul { list-style: none; }
 .logo[data-tooltip]::after {
     content: attr(data-tooltip);
     position: absolute;
-    bottom: -32px; left: 50%;
-    transform: translateX(-50%) scale(0.9);
+    bottom: -32px; left: 0;
+    transform: scale(0.9);
     background: var(--accent-1); color: var(--bg);
     padding: 4px 12px; border-radius: 6px;
     font-size: 1.1rem; font-weight: 600;
@@ -317,7 +317,7 @@ ul { list-style: none; }
     pointer-events: none; white-space: nowrap; z-index: 2000;
 }
 .logo:hover::after {
-    opacity: 1; bottom: -36px; transform: translateX(-50%) scale(1);
+    opacity: 1; bottom: -36px; transform: scale(1);
 }
 
 nav { display: flex; align-items: center; gap: 0.8rem; }
@@ -1185,58 +1185,80 @@ footer {
 
 @media (max-width: 768px) {
     html { font-size: 55%; }
+
+    /* Mobile overlay nav — bottom sheet style */
     nav {
         position: fixed;
-        inset: 0;
+        left: 0; right: 0; bottom: 0;
+        top: auto;
+        display: flex;
         flex-direction: column;
         align-items: stretch;
-        justify-content: flex-end;
-        padding: 0 2rem 4rem;
-        background: rgba(15,26,11,0.0);
-        backdrop-filter: blur(0px);
+        gap: 0.4rem;
+        padding: 1.2rem 1.6rem 2.4rem;
+        background: rgba(15,26,11,0.96);
+        backdrop-filter: blur(32px);
+        -webkit-backdrop-filter: blur(32px);
+        border-top: 1px solid var(--border);
+        border-radius: 20px 20px 0 0;
         z-index: 999;
-        pointer-events: none;
+        transform: translateY(100%);
         opacity: 0;
-        transition: opacity 0.35s, background 0.35s, backdrop-filter 0.35s;
+        pointer-events: none;
+        transition: transform 0.4s var(--spring), opacity 0.3s;
+    }
+    nav::before {
+        content: '';
+        align-self: center;
+        width: 36px; height: 4px;
+        border-radius: 4px;
+        background: rgba(255,255,255,0.15);
+        margin-bottom: 1.2rem;
+        flex-shrink: 0;
     }
     nav.nav-open {
-        display: flex;
-        pointer-events: auto;
-        opacity: 1;
-        background: rgba(15,26,11,0.92);
-        backdrop-filter: blur(28px);
-    }
-    nav a {
-        font-size: 2.2rem;
-        padding: 1.6rem 2rem;
-        text-align: left;
-        border-radius: 14px;
-        border: 1px solid transparent;
-        color: var(--text-muted);
-        transform: translateY(20px);
-        opacity: 0;
-        transition: transform 0.35s var(--spring), opacity 0.3s, background 0.2s, border-color 0.2s, color 0.2s;
-    }
-    nav.nav-open a {
         transform: translateY(0);
         opacity: 1;
+        pointer-events: auto;
     }
-    nav.nav-open a:nth-child(1) { transition-delay: 0.05s; }
-    nav.nav-open a:nth-child(2) { transition-delay: 0.1s; }
-    nav.nav-open a:nth-child(3) { transition-delay: 0.15s; }
-    nav.nav-open a:nth-child(4) { transition-delay: 0.2s; }
-    nav.nav-open a:nth-child(5) { transition-delay: 0.25s; }
+    nav a {
+        font-size: 1.6rem;
+        font-weight: 600;
+        padding: 1.4rem 1.6rem;
+        text-align: left;
+        border-radius: 12px;
+        border: none;
+        color: var(--text-muted);
+        transition: background 0.2s, color 0.2s;
+    }
     nav a:active,
     nav a:hover {
-        background: rgba(162,165,105,0.1);
-        border-color: var(--border);
+        background: rgba(162,165,105,0.12);
         color: var(--text);
     }
+    nav a i,
     nav .nav-cta {
         margin-left: 0;
-        margin-top: 0.8rem;
+        margin-top: 0.4rem;
         text-align: center;
+        border-radius: 12px;
     }
+
+    /* Scrim behind bottom sheet */
+    .nav-scrim {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 998;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+    }
+    .nav-scrim.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
     .menu-toggle { display: flex; z-index: 1001; }
     .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
     .projects-grid { grid-template-columns: 1fr; }

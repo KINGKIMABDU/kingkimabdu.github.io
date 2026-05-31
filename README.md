@@ -1,42 +1,46 @@
-# kingkimabdu.github.io
+# KINGKIMABDU.github.io
 
 Personal portfolio website of **Abdullah Alhariri** (KINGKIMABDU).
 
-🌐 **Live:** [kingkimabdu.github.io](https://kingkimabdu.github.io/)
+Live site: [https://kingkimabdu.github.io/](https://kingkimabdu.github.io/)
 
-## About
+## Overview
 
-A premium single-page portfolio built from scratch with vanilla HTML, CSS & JavaScript. Features a dark green military-inspired theme, interactive particle canvas, custom crosshair cursor with glow trail, scroll-reveal animations, typewriter effect, and a cinematic boot sequence overlay.
+This is a single-page portfolio built with vanilla HTML, CSS, and JavaScript.
+It highlights personal background, projects, and contact links with a green visual theme, reveal animations, a typewriter role loop, and a responsive navigation menu.
 
 ## Sections
 
-- **Hero** — Intro with typewriter, social links, and profile photo
-- **About** — Bio, stats grid, and quick-info card
-- **Skills** — Mobile dev, Python, AI/ML, web, fitness, science
-- **Projects** — Vertisova (Flutter app) & this portfolio
-- **Contact** — GitHub, Discord, Spotify
+- `Home` - Intro, CTA buttons, social links, profile image
+- `About` - Bio, build philosophy, setup, core interests
+- `Projects` - Selected repositories and project cards
+- `Contact` - GitHub, Discord, and Ko-fi links
 
 ## Tech Stack
 
-| Layer | Tech |
-|-------|------|
-| Markup | HTML5 |
-| Styling | CSS3 (custom properties, clamp, grid, glassmorphism) |
-| Scripts | Vanilla JavaScript |
-| Icons | Font Awesome 6 |
-| Fonts | Inter, Space Grotesk, JetBrains Mono (Google Fonts) |
-| Hosting | GitHub Pages |
+- `HTML5`
+- `CSS3` (custom properties, responsive grid/flex layouts)
+- `Vanilla JavaScript` (UI interactions and animations)
+- `Font Awesome 6` icons
+- `Google Fonts` (Plus Jakarta Sans, Sora, IBM Plex Mono)
 
-## Features
+## Local Development
 
-- 🟢 Dark green (#0f1a0b) military color palette
-- ✦ Crosshair cursor with glow trail & particle effects
-- ⚡ Boot sequence overlay with typewriter lines
-- 🎨 Interactive network particle canvas
-- 📱 Fully responsive (1024 / 768 / 480 breakpoints)
-- 🔍 SEO-optimized with Open Graph, JSON-LD, meta tags
-- ♿ Accessible with ARIA labels & semantic HTML
+Open `index.html` directly in a browser, or run a local static server:
+
+```powershell
+python -m http.server 5178 --bind 127.0.0.1
+```
+
+Then visit `http://127.0.0.1:5178/`.
+
+## Repository Structure
+
+- `index.html` - Page markup and inline scripts
+- `style.css` - Main styling and responsive rules
+- `test/` - Test snapshot files
+- image/icon assets - `Profile-photo.png`, favicon files, etc.
 
 ## License
 
-© 2026 Abdullah Alhariri. All rights reserved.
+This project is licensed under the terms in the [LICENSE](LICENSE) file.

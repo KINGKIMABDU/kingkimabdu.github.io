@@ -1,26 +1,1075 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #f6f4ec;
+  --paper-2: #edebdf;
+  --matcha: #a7bc8f;
+  --matcha-soft: #d9e0c9;
+  --matcha-deep: #7e9765;
+  --olive: #66744b;
+  --olive-deep: #454d33;
+  --ink: #2e3226;
+  --ink-soft: #616750;
+  --line: #d9d6c4;
+  /* project cards own their palette: they are dark tiles in both themes,
+     so they can't be built out of tokens that flip with the page */
+  --project-fill: #454d33;
+  --project-edge: #a7bc8f;
+  --project-fg: #f6f4ec;
+  --project-fg-soft: #edebdf;
+  /* hover sweep shared by the hero buttons and the plain cards */
+  --sweep-a: #7e9765;
+  --sweep-b: #454d33;
+  --sweep-fg: #f6f4ec;
+  /* blob tint, read by the WebGL background */
+  --blob-a: #c3d3ab;
+  --blob-b: #8ba372;
+  --blob-opacity: 0.75;
+  /*
+   * Handle card. Unlike --project-*, this one DOES flip: it used to be a dark
+   * tile in both themes, which left a single black object sitting on a paper
+   * page with no other dark surface anywhere near it. Light theme now gets a
+   * light card. The parts of a real card that are never paper-coloured — the
+   * mag stripe, the chip contacts, the signature panel — are hardcoded in the
+   * rules below rather than derived from these, so they stay right on both.
+   */
+  --card-a: #f8f6ec;
+  --card-b: #dde3cd;
+  --card-fg: #2e3226;
+  --card-fg-soft: #5f6a4a;
+  --card-shadow:
+    0 1px 2px rgba(69, 77, 51, 0.18),
+    0 18px 32px -14px rgba(69, 77, 51, 0.42),
+    0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  --badge-bg: #dce3c9;
+  --badge-edge: #a7bc8f;
+  --badge-label: #66744b;
+  --badge-title: #2e3226;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
+/*
+ * Dark theme: `paper` stays "the page" and `ink` stays "the text", they just
+ * swap ends of the scale. Everything else keeps its role, so shadows stay
+ * dark and the sweep-button gradient stays deep.
+ */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    --paper: #13160f;
+    --paper-2: #1c2016;
+    --matcha: #7e9765;
+    --matcha-soft: #2f3826;
+    --matcha-deep: #a7bc8f;
+    --olive: #93a878;
+    --olive-deep: #2b3320;
+    --ink: #ece9dc;
+    --ink-soft: #a6ac92;
+    --line: #2c3122;
+    --project-fill: #262e1d;
+    --project-edge: #4a5936;
+    --project-fg: #ece9dc;
+    --project-fg-soft: #c9cdb8;
+    --sweep-a: #4a5c38;
+    --sweep-b: #26301b;
+    --sweep-fg: #ece9dc;
+    --blob-a: #46543a;
+    --blob-b: #6f8558;
+    --blob-opacity: 0.55;
+    --card-a: #2a3220;
+    --card-b: #171c11;
+    --card-fg: #ece9dc;
+    --card-fg-soft: #a9b193;
+    --card-shadow:
+      0 2px 2px rgba(0, 0, 0, 0.32),
+      0 16px 30px -12px rgba(0, 0, 0, 0.45),
+      0 -1px 0 rgba(255, 255, 255, 0.06) inset;
+    --badge-bg: #232a1a;
+    --badge-edge: #4a5936;
+    --badge-label: #a7bc8f;
+    --badge-title: #ece9dc;
   }
 }
 
+:root[data-theme="dark"] {
+  --paper: #13160f;
+  --paper-2: #1c2016;
+  --matcha: #7e9765;
+  --matcha-soft: #2f3826;
+  --matcha-deep: #a7bc8f;
+  --olive: #93a878;
+  --olive-deep: #2b3320;
+  --ink: #ece9dc;
+  --ink-soft: #a6ac92;
+  --line: #2c3122;
+  --project-fill: #262e1d;
+  --project-edge: #4a5936;
+  --project-fg: #ece9dc;
+  --project-fg-soft: #c9cdb8;
+  --sweep-a: #4a5c38;
+  --sweep-b: #26301b;
+  --sweep-fg: #ece9dc;
+  --blob-a: #46543a;
+  --blob-b: #6f8558;
+  --blob-opacity: 0.55;
+  --card-a: #2a3220;
+  --card-b: #171c11;
+  --card-fg: #ece9dc;
+  --card-fg-soft: #a9b193;
+  --card-shadow:
+    0 2px 2px rgba(0, 0, 0, 0.32),
+    0 16px 30px -12px rgba(0, 0, 0, 0.45),
+    0 -1px 0 rgba(255, 255, 255, 0.06) inset;
+  --badge-bg: #232a1a;
+  --badge-edge: #4a5936;
+  --badge-label: #a7bc8f;
+  --badge-title: #ece9dc;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-matcha: var(--matcha);
+  --color-matcha-soft: var(--matcha-soft);
+  --color-matcha-deep: var(--matcha-deep);
+  --color-olive: var(--olive);
+  --color-olive-deep: var(--olive-deep);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --font-serif: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-karla), system-ui, sans-serif;
+  /* `font-label`, not `font-mono` — it is the sans, and the class should say
+     so. Named for the job rather than the family so the eyebrows, the "01"s
+     and the nav captions can all move together next time. */
+  --font-label: var(--font-karla), system-ui, sans-serif;
+  --font-kr: var(--font-noto-kr), var(--font-fraunces), serif;
+}
+
+/* The scrolling element is <html>, not <body> — the rule has to land here
+   or Chrome keeps painting its own bar next to the custom rail. */
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-karla), system-ui, sans-serif;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+/* Palette swaps shouldn't snap. The toggle sets .theme-shifting for the
+   length of the crossfade and removes it again, so this never fights the
+   entrance animations. */
+/*
+ * The switch is excluded rather than overridden. This rule is `!important`
+ * and names no transform/left/bottom, so while the class is on it flattens
+ * the toggle's own animations — sun and moon teleport instead of sliding,
+ * which is the one thing you're actually looking at when you click it.
+ * Restating them at matching weight is the obvious fix and doesn't survive
+ * the build (Lightning CSS drops `var()` inside an `!important` shorthand),
+ * so the blanket simply stops reaching into the switch instead.
+ */
+.theme-shifting,
+.theme-shifting *:not(.theme-switch, .theme-switch *),
+.theme-shifting *:not(.theme-switch, .theme-switch *)::before,
+.theme-shifting *:not(.theme-switch, .theme-switch *)::after {
+  transition:
+    background-color 0.45s ease,
+    border-color 0.45s ease,
+    color 0.45s ease,
+    box-shadow 0.45s ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+::selection {
+  background: var(--matcha);
+  color: var(--ink);
+}
+
+/* Subtle paper grain over everything */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.045'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* =========================================
+   404 face — from Uiverse.io by preet_7613
+   ========================================= */
+.my-custom-face-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  background: #ffffff00;
+  color: var(--ink);
+}
+
+.my-custom-face-container .face {
+  width: 200px;
+}
+
+.my-custom-face-container .face__eyes,
+.my-custom-face-container .face__eye-lid,
+.my-custom-face-container .face__mouth-left,
+.my-custom-face-container .face__mouth-right,
+.my-custom-face-container .face__nose,
+.my-custom-face-container .face__pupil {
+  animation: eyes 1s 0.3s forwards;
+}
+
+.my-custom-face-container .face__eye-lid,
+.my-custom-face-container .face__pupil {
+  animation-duration: 4s;
+  animation-delay: 1.3s;
+  animation-iteration-count: infinite;
+}
+
+.my-custom-face-container .face__eye-lid {
+  animation-name: eye-lid;
+}
+.my-custom-face-container .face__mouth-left {
+  animation-name: mouth-left;
+}
+.my-custom-face-container .face__mouth-right {
+  animation-name: mouth-right;
+}
+.my-custom-face-container .face__nose {
+  animation-name: nose;
+}
+.my-custom-face-container .face__pupil {
+  animation-name: pupil;
+}
+
+@keyframes eye-lid {
+  0%,
+  40%,
+  45%,
+  100% {
+    transform: translateY(0);
+  }
+  42.5% {
+    transform: translateY(17.5px);
+  }
+}
+
+@keyframes eyes {
+  from {
+    transform: translateY(112.5px);
+  }
+  to {
+    transform: translateY(15px);
+  }
+}
+
+@keyframes pupil {
+  0%,
+  37.5%,
+  40%,
+  45%,
+  87.5%,
+  100% {
+    stroke-dashoffset: 0;
+    transform: translate(0, 0);
+  }
+  12.5%,
+  25%,
+  62.5%,
+  75% {
+    transform: translate(-35px, 0);
+  }
+  42.5% {
+    stroke-dashoffset: 35;
+    transform: translate(0, 17.5px);
+  }
+}
+
+@keyframes mouth-left {
+  from,
+  50% {
+    stroke-dashoffset: -102;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes mouth-right {
+  from,
+  50% {
+    stroke-dashoffset: 102;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes nose {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(0, 22.5px);
+  }
+}
+
+/* =========================================
+   Sweep button — from Uiverse.io by Madflows
+   (recolored to matcha/olive)
+   ========================================= */
+.btn-sweep {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  padding: 0 2rem;
+  border-radius: 1.5rem;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  /* no lift on hover — the wipe carries the whole interaction */
+  transition: box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-sweep--soft {
+  background: var(--olive);
+}
+
+.btn-sweep:hover {
+  box-shadow: 0 12px 26px -16px rgba(69, 77, 51, 0.6);
+}
+
+.btn-sweep::before {
+  content: "";
+  position: absolute;
+  /* 1px of overshoot: at inset 0 the parent's own background bleeds through
+     the rounded corners as a hairline ring once the wipe lands */
+  inset: -1px;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  border-radius: inherit;
+  background: linear-gradient(
+    82.3deg,
+    var(--matcha-deep) 10.8%,
+    var(--olive-deep) 94.3%
+  );
+  transition: transform 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.btn-sweep:hover::before {
+  transform: scaleX(1);
+}
+
+.btn-sweep-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================
+   Inset card — from Uiverse.io by adamgiebl
+   (recolored to the paper palette)
+   ========================================= */
+.card-inset {
+  border-radius: 30px;
+  background: var(--paper-2);
+  box-shadow:
+    rgba(69, 77, 51, 0.16) 0px 30px 50px -12px inset,
+    rgba(46, 50, 38, 0.2) 0px 18px 26px -18px inset;
+}
+
+/* Slow spin for the project-card orb */
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+/* =========================================
+   Scroll rail — the custom bar on the right
+   ========================================= */
+/* The hit area is deliberately much wider than the hairline so the rail is
+   actually grabbable; only the inner track is painted. */
+.scroll-rail {
+  position: fixed;
+  top: 50%;
+  right: 6px;
+  z-index: 45;
+  height: 34vh;
+  width: 20px;
+  translate: 0 -50%;
+  display: flex;
+  justify-content: center;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.scroll-rail__track {
+  position: relative;
+  height: 100%;
+  width: 2px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--line) 70%, transparent);
+  transition: width 0.2s ease, background-color 0.2s ease;
+}
+
+.scroll-rail:hover .scroll-rail__track,
+.scroll-rail[data-dragging="true"] .scroll-rail__track {
+  width: 4px;
+  background: color-mix(in srgb, var(--line) 100%, transparent);
+}
+
+.scroll-rail__thumb {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  border-radius: 999px;
+  background: linear-gradient(
+    to bottom,
+    var(--matcha),
+    var(--matcha-deep)
+  );
+  transform-origin: top;
+}
+
+.scroll-rail__bead {
+  position: absolute;
+  left: 50%;
+  transition: height 0.2s ease, width 0.2s ease;
+  height: 7px;
+  width: 7px;
+  translate: -50% -50%;
+  border-radius: 999px;
+  background: var(--matcha-deep);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--paper) 80%, transparent);
+}
+
+.scroll-rail:hover .scroll-rail__bead,
+.scroll-rail[data-dragging="true"] .scroll-rail__bead {
+  height: 11px;
+  width: 11px;
+}
+
+@media (max-width: 640px) {
+  .scroll-rail {
+    display: none;
+  }
+}
+
+/* =========================================
+   Theme toggle
+   ========================================= */
+/*
+ * Day/night switch — from Uiverse.io by Galahhad.
+ * Sized down from the original 30px base and recolored off the matcha
+ * palette: the literal sky-blue and sodium-yellow of the original are the
+ * only two hues on the page that belong to nothing else.
+ * Driven by [data-state] rather than :checked — the theme lives in
+ * localStorage and on <html>, not in an input.
+ */
+.theme-switch {
+  --toggle-size: 14px;
+  --container-width: 5.625em;
+  --container-height: 2.5em;
+  --container-radius: 6.25em;
+  --container-light-bg: #8fa877;
+  --container-night-bg: #171c11;
+  --circle-container-diameter: 3.375em;
+  --sun-moon-diameter: 2.125em;
+  --sun-bg: #f2e9c6;
+  --moon-bg: #d3d7c6;
+  --spot-color: #a3ab90;
+  --circle-container-offset: calc(
+    (var(--circle-container-diameter) - var(--container-height)) / 2 * -1
+  );
+  --stars-color: #f6f4ec;
+  --clouds-color: #eef3e2;
+  --back-clouds-color: #b9c9a3;
+  --sw-transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25);
+  --circle-transition: 0.3s cubic-bezier(0, -0.02, 0.35, 1.17);
+
+  display: inline-block;
+  border: none;
+  padding: 0;
+  background: none;
+  line-height: 0;
+}
+
+.theme-switch,
+.theme-switch *,
+.theme-switch *::before,
+.theme-switch *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-size: var(--toggle-size);
+}
+
+/* The original is built out of <div>s. These are <span>s — a <div> inside a
+   <button> is invalid — so every box that takes a width has to be told to
+   stop being inline. */
+.theme-switch__container {
+  display: block;
+  position: relative;
+  width: var(--container-width);
+  height: var(--container-height);
+  border-radius: var(--container-radius);
+  background-color: var(--container-light-bg);
+  overflow: hidden;
+  box-shadow:
+    0em -0.062em 0.062em rgba(0, 0, 0, 0.25),
+    0em 0.062em 0.125em rgba(255, 255, 255, 0.55);
+  transition: background-color var(--sw-transition);
+}
+
+.theme-switch__container::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  border-radius: var(--container-radius);
+  box-shadow: 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset;
+}
+
+.theme-switch__circle-container {
+  position: absolute;
+  left: var(--circle-container-offset);
+  top: var(--circle-container-offset);
+  display: flex;
+  width: var(--circle-container-diameter);
+  height: var(--circle-container-diameter);
+  border-radius: var(--container-radius);
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 0 0 3.375em rgba(255, 255, 255, 0.1),
+    inset 0 0 0 3.375em rgba(255, 255, 255, 0.1),
+    0 0 0 0.625em rgba(255, 255, 255, 0.1),
+    0 0 0 1.25em rgba(255, 255, 255, 0.1);
+  transition: left var(--circle-transition);
+  pointer-events: none;
+}
+
+.theme-switch__sun-moon-container {
+  display: block;
+  position: relative;
+  z-index: 2;
+  width: var(--sun-moon-diameter);
+  height: var(--sun-moon-diameter);
+  margin: auto;
+  border-radius: var(--container-radius);
+  background-color: var(--sun-bg);
+  overflow: hidden;
+  box-shadow:
+    0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset,
+    0em -0.062em 0.062em 0em #a99a5f inset;
+  filter:
+    drop-shadow(0.062em 0.125em 0.125em rgba(0, 0, 0, 0.25))
+    drop-shadow(0em 0.062em 0.125em rgba(0, 0, 0, 0.25));
+  transition: var(--sw-transition);
+}
+
+.theme-switch__moon {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background-color: var(--moon-bg);
+  transform: translateX(100%);
+  box-shadow:
+    0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset,
+    0em -0.062em 0.062em 0em #939a83 inset;
+  transition: transform var(--sw-transition);
+}
+
+.theme-switch__spot {
+  position: absolute;
+  top: 0.75em;
+  left: 0.312em;
+  width: 0.75em;
+  height: 0.75em;
+  border-radius: var(--container-radius);
+  background-color: var(--spot-color);
+  box-shadow: 0em 0.0312em 0.062em rgba(0, 0, 0, 0.25) inset;
+}
+
+.theme-switch__spot:nth-of-type(2) {
+  width: 0.375em;
+  height: 0.375em;
+  top: 0.937em;
+  left: 1.375em;
+}
+
+.theme-switch__spot:nth-last-of-type(3) {
+  width: 0.25em;
+  height: 0.25em;
+  top: 0.312em;
+  left: 0.812em;
+}
+
+.theme-switch__clouds {
+  position: absolute;
+  bottom: -0.625em;
+  left: 0.312em;
+  width: 1.25em;
+  height: 1.25em;
+  border-radius: var(--container-radius);
+  background-color: var(--clouds-color);
+  box-shadow:
+    0.937em 0.312em var(--clouds-color),
+    -0.312em -0.312em var(--back-clouds-color),
+    1.437em 0.375em var(--clouds-color),
+    0.5em -0.125em var(--back-clouds-color),
+    2.187em 0 var(--clouds-color),
+    1.25em -0.062em var(--back-clouds-color),
+    2.937em 0.312em var(--clouds-color),
+    2em -0.312em var(--back-clouds-color),
+    3.625em -0.062em var(--clouds-color),
+    2.625em 0em var(--back-clouds-color),
+    4.5em -0.312em var(--clouds-color),
+    3.375em -0.437em var(--back-clouds-color),
+    4.625em -1.75em 0 0.437em var(--clouds-color),
+    4em -0.625em var(--back-clouds-color),
+    4.125em -2.125em 0 0.437em var(--back-clouds-color);
+  transition: bottom var(--sw-transition);
+}
+
+.theme-switch__stars-container {
+  position: absolute;
+  top: -100%;
+  left: 0.312em;
+  width: 2.75em;
+  height: auto;
+  color: var(--stars-color);
+  transition: var(--sw-transition);
+}
+
+.theme-switch__stars-container svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* actions */
+.theme-switch[data-state="dark"] .theme-switch__container {
+  background-color: var(--container-night-bg);
+}
+
+.theme-switch[data-state="dark"] .theme-switch__circle-container {
+  left: calc(
+    100% - var(--circle-container-offset) - var(--circle-container-diameter)
+  );
+}
+
+.theme-switch[data-state="dark"] .theme-switch__moon {
+  transform: translate(0);
+}
+
+.theme-switch[data-state="dark"] .theme-switch__clouds {
+  bottom: -4.062em;
+}
+
+.theme-switch[data-state="dark"] .theme-switch__stars-container {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.theme-switch:hover .theme-switch__circle-container {
+  left: calc(var(--circle-container-offset) + 0.187em);
+}
+
+.theme-switch[data-state="dark"]:hover .theme-switch__circle-container {
+  left: calc(
+    100% - var(--circle-container-offset) - var(--circle-container-diameter) -
+      0.187em
+  );
+}
+
+/* =========================================
+   Opening curtain
+   ========================================= */
+.intro-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  background: var(--paper);
+}
+
+/* Google Play mark: a black PNG, so it is used as a mask and painted with
+   currentColor like every other icon on the page. */
+.icon-play-mask {
+  display: block;
+  background-color: currentColor;
+  -webkit-mask-image: url("/google-play.png");
+  mask-image: url("/google-play.png");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* Stand-in disc behind BlobLoader while the WebGL chunk is still in flight */
+.blob-loader-fallback {
+  position: absolute;
+  inset: 8%;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle at 45% 40%,
+    var(--blob-a),
+    var(--blob-b) 72%,
+    transparent 78%
+  );
+  opacity: 0.85;
+  animation: blob-breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes blob-breathe {
+  0%,
+  100% {
+    transform: scale(0.92);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob-loader-fallback {
+    animation: none;
+  }
+}
+
+/* =========================================
+   Cursor: the system one, unmodified. Nothing follows it, nothing replaces
+   it. Only the two places where the native keyword is genuinely wrong get
+   an override.
+   ========================================= */
+.scroll-rail {
+  cursor: grab;
+}
+
+.scroll-rail[data-dragging="true"],
+.scroll-rail[data-dragging="true"] * {
+  cursor: grabbing;
+}
+
+.intro-veil {
+  cursor: progress;
+}
+
+/* =========================================
+   Card sweep — the hero buttons' hover, reused on the plain cards.
+   The gradient wipes in from the left and the labels go light to stay
+   readable on top of it. Deliberately not applied to the project cards
+   or the contact cards, which have their own hover behaviour.
+   ========================================= */
+.card-sweep {
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card-sweep::before {
+  content: "";
+  position: absolute;
+  /* 1px of overshoot kills the hairline of parent background that otherwise
+     survives in the rounded corners and reads as a stray border on hover */
+  inset: -1px;
+  z-index: 0;
+  border-radius: inherit;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(82.3deg, var(--sweep-a) 10.8%, var(--sweep-b) 94.3%);
+  transition: transform 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.card-sweep:hover::before {
+  transform: scaleX(1);
+}
+
+/* content has to out-rank the pseudo, which is positioned */
+.card-sweep > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* No lift: the wipe is the hover. The inset depth of .card-inset has to go
+   with it, or it keeps drawing a rim on top of the flat gradient. */
+.card-sweep:hover {
+  box-shadow: 0 12px 28px -18px rgba(69, 77, 51, 0.5);
+}
+
+/* the delay lets the wipe get most of the way there before the text flips */
+.card-sweep:hover,
+.card-sweep:hover * {
+  color: var(--sweep-fg);
+  transition: color 0.32s ease 0.14s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-sweep::before {
+    transition: none;
+  }
+}
+
+/* =========================================
+   Nav orb — the round menu buttons.
+   Same wipe as the hero buttons, but the fill needs its own clipped layer:
+   the label tooltip hangs below the button, so overflow:hidden can't live
+   on the button itself.
+   ========================================= */
+.nav-orb {
+  position: relative;
+  transition: color 0.32s ease 0.14s;
+}
+
+.nav-orb__fill {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--paper-2);
+}
+
+.nav-orb__fill::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(82.3deg, var(--sweep-a) 10.8%, var(--sweep-b) 94.3%);
+  transition: transform 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.nav-orb:hover .nav-orb__fill::before,
+.nav-orb:focus-visible .nav-orb__fill::before {
+  transform: scaleX(1);
+}
+
+.nav-orb:hover,
+.nav-orb:focus-visible {
+  color: var(--sweep-fg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-orb__fill::before {
+    transition: none;
+  }
+}
+
+/* =========================================
+   Handle card — credit-card flip.
+   Layout adapted from Uiverse.io by Praashoo7; rebuilt on the palette and
+   on flow layout rather than the original's absolutely-placed em offsets,
+   which only hold at exactly one card size.
+   ========================================= */
+.handle-card {
+  width: 300px;
+  height: 189px;
+  perspective: 1400px;
+}
+
+.handle-card__inner {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.78s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.handle-card[data-flipped="true"] .handle-card__inner {
+  transform: rotateY(180deg);
+}
+
+.handle-card__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 20px;
+  border-radius: 16px;
+  overflow: hidden;
+  color: var(--card-fg);
+  background:
+    radial-gradient(
+      120% 140% at 82% 6%,
+      color-mix(in srgb, var(--matcha-deep) 34%, transparent),
+      transparent 58%
+    ),
+    linear-gradient(146deg, var(--card-a), var(--card-b));
+  box-shadow: var(--card-shadow);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.handle-card__face--back {
+  transform: rotateY(180deg);
+  padding: 0;
+}
+
+/* the contact-chip: drawn, not an image, so it recolors with the theme */
+.handle-card__chip {
+  position: relative;
+  height: 28px;
+  width: 36px;
+  border-radius: 6px;
+  background: linear-gradient(150deg, #d6c893, #9d8f5c);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/*
+ * The contact tracks were derived from --card-b, which worked only while the
+ * card was dark in both themes: on the light card that resolved to a pale
+ * green and the chip lost its lines entirely. The chip is gold on both
+ * themes, so its engraving is a fixed dark and doesn't flip with anything.
+ */
+.handle-card__chip::before,
+.handle-card__chip::after {
+  content: "";
+  position: absolute;
+  background: rgba(38, 43, 28, 0.55);
+}
+
+.handle-card__chip::before {
+  inset: 0 0 0 0;
+  border-inline: 9px solid transparent;
+  border-block: 7px solid transparent;
+  background-clip: content-box;
+  border-radius: 3px;
+  box-shadow:
+    inset 0 -1px 0 rgba(38, 43, 28, 0.55),
+    inset 0 1px 0 rgba(38, 43, 28, 0.55);
+}
+
+.handle-card__chip::after {
+  top: 7px;
+  bottom: 7px;
+  left: 9px;
+  width: 1px;
+  box-shadow: 17px 0 0 rgba(38, 43, 28, 0.55);
+}
+
+.handle-card__stripe {
+  height: 34px;
+  width: 100%;
+  margin-top: 20px;
+  background: repeating-linear-gradient(
+    45deg,
+    #2c3124,
+    #2c3124 10px,
+    #1d2117 10px,
+    #1d2117 20px
+  );
+}
+
+/* Same reasoning as the chip: a signature panel is a pale strip with dark ink
+   on every card ever printed. Deriving it from --card-fg/--card-b inverted it
+   the moment the light theme arrived. */
+.handle-card__signature {
+  display: flex;
+  align-items: center;
+  height: 22px;
+  margin: 16px 20px 0;
+  padding: 0 8px;
+  border-radius: 3px;
+  background: #efeddf;
+  color: #262b1c;
+  /* the hairline is what makes the panel legible on the light card, where it
+     and the card body are both pale; on the dark card it costs nothing */
+  box-shadow: inset 0 0 0 1px rgba(38, 43, 28, 0.14);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .handle-card__inner {
+    transition: none;
+  }
+}
+
+/* =========================================
+   Rules.
+   A hairline at full opacity butted hard into both edges of its container is
+   the stock divider every template ships with, and it reads that way. Neither
+   of these is that: the footer gets a rule that starts and ends in nothing,
+   and the break inside a card gets a short mark instead of a full-width line.
+   ========================================= */
+.rule-fade {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--line) 12%,
+    var(--line) 88%,
+    transparent
+  );
+}
+
+/* currentColor, not a palette token: this lives inside .card-sweep, which
+   repaints the text on hover and would otherwise leave the mark behind as a
+   stray fleck sitting on top of the gradient. */
+.rule-mark {
+  height: 2px;
+  width: 26px;
+  border: 0;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+/* =========================================
+   Ko-fi badge sheen.
+   `overlay` reads as nothing against a near-black tile, so dark mode
+   switches to `screen` and pulls the strength back to compensate.
+   ========================================= */
+.award-badge__sheen {
+  mix-blend-mode: overlay;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .award-badge__sheen {
+    mix-blend-mode: screen;
+    opacity: 0.5;
+  }
+}
+
+:root[data-theme="dark"] .award-badge__sheen {
+  mix-blend-mode: screen;
+  opacity: 0.5;
 }

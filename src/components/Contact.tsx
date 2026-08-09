@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState, type PointerEvent, type MouseEvent } from "react";
 import { SectionHeading, Reveal } from "@/components/Reveal";
 import { isHoverPointer } from "@/lib/utils";
 
@@ -56,6 +56,25 @@ const ICONS: Record<string, React.ReactNode> = {
     </svg>
   ),
 };
+
+// the pill that appears on touch as the "tap again to open" affordance —
+// purely visual, it rides inside the card's own <a>, so the tap that lands
+// on it navigates through the card link
+const ExploreTag = ({ className }: { className?: string }) => (
+  <span className={`btn-explore ${className ?? ""}`} aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+    </svg>
+    Explore me
+  </span>
+);
 
 /*
  * Ordered, not arbitrary: how to reach me, then what I've shipped, then
@@ -114,6 +133,41 @@ const LINKS = [
 
 export default function Contact() {
   const [expanded, setExpanded] = useState(1);
+  // whether the last interaction came from a finger. Drives the Explore pill:
+  // a mouse or pen never sees it, a touch does. Not a device query — a
+  // hybrid laptop flips it live as the user switches hand for finger.
+  const [touch, setTouch] = useState(false);
+  // read synchronously in onClick, where the click event has no pointerType
+  // of its own. onPointerDown always fires first and stamps it here.
+  const lastPointer = useRef<string>("mouse");
+
+  /*
+   * One card, three inputs:
+   *  - mouse / pen: enter opens it (pen reports real hover), a click follows
+   *    the link straight away. No pill — the whole open card is the target.
+   *  - touch: the first tap only opens (the click is swallowed), the second
+   *    follows. The pill is that second tap's affordance, shown only here.
+   *  - keyboard: focus opens it, Enter follows — same path as the mouse.
+   */
+  const cardProps = (idx: number) => ({
+    onPointerEnter: (e: PointerEvent) => {
+      if (isHoverPointer(e)) {
+        setExpanded(idx);
+        setTouch(false);
+      }
+    },
+    onPointerDown: (e: PointerEvent) => {
+      lastPointer.current = e.pointerType;
+      setTouch(e.pointerType === "touch");
+    },
+    onFocus: () => setExpanded(idx),
+    onClick: (e: MouseEvent) => {
+      if (lastPointer.current === "touch" && expanded !== idx) {
+        e.preventDefault();
+        setExpanded(idx);
+      }
+    },
+  });
 
   return (
     <section
@@ -139,13 +193,13 @@ export default function Contact() {
           {LINKS.map((link, idx) => {
             const isOpen = idx === expanded;
             return (
-              <div
+              <a
                 key={link.id}
-                /* the panel expands on hover (mouse/pen) or on tap
-                   (pointerdown catches touch); it never navigates itself —
-                   the Explore button inside is the one link out */
-                onPointerEnter={(e) => isHoverPointer(e) && setExpanded(idx)}
-                onPointerDown={() => setExpanded(idx)}
+                href={link.href}
+                target={link.href.startsWith("mailto:") ? undefined : "_blank"}
+                rel="noopener noreferrer"
+                aria-label={`${link.label}: ${link.value}`}
+                {...cardProps(idx)}
                 className="card-inset relative flex h-36 items-center overflow-hidden"
                 style={{
                   width: isOpen ? "22rem" : "4.5rem",
@@ -179,30 +233,9 @@ export default function Contact() {
                   <span className="mt-1 block whitespace-nowrap font-serif text-2xl text-ink">
                     {link.value}
                   </span>
-                  {/* the actual way out. Focusing it also opens the panel, so
-                      keyboard users reach it by tabbing even while collapsed */}
-                  <a
-                    href={link.href}
-                    target={link.href.startsWith("mailto:") ? undefined : "_blank"}
-                    rel="noopener noreferrer"
-                    onFocus={() => setExpanded(idx)}
-                    aria-label={`${link.label}: ${link.value}`}
-                    className="btn-explore mt-4"
-                  >
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                    </svg>
-                    Explore me
-                  </a>
+                  {touch && isOpen ? <ExploreTag className="mt-4" /> : null}
                 </span>
-              </div>
+              </a>
             );
           })}
         </div>
@@ -212,25 +245,23 @@ export default function Contact() {
        * Below lg: the same panel, transposed. The row's fixed 4.5rem icon
        * column becomes a fixed 4rem icon band at the top of each card, and
        * the panel grows downward instead of rightward to bring in the label,
-       * the value and the Explore button. Same easing, same delayed entry.
-       *
-       * Opening it: pointer enter for mouse and Apple Pencil, pointerdown for
-       * a finger. The card itself never navigates — a collapsed card shows an
-       * icon and nothing else, so leaving the page from it would mean
-       * following a control that never said where it went. Touch: one tap
-       * opens, then the Explore button is the deliberate way out.
+       * the value, and — on touch — the Explore pill. Same easing, same
+       * delayed entry, same three-input rules as the row above.
        */}
       <div className="flex flex-col gap-2 lg:hidden">
         {LINKS.map((link, idx) => {
           const isOpen = idx === expanded;
           return (
-            <div
+            <a
               key={link.id}
-              onPointerEnter={(e) => isHoverPointer(e) && setExpanded(idx)}
-              onPointerDown={() => setExpanded(idx)}
+              href={link.href}
+              target={link.href.startsWith("mailto:") ? undefined : "_blank"}
+              rel="noopener noreferrer"
+              aria-label={`${link.label}: ${link.value}`}
+              {...cardProps(idx)}
               className="card-inset relative flex w-full flex-col overflow-hidden"
               style={{
-                height: isOpen ? "12rem" : "4rem",
+                height: isOpen ? (touch ? "12rem" : "8.5rem") : "4rem",
                 transition: "height 0.62s cubic-bezier(0.22, 1, 0.36, 1)",
               }}
             >
@@ -255,28 +286,9 @@ export default function Contact() {
                 <span className="mt-1 block whitespace-nowrap font-serif text-2xl text-ink">
                   {link.value}
                 </span>
-                <a
-                  href={link.href}
-                  target={link.href.startsWith("mailto:") ? undefined : "_blank"}
-                  rel="noopener noreferrer"
-                  onFocus={() => setExpanded(idx)}
-                  aria-label={`${link.label}: ${link.value}`}
-                  className="btn-explore mt-3"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                  </svg>
-                  Explore me
-                </a>
+                {touch && isOpen ? <ExploreTag className="mt-3" /> : null}
               </span>
-            </div>
+            </a>
           );
         })}
       </div>

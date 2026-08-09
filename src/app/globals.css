@@ -404,9 +404,9 @@ body::after {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   font-family: var(--font-label), system-ui, sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.4px;
@@ -414,19 +414,25 @@ body::after {
   background: var(--paper);
   border: 2px solid var(--exp-border);
   border-radius: 999px;
-  padding: 11px 22px 11px 20px;
+  padding: 8px 15px;
   transition:
     color 0.2s ease,
     background-color 0.2s ease,
     box-shadow 0.2s ease;
   box-shadow:
-    -4px -2px 14px 0 var(--exp-hi),
-    4px 2px 14px 0 var(--exp-lo);
+    -4px -2px 13px 0 var(--exp-hi),
+    4px 2px 13px 0 var(--exp-lo);
 }
 
 .btn-explore svg {
-  width: 17px;
-  height: 17px;
+  width: 14px;
+  height: 14px;
+  /* nudge the arrow along on hover — the one bit of motion it gets */
+  transition: transform 0.2s ease;
+}
+
+.btn-explore:hover svg {
+  transform: translateX(2px);
 }
 
 .btn-explore:hover {

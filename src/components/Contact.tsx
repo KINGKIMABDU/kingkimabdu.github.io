@@ -59,20 +59,22 @@ const ICONS: Record<string, React.ReactNode> = {
 
 // the pill that appears on touch as the "tap again to open" affordance —
 // purely visual, it rides inside the card's own <a>, so the tap that lands
-// on it navigates through the card link
+// on it navigates through the card link. Sits to the right of the value.
 const ExploreTag = ({ className }: { className?: string }) => (
-  <span className={`btn-explore ${className ?? ""}`} aria-hidden="true">
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-    </svg>
-    Explore me
+  <span className={`flex justify-end ${className ?? ""}`}>
+    <span className="btn-explore" aria-hidden="true">
+      Open
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M5 12h14M13 6l6 6-6 6" />
+      </svg>
+    </span>
   </span>
 );
 

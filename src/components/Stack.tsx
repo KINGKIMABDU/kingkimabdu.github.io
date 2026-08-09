@@ -208,11 +208,16 @@ export default function Stack() {
         ))}
       </Stagger>
 
+      {/* five items: at two columns the fifth would sit alone on its own
+          row, so it spans the full width there instead. Three and five
+          columns divide the row cleanly and reset it. */}
       <Stagger className="mt-5 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
-        {GEAR.map((g) => (
+        {GEAR.map((g, i) => (
           <StaggerItem
             key={g.name}
-            className="card-inset card-sweep group p-5"
+            className={`card-inset card-sweep group p-5 ${
+              i === GEAR.length - 1 ? "col-span-2 sm:col-span-1" : ""
+            }`}
           >
             <span className="mb-3 block h-7 w-7 text-olive transition-colors duration-300 group-hover:text-matcha-deep">
               {ICONS[g.icon]}

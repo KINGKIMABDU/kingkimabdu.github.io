@@ -184,8 +184,10 @@ function ProjectCard({ project }: { project: Project }) {
   );
 }
 
-/* A spine, not a card: full row height, narrow, text set on its side. Same
-   inset surface as the contact cards, at the dimensions it already had. */
+/* A spine on md and up: full row height, narrow, text set on its side, same
+   inset surface as the contact cards. Below md that shape is wrong — a lone
+   72px tower next to a centred card — so it lays flat into a full-width bar
+   with the label running normally. */
 function GithubProfileSpine() {
   return (
     <a
@@ -193,7 +195,7 @@ function GithubProfileSpine() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="View my GitHub profile"
-      className="card-inset card-sweep group flex h-[340px] w-[72px] flex-col items-center justify-center gap-7 py-5"
+      className="card-inset card-sweep group flex w-full flex-row items-center justify-center gap-4 py-5 md:h-[340px] md:w-[72px] md:flex-col md:gap-7"
     >
       <span className="text-olive transition-colors duration-300 group-hover:text-matcha-deep">
         <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
@@ -201,10 +203,7 @@ function GithubProfileSpine() {
         </svg>
       </span>
 
-      <span
-        className="font-label font-medium text-[11px] uppercase tracking-[0.3em] text-matcha-deep"
-        style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
-      >
+      <span className="font-label font-medium text-[11px] uppercase tracking-[0.3em] text-matcha-deep md:[writing-mode:vertical-rl] md:rotate-180">
         View my profile
       </span>
     </a>
@@ -240,7 +239,7 @@ export default function Projects() {
          * The nested wrap is what keeps the pair from overflowing a 360px
          * phone, where 240 + 24 + 72 is wider than the column.
          */}
-        <StaggerItem className="flex flex-wrap justify-center gap-6 md:justify-start">
+        <StaggerItem className="flex w-full flex-col items-center gap-6 md:w-auto md:flex-row md:flex-wrap md:justify-start">
           <div className="transition-transform duration-[520ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2">
             <ProjectCard project={PROJECTS[PROJECTS.length - 1]} />
           </div>

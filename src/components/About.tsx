@@ -103,6 +103,11 @@ export default function About() {
           {/* One card per row: the "X over Y" pairs read as a list, which is
               what they are — the old 2x2 grid of big serif words fought the
               paragraphs for attention. */}
+          {/* The interests card rides in the same Stagger as the principles
+              above rather than its own Reveal. As a standalone Reveal it had a
+              separate viewport trigger and a longer 0.9s + 0.1 delay, so it
+              landed a beat after the four cards had already settled and read as
+              lag. Folded in, it's just the fifth item on the one timeline. */}
           <Stagger className="space-y-3">
             {PRINCIPLES.map((p) => (
               <StaggerItem
@@ -116,10 +121,8 @@ export default function About() {
                 <span className="ml-auto text-sm text-ink-soft">{p.b}</span>
               </StaggerItem>
             ))}
-          </Stagger>
 
-          <Reveal delay={0.1} className="mt-3">
-            <div className="card-inset card-sweep group px-6 py-5">
+            <StaggerItem className="card-inset card-sweep group px-6 py-5">
               <p className="font-label text-[11px] font-medium uppercase tracking-[0.18em] text-matcha-deep">
                 Off the clock
               </p>
@@ -151,8 +154,8 @@ export default function About() {
                 Matcha and coffee, roughly in that order. Green — as you may
                 have noticed.
               </p>
-            </div>
-          </Reveal>
+            </StaggerItem>
+          </Stagger>
         </div>
       </div>
     </section>

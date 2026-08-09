@@ -39,7 +39,7 @@ const PROJECTS: Project[] = [
   },
   {
     n: "02",
-    kind: "Biology Web",
+    kind: "School Project",
     title: "Vakuole",
     blurb:
       "Interactive biology learning website with a clean layout, focused explanations, and a visual style made for studying without clutter.",
@@ -54,7 +54,7 @@ const PROJECTS: Project[] = [
   },
   {
     n: "03",
-    kind: "Study Project",
+    kind: "School Project",
     title: "Mitosis",
     blurb:
       "Science study project about mitosis, built to practice structure, presentation, and turning school topics into something easier to explore.",
@@ -184,6 +184,27 @@ function ProjectCard({ project }: { project: Project }) {
   );
 }
 
+/*
+ * The card is drawn at one fixed size (240x340) and everything inside it — the
+ * orb, the padding, the type scale — is tuned to that. Rather than reflow all
+ * of it for phones, the whole card is scaled as a unit so two sit side by side
+ * and stay legible. The box grows with the phone instead of sitting at one
+ * tiny size: it takes the largest scale that still fits two across at each
+ * width — ~148px on a 360, up past 184px on a large phone — then locks to full
+ * size from md up. Box height tracks 340/240 of the width so the scaled card
+ * fills it exactly. The lift stays on this element so scale and hover compose
+ * in one transform.
+ */
+function ProjectCardShell({ project }: { project: Project }) {
+  return (
+    <div className="h-[210px] w-[148px] min-[384px]:h-[230px] min-[384px]:w-[162px] min-[430px]:h-[261px] min-[430px]:w-[184px] md:h-[340px] md:w-[240px]">
+      <div className="origin-top-left scale-[0.6167] transition-transform duration-[520ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 min-[384px]:scale-[0.675] min-[430px]:scale-[0.7667] md:scale-100">
+        <ProjectCard project={project} />
+      </div>
+    </div>
+  );
+}
+
 /* A spine on md and up: full row height, narrow, text set on its side, same
    inset surface as the contact cards. Below md that shape is wrong — a lone
    72px tower next to a centred card — so it lays flat into a full-width bar
@@ -218,14 +239,13 @@ export default function Projects() {
     >
       <SectionHeading label="Projects" title="Selected work from GitHub." />
 
-      <Stagger className="flex flex-wrap justify-center gap-6 md:justify-start">
+      {/* the one lift left on the page — these cards are objects on a surface,
+          so picking one up reads; the buttons aren't. Two-up on phones via the
+          scaled shell, gap tightened to match. */}
+      <Stagger className="flex flex-wrap justify-center gap-2 md:justify-start md:gap-6">
         {PROJECTS.slice(0, -1).map((project) => (
           <StaggerItem key={project.n}>
-            {/* the one lift left on the page — these cards are objects on a
-                surface, so picking one up reads; the buttons aren't */}
-            <div className="transition-transform duration-[520ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2">
-              <ProjectCard project={project} />
-            </div>
+            <ProjectCardShell project={project} />
           </StaggerItem>
         ))}
 
@@ -239,10 +259,8 @@ export default function Projects() {
          * The nested wrap is what keeps the pair from overflowing a 360px
          * phone, where 240 + 24 + 72 is wider than the column.
          */}
-        <StaggerItem className="flex w-full flex-col items-center gap-6 md:w-auto md:flex-row md:flex-wrap md:justify-start">
-          <div className="transition-transform duration-[520ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2">
-            <ProjectCard project={PROJECTS[PROJECTS.length - 1]} />
-          </div>
+        <StaggerItem className="flex w-full flex-col items-center gap-3 md:w-auto md:flex-row md:flex-wrap md:justify-start md:gap-6">
+          <ProjectCardShell project={PROJECTS[PROJECTS.length - 1]} />
           <GithubProfileSpine />
         </StaggerItem>
       </Stagger>

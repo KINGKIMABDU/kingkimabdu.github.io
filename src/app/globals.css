@@ -1027,46 +1027,30 @@ body::after {
   padding: 0;
 }
 
-/* the contact-chip: drawn, not an image, so it recolors with the theme */
+/* The contact chip: a gold plate whose engraving is a drawn SVG (see
+   CardChip in Nav.tsx). The gold body and its slight top-down sheen live
+   here; the contact tracks ride inside as strokes. Gold on both themes, so
+   nothing about it flips with the palette.
+   The inner highlight/shadow pair gives the plate a shallow bevel instead of
+   a flat fill. */
 .handle-card__chip {
   position: relative;
   height: 28px;
   width: 36px;
   border-radius: 6px;
-  background: linear-gradient(150deg, #d6c893, #9d8f5c);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-}
-
-/*
- * The contact tracks were derived from --card-b, which worked only while the
- * card was dark in both themes: on the light card that resolved to a pale
- * green and the chip lost its lines entirely. The chip is gold on both
- * themes, so its engraving is a fixed dark and doesn't flip with anything.
- */
-.handle-card__chip::before,
-.handle-card__chip::after {
-  content: "";
-  position: absolute;
-  background: rgba(38, 43, 28, 0.55);
-}
-
-.handle-card__chip::before {
-  inset: 0 0 0 0;
-  border-inline: 9px solid transparent;
-  border-block: 7px solid transparent;
-  background-clip: content-box;
-  border-radius: 3px;
+  overflow: hidden;
+  background: linear-gradient(150deg, #e2d59f 0%, #c9b978 46%, #9d8f5c 100%);
   box-shadow:
-    inset 0 -1px 0 rgba(38, 43, 28, 0.55),
-    inset 0 1px 0 rgba(38, 43, 28, 0.55);
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 
-.handle-card__chip::after {
-  top: 7px;
-  bottom: 7px;
-  left: 9px;
-  width: 1px;
-  box-shadow: 17px 0 0 rgba(38, 43, 28, 0.55);
+.handle-card__chip svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .handle-card__stripe {

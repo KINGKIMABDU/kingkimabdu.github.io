@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type PointerEvent, type MouseEvent } from "react";
+import { useState, type PointerEvent } from "react";
 import { SectionHeading, Reveal } from "@/components/Reveal";
 import { isHoverPointer } from "@/lib/utils";
 
@@ -57,26 +57,35 @@ const ICONS: Record<string, React.ReactNode> = {
   ),
 };
 
-// the pill that appears on touch as the "tap again to open" affordance —
-// purely visual, it rides inside the card's own <a>, so the tap that lands
-// on it navigates through the card link. Sits to the right of the value.
-const ExploreTag = ({ className }: { className?: string }) => (
-  <span className={`flex justify-end ${className ?? ""}`}>
-    <span className="btn-explore" aria-hidden="true">
+/*
+ * The one thing that navigates. The card body only expands; opening is this
+ * button and nothing else, on every input — so a click or tap anywhere else
+ * on an open card never fires a link by accident. Left-aligned under the
+ * value, and no trailing arrow: the word carries it.
+ */
+function OpenButton({
+  href,
+  label,
+  className,
+}: {
+  href: string;
+  label: string;
+  className?: string;
+}) {
+  const external = !href.startsWith("mailto:");
+  return (
+    <a
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel="noopener noreferrer"
+      aria-label={`Open ${label}`}
+      onClick={(e) => e.stopPropagation()}
+      className={`btn-explore ${className ?? ""}`}
+    >
       Open
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M5 12h14M13 6l6 6-6 6" />
-      </svg>
-    </span>
-  </span>
-);
+    </a>
+  );
+}
 
 /*
  * Ordered, not arbitrary: how to reach me, then what I've shipped, then
@@ -135,40 +144,25 @@ const LINKS = [
 
 export default function Contact() {
   const [expanded, setExpanded] = useState(1);
-  // whether the last interaction came from a finger. Drives the Explore pill:
-  // a mouse or pen never sees it, a touch does. Not a device query — a
-  // hybrid laptop flips it live as the user switches hand for finger.
-  const [touch, setTouch] = useState(false);
-  // read synchronously in onClick, where the click event has no pointerType
-  // of its own. onPointerDown always fires first and stamps it here.
-  const lastPointer = useRef<string>("mouse");
 
   /*
-   * One card, three inputs:
-   *  - mouse / pen: enter opens it (pen reports real hover), a click follows
-   *    the link straight away. No pill — the whole open card is the target.
-   *  - touch: the first tap only opens (the click is swallowed), the second
-   *    follows. The pill is that second tap's affordance, shown only here.
-   *  - keyboard: focus opens it, Enter follows — same path as the mouse.
+   * The card is a container, not a link — it only ever expands, and the same
+   * way for every input:
+   *  - mouse / pen: entering opens it (pen reports real hover).
+   *  - touch: the first tap opens it; the body stays inert once open, so a
+   *    second tap on the value or icon does nothing. Only the Open button
+   *    navigates — which is the second tap on phone and iPad.
+   *  - keyboard: focus lands on the Open link, which bubbles up to open the
+   *    card, and Enter follows it — same single path as the mouse.
+   * Because nothing here calls the link but the button, a hybrid laptop can't
+   * fire a redirect on the first touch the way a whole-card <a> used to.
    */
   const cardProps = (idx: number) => ({
     onPointerEnter: (e: PointerEvent) => {
-      if (isHoverPointer(e)) {
-        setExpanded(idx);
-        setTouch(false);
-      }
-    },
-    onPointerDown: (e: PointerEvent) => {
-      lastPointer.current = e.pointerType;
-      setTouch(e.pointerType === "touch");
+      if (isHoverPointer(e)) setExpanded(idx);
     },
     onFocus: () => setExpanded(idx),
-    onClick: (e: MouseEvent) => {
-      if (lastPointer.current === "touch" && expanded !== idx) {
-        e.preventDefault();
-        setExpanded(idx);
-      }
-    },
+    onClick: () => setExpanded(idx),
   });
 
   return (
@@ -195,14 +189,10 @@ export default function Contact() {
           {LINKS.map((link, idx) => {
             const isOpen = idx === expanded;
             return (
-              <a
+              <div
                 key={link.id}
-                href={link.href}
-                target={link.href.startsWith("mailto:") ? undefined : "_blank"}
-                rel="noopener noreferrer"
-                aria-label={`${link.label}: ${link.value}`}
                 {...cardProps(idx)}
-                className="card-inset relative flex h-36 items-center overflow-hidden"
+                className="card-inset relative flex h-36 cursor-pointer items-center overflow-hidden"
                 style={{
                   width: isOpen ? "22rem" : "4.5rem",
                   flexShrink: 0,
@@ -221,12 +211,14 @@ export default function Contact() {
                   <span className="h-7 w-7">{ICONS[link.id]}</span>
                 </span>
                 {/* the label rides in behind the widening panel rather than
-                    arriving with it, so it never gets clipped mid-fade */}
+                    arriving with it, so it never gets clipped mid-fade.
+                    pointer-events off while collapsed so a tap on the closed
+                    panel falls through to the card and only opens it. */}
                 <span
                   className={`min-w-0 pr-6 transition-[opacity,transform] duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
                     isOpen
-                      ? "translate-x-0 opacity-100 delay-[180ms]"
-                      : "-translate-x-4 opacity-0"
+                      ? "pointer-events-auto translate-x-0 opacity-100 delay-[180ms]"
+                      : "pointer-events-none -translate-x-4 opacity-0"
                   }`}
                 >
                   <span className="block font-label font-medium text-[11px] uppercase tracking-[0.25em] text-matcha-deep">
@@ -235,9 +227,13 @@ export default function Contact() {
                   <span className="mt-1 block whitespace-nowrap font-serif text-2xl text-ink">
                     {link.value}
                   </span>
-                  {touch && isOpen ? <ExploreTag className="mt-4" /> : null}
+                  <OpenButton
+                    href={link.href}
+                    label={link.label}
+                    className="mt-4"
+                  />
                 </span>
-              </a>
+              </div>
             );
           })}
         </div>
@@ -247,23 +243,19 @@ export default function Contact() {
        * Below lg: the same panel, transposed. The row's fixed 4.5rem icon
        * column becomes a fixed 4rem icon band at the top of each card, and
        * the panel grows downward instead of rightward to bring in the label,
-       * the value, and — on touch — the Explore pill. Same easing, same
-       * delayed entry, same three-input rules as the row above.
+       * the value, and the Open button. Same easing, same delayed entry, same
+       * three-input rules as the row above.
        */}
       <div className="flex flex-col gap-2 lg:hidden">
         {LINKS.map((link, idx) => {
           const isOpen = idx === expanded;
           return (
-            <a
+            <div
               key={link.id}
-              href={link.href}
-              target={link.href.startsWith("mailto:") ? undefined : "_blank"}
-              rel="noopener noreferrer"
-              aria-label={`${link.label}: ${link.value}`}
               {...cardProps(idx)}
-              className="card-inset relative flex w-full flex-col overflow-hidden"
+              className="card-inset relative flex w-full cursor-pointer flex-col overflow-hidden"
               style={{
-                height: isOpen ? (touch ? "12rem" : "8.5rem") : "4rem",
+                height: isOpen ? "12rem" : "4rem",
                 transition: "height 0.62s cubic-bezier(0.22, 1, 0.36, 1)",
               }}
             >
@@ -278,8 +270,8 @@ export default function Contact() {
               <span
                 className={`min-w-0 px-6 transition-[opacity,transform] duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
                   isOpen
-                    ? "translate-y-0 opacity-100 delay-[180ms]"
-                    : "-translate-y-4 opacity-0"
+                    ? "pointer-events-auto translate-y-0 opacity-100 delay-[180ms]"
+                    : "pointer-events-none -translate-y-4 opacity-0"
                 }`}
               >
                 <span className="block font-label text-[11px] font-medium uppercase tracking-[0.25em] text-matcha-deep">
@@ -288,9 +280,13 @@ export default function Contact() {
                 <span className="mt-1 block whitespace-nowrap font-serif text-2xl text-ink">
                   {link.value}
                 </span>
-                {touch && isOpen ? <ExploreTag className="mt-3" /> : null}
+                <OpenButton
+                  href={link.href}
+                  label={link.label}
+                  className="mt-3"
+                />
               </span>
-            </a>
+            </div>
           );
         })}
       </div>

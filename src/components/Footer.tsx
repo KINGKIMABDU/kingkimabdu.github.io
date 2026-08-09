@@ -25,9 +25,13 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="flex flex-col items-center gap-6 sm:flex-row sm:gap-8">
-          <div className="flex items-center gap-3">
-            <span className="font-label font-medium text-[10px] uppercase tracking-[0.25em] text-ink-soft">
+        {/* On phones the switch sits on the left and the Ko-fi badge to its
+            right — a single tidy row rather than a tall stack. The "Theme"
+            caption only earns its width from sm up; below that the switch
+            speaks for itself and the space goes to the badge. */}
+        <div className="flex w-full items-center justify-center gap-3 sm:w-auto sm:gap-8">
+          <div className="flex shrink-0 items-center gap-3">
+            <span className="hidden font-label font-medium text-[10px] uppercase tracking-[0.25em] text-ink-soft sm:inline">
               Theme
             </span>
             <ThemeToggle />

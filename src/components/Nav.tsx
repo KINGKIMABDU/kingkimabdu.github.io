@@ -100,6 +100,28 @@ const ITEMS: MenuItem[] = [
      page rather than a place to park outbound links. */
 ];
 
+/* The EMV contact plate, drawn rather than imaged so it recolors with the
+   theme and stays crisp at any density. The engraving is the real smart-card
+   layout: a tall centre pad with three separate contacts down each side and a
+   split bar along the bottom — the old chip was a bare gold rectangle with a
+   single cross scored through it and read as a placeholder. */
+function CardChip() {
+  return (
+    <span className="handle-card__chip" aria-hidden="true">
+      <svg
+        viewBox="0 0 40 31"
+        preserveAspectRatio="none"
+        fill="none"
+        stroke="rgba(70, 60, 26, 0.55)"
+        strokeWidth={1.1}
+        strokeLinecap="round"
+      >
+        <path d="M15 2.5V21M25 2.5V21M2.5 8.5H37.5M2.5 15H15M25 15H37.5M2.5 21H37.5M20 21V28.5" />
+      </svg>
+    </span>
+  );
+}
+
 /* Two interlocking discs, in the spot a card scheme's mark would sit.
    Deliberately not any real network's logo — it borrows the placement and
    the silhouette, nothing else. */
@@ -147,7 +169,7 @@ function HandleCard() {
         <div className="handle-card__face">
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-3">
-              <span className="handle-card__chip" />
+              <CardChip />
               <span className="text-[var(--card-fg-soft)]">
                 <ContactlessMark />
               </span>

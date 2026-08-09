@@ -237,7 +237,12 @@ export const AwardBadge = ({ topText, text, link }: AwardBadgeProps) => {
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      className="block w-[240px] sm:w-[320px] h-auto"
+      /* On phones this rides in a row beside the theme switch, so it flexes to
+         fill whatever is left rather than forcing a fixed 240px that would
+         push the switch off a 320px screen. A small start margin nudges it a
+         touch right of the switch on mobile; both reset from sm up, where it
+         locks to 320px and the footer has the room. */
+      className="ms-2 block h-auto w-full max-w-[220px] flex-1 sm:ms-0 sm:w-[320px] sm:max-w-none sm:flex-none"
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
       onPointerEnter={onPointerEnter}

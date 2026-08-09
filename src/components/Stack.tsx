@@ -123,7 +123,7 @@ const MACHINES = [
     specs: [
       "Intel i7 7th gen H",
       "16 GB RAM",
-      "1 TB storage",
+      "1 TB SSD",
       "GTX 1060 6 GB VRAM",
     ],
   },
@@ -132,7 +132,7 @@ const MACHINES = [
     tag: "On the go",
     name: "Lenovo ThinkPad X270",
     blurb: "For outdoor work or work on the go.",
-    specs: ["Intel i7 7500U", "16 GB RAM", "90 Wh battery"],
+    specs: ["Intel i7 7500U", "16 GB RAM", "256 GB SSD", "90 Wh battery"],
   },
   {
     icon: "phone",

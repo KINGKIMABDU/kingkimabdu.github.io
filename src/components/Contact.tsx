@@ -139,13 +139,13 @@ export default function Contact() {
           {LINKS.map((link, idx) => {
             const isOpen = idx === expanded;
             return (
-              <a
+              <div
                 key={link.id}
-                href={link.href}
-                target={link.href.startsWith("mailto:") ? undefined : "_blank"}
-                rel="noopener noreferrer"
+                /* the panel expands on hover (mouse/pen) or on tap
+                   (pointerdown catches touch); it never navigates itself —
+                   the Explore button inside is the one link out */
                 onPointerEnter={(e) => isHoverPointer(e) && setExpanded(idx)}
-                onFocus={() => setExpanded(idx)}
+                onPointerDown={() => setExpanded(idx)}
                 className="card-inset relative flex h-36 items-center overflow-hidden"
                 style={{
                   width: isOpen ? "22rem" : "4.5rem",
@@ -155,9 +155,9 @@ export default function Contact() {
                      flat stop. Width only, on the page's own easing. */
                   transition: "width 0.62s cubic-bezier(0.22, 1, 0.36, 1)",
                 }}
-                aria-label={link.label}
               >
                 <span
+                  aria-hidden="true"
                   className={`flex h-full w-[4.5rem] shrink-0 items-center justify-center transition-colors duration-500 ${
                     isOpen ? "text-matcha-deep" : "text-olive"
                   }`}
@@ -179,8 +179,30 @@ export default function Contact() {
                   <span className="mt-1 block whitespace-nowrap font-serif text-2xl text-ink">
                     {link.value}
                   </span>
+                  {/* the actual way out. Focusing it also opens the panel, so
+                      keyboard users reach it by tabbing even while collapsed */}
+                  <a
+                    href={link.href}
+                    target={link.href.startsWith("mailto:") ? undefined : "_blank"}
+                    rel="noopener noreferrer"
+                    onFocus={() => setExpanded(idx)}
+                    aria-label={`${link.label}: ${link.value}`}
+                    className="btn-explore mt-4"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                    </svg>
+                    Explore me
+                  </a>
                 </span>
-              </a>
+              </div>
             );
           })}
         </div>
@@ -189,41 +211,31 @@ export default function Contact() {
       {/*
        * Below lg: the same panel, transposed. The row's fixed 4.5rem icon
        * column becomes a fixed 4rem icon band at the top of each card, and
-       * the panel grows downward instead of rightward to bring in the label
-       * and the value. Same easing, same delayed label entry, same idea.
+       * the panel grows downward instead of rightward to bring in the label,
+       * the value and the Explore button. Same easing, same delayed entry.
        *
-       * Opening it: pointer enter for mouse and Apple Pencil, and tap for a
-       * finger. The tap has to be intercepted — a collapsed card is showing
-       * an icon and nothing else, so following the link on the first tap
-       * would mean leaving the page from a control that never said where it
-       * went. First tap opens, second tap follows.
+       * Opening it: pointer enter for mouse and Apple Pencil, pointerdown for
+       * a finger. The card itself never navigates — a collapsed card shows an
+       * icon and nothing else, so leaving the page from it would mean
+       * following a control that never said where it went. Touch: one tap
+       * opens, then the Explore button is the deliberate way out.
        */}
       <div className="flex flex-col gap-2 lg:hidden">
         {LINKS.map((link, idx) => {
           const isOpen = idx === expanded;
           return (
-            <a
+            <div
               key={link.id}
-              href={link.href}
-              target={link.href.startsWith("mailto:") ? undefined : "_blank"}
-              rel="noopener noreferrer"
               onPointerEnter={(e) => isHoverPointer(e) && setExpanded(idx)}
-              onFocus={() => setExpanded(idx)}
-              onClick={(e) => {
-                if (!isOpen) {
-                  e.preventDefault();
-                  setExpanded(idx);
-                }
-              }}
-              aria-label={link.label}
-              aria-expanded={isOpen}
+              onPointerDown={() => setExpanded(idx)}
               className="card-inset relative flex w-full flex-col overflow-hidden"
               style={{
-                height: isOpen ? "8.5rem" : "4rem",
+                height: isOpen ? "12rem" : "4rem",
                 transition: "height 0.62s cubic-bezier(0.22, 1, 0.36, 1)",
               }}
             >
               <span
+                aria-hidden="true"
                 className={`flex h-16 shrink-0 items-center px-6 transition-colors duration-500 ${
                   isOpen ? "text-matcha-deep" : "text-olive"
                 }`}
@@ -243,8 +255,28 @@ export default function Contact() {
                 <span className="mt-1 block whitespace-nowrap font-serif text-2xl text-ink">
                   {link.value}
                 </span>
+                <a
+                  href={link.href}
+                  target={link.href.startsWith("mailto:") ? undefined : "_blank"}
+                  rel="noopener noreferrer"
+                  onFocus={() => setExpanded(idx)}
+                  aria-label={`${link.label}: ${link.value}`}
+                  className="btn-explore mt-3"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                  </svg>
+                  Explore me
+                </a>
               </span>
-            </a>
+            </div>
           );
         })}
       </div>

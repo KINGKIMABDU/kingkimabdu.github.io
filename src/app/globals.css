@@ -388,6 +388,83 @@ body::after {
 }
 
 /* =========================================
+   Explore button — from Uiverse.io by barisdogansutcu
+   The original is a fixed sky-blue neumorphic pill. Recolored onto the
+   matcha palette, and its two shadows (a white highlight + a tinted drop)
+   are driven by --exp-* so they can flip in dark mode: a light lift on
+   paper, a dark recess on near-black.
+   ========================================= */
+.btn-explore {
+  --exp-fg: var(--olive);
+  --exp-fg-hover: var(--olive-deep);
+  --exp-border: rgba(255, 255, 255, 0.55);
+  --exp-hi: rgba(255, 255, 255, 0.85); /* top-left highlight */
+  --exp-lo: rgba(101, 116, 75, 0.3); /* bottom-right, olive tint */
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-label), system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--exp-fg);
+  background: var(--paper);
+  border: 2px solid var(--exp-border);
+  border-radius: 999px;
+  padding: 11px 22px 11px 20px;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow:
+    -4px -2px 14px 0 var(--exp-hi),
+    4px 2px 14px 0 var(--exp-lo);
+}
+
+.btn-explore svg {
+  width: 17px;
+  height: 17px;
+}
+
+.btn-explore:hover {
+  color: var(--exp-fg-hover);
+  box-shadow:
+    -2px -1px 8px 0 var(--exp-hi),
+    2px 1px 8px 0 var(--exp-lo);
+}
+
+.btn-explore:active {
+  box-shadow: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .btn-explore {
+    --exp-fg: var(--matcha-deep);
+    --exp-fg-hover: var(--ink);
+    --exp-border: rgba(255, 255, 255, 0.06);
+    --exp-hi: rgba(255, 255, 255, 0.05);
+    --exp-lo: rgba(0, 0, 0, 0.55);
+  }
+}
+
+:root[data-theme="dark"] .btn-explore {
+  --exp-fg: var(--matcha-deep);
+  --exp-fg-hover: var(--ink);
+  --exp-border: rgba(255, 255, 255, 0.06);
+  --exp-hi: rgba(255, 255, 255, 0.05);
+  --exp-lo: rgba(0, 0, 0, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-explore {
+    transition: none;
+  }
+}
+
+/* =========================================
    Inset card — from Uiverse.io by adamgiebl
    (recolored to the paper palette)
    ========================================= */

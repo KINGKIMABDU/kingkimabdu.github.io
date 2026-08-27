@@ -1,6 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Karla, Noto_Serif_KR } from "next/font/google";
 import "./globals.css";
+import { STRUCTURED_DATA } from "@/lib/structured-data";
+import {
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_URL,
+  AUTHOR_NAME,
+} from "@/lib/site";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -27,12 +35,37 @@ const notoSerifKr = Noto_Serif_KR({
   preload: false,
 });
 
+/* The old description listed interests and stopped there. Nothing in it said
+   an app had shipped, so anything reading the site through search results had
+   the page claiming a launch and the snippet not corroborating it, and hedged
+   accordingly. SITE_DESCRIPTION now carries the app and the store, and the
+   JSON-LD below carries the date and the listing URL. */
 export const metadata: Metadata = {
-  title: "KINGKIMABDU | Crafted to Create",
-  description:
-    "Abdullah Alhariri (KINGKIMABDU) — student in Germany building software and hardware projects, running Arch Linux, and working toward medicine.",
-  applicationName: "KINGKIMABDU",
-  appleWebApp: { title: "KINGKIMABDU", capable: true },
+  metadataBase: new URL(SITE_URL),
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  authors: [{ name: AUTHOR_NAME, url: SITE_URL }],
+  creator: AUTHOR_NAME,
+  alternates: { canonical: "/" },
+  appleWebApp: { title: SITE_NAME, capable: true },
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    locale: "en_US",
+    images: [
+      { url: "/icon-512.png", width: 512, height: 512, alt: SITE_NAME },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: ["/icon-512.png"],
+  },
 };
 
 export const viewport: Viewport = {
@@ -62,6 +95,10 @@ export default function RootLayout({
           reconcile against this one. Still runs before anything paints. */}
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA) }}
+        />
         {children}
       </body>
     </html>

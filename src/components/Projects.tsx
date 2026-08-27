@@ -1,7 +1,5 @@
 import { Stagger, StaggerItem, SectionHeading } from "@/components/Reveal";
-
-const VERTISOVA_PLAY =
-  "https://play.google.com/store/apps/details?id=com.kingkimabdu.vertisova";
+import { VERTISOVA_PLAY } from "@/lib/site";
 
 type LinkKind = "github" | "play";
 
@@ -26,7 +24,7 @@ const PROJECTS: Project[] = [
     kind: "Android App",
     title: "Vertisova",
     blurb:
-      "Health, habits, and personal progress in one app. Built for my own routine first, now out in the open.",
+      "Posture and screen-distance tracking that runs on your own phone. Built for my own routine first, published on Google Play in August 2026.",
     links: [
       {
         kind: "github",

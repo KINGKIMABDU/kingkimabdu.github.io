@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE } from "@/lib/site";
 
 // required by `output: "export"` — the manifest is a route, and routes have
 // to opt in to being emitted as a static file
@@ -8,10 +9,9 @@ export const dynamic = "force-static";
    apple-icon.png from the app directory instead. */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "KINGKIMABDU | Crafted to Create",
-    short_name: "KINGKIMABDU",
-    description:
-      "Abdullah Alhariri (KINGKIMABDU) — student in Germany building software and hardware projects, running Arch Linux, and working toward medicine.",
+    name: SITE_TITLE,
+    short_name: SITE_NAME,
+    description: SITE_DESCRIPTION,
     start_url: "/",
     display: "standalone",
     background_color: "#f6f4ec",

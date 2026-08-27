@@ -11,10 +11,13 @@ export const SITE_TITLE = "KINGKIMABDU | Crafted to Create";
 
 /* This is the line printed under the result in search, and for anything that
    reads the site secondhand (summarisers, assistants, previews) it is often
-   the only sentence about it they ever see. It has to carry the launch, not
-   just the biography. */
+   the only sentence about it they ever see. It stays about the person: this
+   is a personal site, not a product page, and naming one app here would make
+   the whole site read as that app's landing page. The shipped-work claim is
+   carried by the JSON-LD instead, which is where machines look for facts
+   anyway, and where it can be stated precisely without narrowing this line. */
 export const SITE_DESCRIPTION =
-  "Abdullah Alhariri (KINGKIMABDU), student developer in Germany. Vertisova, an Android posture and screen-distance tracker, is out now on Google Play.";
+  "Abdullah Alhariri (KINGKIMABDU), a student in Germany who builds and ships software and hardware projects, runs Arch Linux, and is working toward medicine.";
 
 export const AUTHOR_NAME = "Abdullah Alhariri";
 

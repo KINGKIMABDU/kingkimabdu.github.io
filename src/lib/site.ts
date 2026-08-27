@@ -17,7 +17,13 @@ export const SITE_TITLE = "KINGKIMABDU | Crafted to Create";
    carried by the JSON-LD instead, which is where machines look for facts
    anyway, and where it can be stated precisely without narrowing this line. */
 export const SITE_DESCRIPTION =
-  "Abdullah Alhariri (KINGKIMABDU), a student in Germany who builds and ships software and hardware projects, runs Arch Linux, and is working toward medicine.";
+  "Abdullah Alhariri (KINGKIMABDU), student and tech builder, nerd-deep across the field, infused with science, strengthened by sport, driven toward medicine.";
+
+/* The line above has to fit a search result. This one does not, so it is the
+   long form: same person, room to say it properly. It feeds the Person node
+   in the JSON-LD, where nothing gets truncated. */
+export const AUTHOR_BIO =
+  "Student and tech builder based in Germany, at home almost anywhere in tech: Android and Flutter apps, web, Linux from the config files up, hardware and robotics. Science underneath it, sport holding it together, medicine the direction it all points.";
 
 export const AUTHOR_NAME = "Abdullah Alhariri";
 

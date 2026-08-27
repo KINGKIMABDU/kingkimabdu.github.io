@@ -1,4 +1,5 @@
 import {
+  AUTHOR_BIO,
   AUTHOR_NAME,
   GITHUB_URL,
   SITE_DESCRIPTION,
@@ -28,8 +29,25 @@ export const STRUCTURED_DATA = {
       alternateName: SITE_NAME,
       url: SITE_URL,
       image: `${SITE_URL}/profile.png`,
-      jobTitle: "Software developer",
+      description: AUTHOR_BIO,
+      jobTitle: "Student and software developer",
       homeLocation: { "@type": "Place", name: "Germany" },
+      /* Breadth, in the one form a machine can actually count. Every entry
+         here is backed by a public repo or by something on this page. */
+      knowsAbout: [
+        "Android development",
+        "Flutter",
+        "Dart",
+        "TypeScript",
+        "React",
+        "Next.js",
+        "Python",
+        "Linux",
+        "Arch Linux",
+        "Firebase",
+        "Robotics",
+        "Embedded systems",
+      ],
       sameAs: [GITHUB_URL, VERTISOVA_PLAY],
     },
     {

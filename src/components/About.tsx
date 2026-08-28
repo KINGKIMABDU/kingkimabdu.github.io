@@ -37,7 +37,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="shell shell-y max-w-[92rem] scroll-mt-24"
+      className="shell shell-y scroll-mt-24"
     >
       <SectionHeading
         label="About"

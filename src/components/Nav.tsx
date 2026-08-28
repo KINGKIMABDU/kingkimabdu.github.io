@@ -313,7 +313,7 @@ export default function Nav() {
           isolation and misaligned in context — which is also why the gutter
           has to be one shared token rather than a number repeated in eight
           files. */}
-      <div className="shell flex max-w-[92rem] items-center justify-between gap-3 py-4">
+      <div className="shell flex items-center justify-between gap-3 py-4">
         <LogoWithCard />
 
         <div className="flex items-center gap-1 rounded-full border border-line bg-paper/80 p-1.5 shadow-lg shadow-olive-deep/10 backdrop-blur-md sm:gap-1.5">

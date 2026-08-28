@@ -100,7 +100,7 @@ export default function Timeline() {
   return (
     <section
       id="timeline"
-      className="shell shell-y max-w-4xl scroll-mt-24"
+      className="shell shell-y scroll-mt-24 [--shell-cap:52rem]"
     >
       <SectionHeading
         label="Timeline"

@@ -29,7 +29,7 @@ export default function Hero() {
           and the morphing line adds up to more than the screen, and the last
           line sits on the bottom edge. vh gives that back where it is scarce
           and keeps the generous version on a tall panel. */}
-      <div className="shell relative z-10 max-w-[92rem] pt-[clamp(6rem,13vh,8.5rem)] pb-[clamp(3.5rem,10vh,8rem)]">
+      <div className="shell relative z-10 pt-[clamp(6rem,13vh,8.5rem)] pb-[clamp(3.5rem,10vh,8rem)]">
         {/* avatar — sits where the wordmark used to */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}

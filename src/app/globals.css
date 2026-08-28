@@ -55,14 +55,26 @@
    * margin and the page looked placed; on a 1280 it looked like the text had
    * fallen off the left edge, which is exactly what it was doing.
    *
-   * Fluid instead. The margin tracks the viewport and meets the cap where the
-   * cap takes over (1654px), so there is no step anywhere:
+   * Fluid instead. The margin tracks the viewport:
    *   360 -> 22   768 -> 42   820 -> 45   1180 -> 65   1366 -> 75
-   *   1440 -> 79  1654 -> the cap, and from there the cap only widens.
+   *   1440 -> 79  1891 and up -> 104, where the clamp tops out.
    * vw is safe here because the scrollbar is hidden site-wide, so there is no
    * gutter of chrome for it to over-count.
    */
   --shell-gutter: clamp(1.375rem, 5.5vw, 6.5rem);
+
+  /*
+   * The cap is the CONTENT column, not the outer box. This matters as soon as
+   * the gutter stops being a fixed 32px: `max-width` is a border-box width, so
+   * a cap of 92rem with 104px of padding is a 1264px column, not the 1408px
+   * one the old fixed-gutter build produced at 1920. The gutter never hands
+   * over to the cap — past the cap it just keeps eating the column.
+   *
+   * So 88rem, which is what 92rem minus the old 2x32px actually was, and the
+   * outer box is that plus the gutter. Every width at which the cap engages
+   * now lands exactly where it did before this file learned about clamp.
+   */
+  --shell-cap: 88rem;
   /* Vertical rhythm, on the same idea: a flat 112px is heavy on a phone and
      a little mean on a 16". */
   --section-y: clamp(4rem, 7vw, 7.5rem);
@@ -167,12 +179,15 @@
 
 /*
  * One definition of "the content column", so the nav, every section and the
- * footer cannot drift apart again. Deliberately does NOT set max-width: each
- * caller keeps its own (`max-w-[92rem]` for the wide sections, `max-w-4xl`
- * for the timeline) rather than fighting this rule for specificity.
+ * footer cannot drift apart again. The cap comes with it rather than being
+ * left to each caller: the two have to be computed together now that the
+ * gutter is fluid, and a stray `max-w-*` alongside this would silently go
+ * back to shrinking the column. Narrower sections set --shell-cap instead —
+ * the timeline runs at 52rem.
  */
 @utility shell {
   width: 100%;
+  max-width: calc(var(--shell-cap) + 2 * var(--shell-gutter));
   margin-inline: auto;
   padding-inline: var(--shell-gutter);
 }

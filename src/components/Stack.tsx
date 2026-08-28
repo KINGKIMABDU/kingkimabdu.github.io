@@ -169,7 +169,7 @@ export default function Stack() {
   return (
     <section
       id="stack"
-      className="shell shell-y max-w-[92rem] scroll-mt-24"
+      className="shell shell-y scroll-mt-24"
     >
       <SectionHeading
         label="Stack & Setup"

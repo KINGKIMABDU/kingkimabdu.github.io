@@ -37,7 +37,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="mx-auto max-w-[92rem] scroll-mt-24 px-6 py-28 sm:px-8"
+      className="shell shell-y max-w-[92rem] scroll-mt-24"
     >
       <SectionHeading
         label="About"
@@ -52,7 +52,7 @@ export default function About() {
       {/* Prose carries the weight on the left; the right column holds the
           short, scannable stuff so the section isn't a long ragged block
           with dead space beside it. */}
-      <div className="grid gap-x-20 gap-y-16 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+      <div className="grid gap-x-[clamp(2.5rem,4.5vw,5rem)] gap-y-16 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
         <div className="max-w-2xl space-y-6 text-lg leading-relaxed text-ink-soft">
           <Reveal>
             <p>

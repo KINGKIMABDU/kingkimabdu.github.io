@@ -22,7 +22,14 @@ export default function Hero() {
       {/* soft wash so text stays readable over the living blob */}
       <div className="absolute inset-0 z-[1] bg-gradient-to-b from-paper/70 via-paper/30 to-paper/0" />
 
-      <div className="relative z-10 mx-auto w-full max-w-[92rem] px-6 pt-32 pb-32 sm:px-8">
+      {/* Vertical padding is off the viewport *height*, not a flat 128px. The
+          section is min-h-100svh and centred, so on a short landscape
+          viewport — an iPad Air at 820, a 1366x768 laptop — a fixed 256px of
+          padding plus the avatar, the headline, the paragraph, the buttons
+          and the morphing line adds up to more than the screen, and the last
+          line sits on the bottom edge. vh gives that back where it is scarce
+          and keeps the generous version on a tall panel. */}
+      <div className="shell relative z-10 max-w-[92rem] pt-[clamp(6rem,13vh,8.5rem)] pb-[clamp(3.5rem,10vh,8rem)]">
         {/* avatar — sits where the wordmark used to */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}

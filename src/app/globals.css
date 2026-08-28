@@ -45,6 +45,27 @@
   --badge-edge: #a7bc8f;
   --badge-label: #66744b;
   --badge-title: #2e3226;
+
+  /*
+   * Page inset. This was a two-step 24px / 32px and nothing else, which meant
+   * that above 640 the only thing holding content off the glass was the 92rem
+   * cap — and the cap doesn't engage until 1654px. Every width in between got
+   * the phone's 32px: a 1180 iPad in landscape, a 1366 or 1440 laptop, a 16"
+   * panel at anything but native. On a 1920 screen the cap gave 224px of
+   * margin and the page looked placed; on a 1280 it looked like the text had
+   * fallen off the left edge, which is exactly what it was doing.
+   *
+   * Fluid instead. The margin tracks the viewport and meets the cap where the
+   * cap takes over (1654px), so there is no step anywhere:
+   *   360 -> 22   768 -> 42   820 -> 45   1180 -> 65   1366 -> 75
+   *   1440 -> 79  1654 -> the cap, and from there the cap only widens.
+   * vw is safe here because the scrollbar is hidden site-wide, so there is no
+   * gutter of chrome for it to over-count.
+   */
+  --shell-gutter: clamp(1.375rem, 5.5vw, 6.5rem);
+  /* Vertical rhythm, on the same idea: a flat 112px is heavy on a phone and
+     a little mean on a 16". */
+  --section-y: clamp(4rem, 7vw, 7.5rem);
 }
 
 /*
@@ -142,6 +163,22 @@
      and the nav captions can all move together next time. */
   --font-label: var(--font-karla), system-ui, sans-serif;
   --font-kr: var(--font-noto-kr), var(--font-fraunces), serif;
+}
+
+/*
+ * One definition of "the content column", so the nav, every section and the
+ * footer cannot drift apart again. Deliberately does NOT set max-width: each
+ * caller keeps its own (`max-w-[92rem]` for the wide sections, `max-w-4xl`
+ * for the timeline) rather than fighting this rule for specificity.
+ */
+@utility shell {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--shell-gutter);
+}
+
+@utility shell-y {
+  padding-block: var(--section-y);
 }
 
 /* The scrolling element is <html>, not <body> — the rule has to land here

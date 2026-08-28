@@ -306,12 +306,14 @@ export default function Nav() {
       transition={{ delay: 0.8, duration: 1, ease: [0.22, 1, 0.36, 1] }}
       className="fixed inset-x-0 top-0 z-40"
     >
-      {/* Same max-width and padding as every <section> on the page, and that
-          is the whole reason it looks placed: the wordmark lands exactly
-          above the hero avatar and the pill lands exactly on the right edge
-          of the hero text column. Insetting either end further would read as
-          tidier in isolation and misaligned in context. */}
-      <div className="mx-auto flex max-w-[92rem] items-center justify-between gap-3 px-6 py-4 sm:px-8">
+      {/* Same `shell` as every <section> on the page, and that is the whole
+          reason it looks placed: the wordmark lands exactly above the hero
+          avatar and the pill lands exactly on the right edge of the hero text
+          column. Insetting either end further would read as tidier in
+          isolation and misaligned in context — which is also why the gutter
+          has to be one shared token rather than a number repeated in eight
+          files. */}
+      <div className="shell flex max-w-[92rem] items-center justify-between gap-3 py-4">
         <LogoWithCard />
 
         <div className="flex items-center gap-1 rounded-full border border-line bg-paper/80 p-1.5 shadow-lg shadow-olive-deep/10 backdrop-blur-md sm:gap-1.5">

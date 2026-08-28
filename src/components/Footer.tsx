@@ -8,11 +8,11 @@ export default function Footer() {
           full-bleed border on the <footer> itself. The old one ran edge to
           edge past every margin on the page and was the only element that
           did. */}
-      <div className="mx-auto max-w-[92rem] px-6 sm:px-8">
+      <div className="shell max-w-[92rem]">
         <hr className="rule-fade" aria-hidden="true" />
       </div>
 
-      <div className="mx-auto flex max-w-[92rem] flex-col items-center gap-10 px-6 pt-12 sm:px-8 md:flex-row md:items-center md:justify-between">
+      <div className="shell flex max-w-[92rem] flex-col items-center gap-10 pt-12 md:flex-row md:items-center md:justify-between">
         <div className="text-center md:text-left">
           <p className="font-kr text-lg text-ink">
             킹키마브두 · KINGKIMABDU · Abdullah

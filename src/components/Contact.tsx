@@ -168,7 +168,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="mx-auto max-w-[92rem] scroll-mt-24 px-6 py-28 sm:px-8"
+      className="shell shell-y max-w-[92rem] scroll-mt-24"
     >
       <SectionHeading
         label="Contact"

@@ -233,7 +233,7 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="mx-auto max-w-[92rem] scroll-mt-24 px-6 py-28 sm:px-8"
+      className="shell shell-y max-w-[92rem] scroll-mt-24"
     >
       <SectionHeading label="Projects" title="Selected work from GitHub." />
 

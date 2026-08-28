@@ -10,6 +10,7 @@ import {
 } from "@react-three/fiber";
 import { shaderMaterial, PerformanceMonitor } from "@react-three/drei";
 import type { MotionValue } from "framer-motion";
+import { onTick } from "@/lib/ticker";
 import * as THREE from "three";
 
 // Living-fluid blob shader, tuned to the matcha palette.
@@ -280,6 +281,20 @@ function FluidScene({
   );
 }
 
+/*
+ * The canvas is `frameloop="never"` and stepped from here. r3f's own loop is
+ * requestAnimationFrame, and WebKit stops servicing rAF on a page it decides
+ * is visually idle — which is why the blob only ever moved on an iPad while
+ * the page was being scrolled. The shared ticker keeps rAF as the driver
+ * whenever it is actually running and falls back to a timer when it isn't,
+ * so nothing about the frame rate changes on a browser that behaves.
+ */
+function TickDriver() {
+  const advance = useThree((state) => state.advance);
+  useEffect(() => onTick((now) => advance(now)), [advance]);
+  return null;
+}
+
 export default function FluidBackground({
   scrollProgress,
   variant = "page",
@@ -302,7 +317,9 @@ export default function FluidBackground({
         camera={{ position: [0, 0, variant === "loader" ? 5.4 : 4], fov: 75 }}
         dpr={dpr}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        frameloop="never"
       >
+        <TickDriver />
         <PerformanceMonitor
           onChange={({ factor }) =>
             setDpr(Math.round((1 + factor) * 4) / 4)

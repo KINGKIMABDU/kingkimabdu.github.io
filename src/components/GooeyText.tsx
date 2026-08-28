@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { onTick } from "@/lib/ticker";
 import { cn } from "@/lib/utils";
 
 interface GooeyTextProps {
@@ -25,10 +26,9 @@ export function GooeyText({
 
   React.useEffect(() => {
     let textIndex = texts.length - 1;
-    let time = new Date();
+    let time = performance.now();
     let morph = 0;
     let cooldown = cooldownTime;
-    let frame = 0;
 
     const setMorph = (fraction: number) => {
       if (text1Ref.current && text2Ref.current) {
@@ -64,12 +64,15 @@ export function GooeyText({
       setMorph(fraction);
     };
 
-    function animate() {
-      frame = requestAnimationFrame(animate);
-      const newTime = new Date();
+    /* Driven by the shared ticker rather than its own rAF: WebKit stops
+       servicing rAF on a page it thinks is idle, and this was the loop you
+       could watch it happen on — the words only moved while you scrolled.
+       dt comes off the timestamp, so a coarser fallback tick lands in
+       bigger steps and changes nothing else. */
+    function animate(now: number) {
       const shouldIncrementIndex = cooldown > 0;
-      const dt = (newTime.getTime() - time.getTime()) / 1000;
-      time = newTime;
+      const dt = (now - time) / 1000;
+      time = now;
 
       cooldown -= dt;
 
@@ -87,11 +90,7 @@ export function GooeyText({
       }
     }
 
-    animate();
-
-    return () => {
-      cancelAnimationFrame(frame);
-    };
+    return onTick(animate);
   }, [texts, morphTime, cooldownTime]);
 
   return (

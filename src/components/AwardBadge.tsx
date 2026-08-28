@@ -1,6 +1,6 @@
 "use client";
 
-import React, { PointerEvent, useEffect, useRef, useState } from "react";
+import React, { PointerEvent, useRef, useState } from "react";
 import { isHoverPointer } from "@/lib/utils";
 
 interface AwardBadgeProps {
@@ -22,13 +22,19 @@ type Timer = ReturnType<typeof setTimeout>;
 export const AwardBadge = ({ topText, text, link }: AwardBadgeProps) => {
   const ref = useRef<HTMLAnchorElement>(null);
   const [firstOverlayPosition, setFirstOverlayPosition] = useState<number>(0);
-  const [matrix, setMatrix] = useState<string>(identityMatrix);
+  /* The tilt the badge snaps to on the way in, held only until the 200ms
+     settle is over. After that the transform tracks the pointer. */
+  const [enterMatrix, setEnterMatrix] = useState<string>(identityMatrix);
   const [currentMatrix, setCurrentMatrix] = useState<string>(identityMatrix);
   const [disableInOutOverlayAnimation, setDisableInOutOverlayAnimation] =
     useState<boolean>(true);
   const [disableOverlayAnimation, setDisableOverlayAnimation] =
     useState<boolean>(false);
   const [isTimeoutFinished, setIsTimeoutFinished] = useState<boolean>(false);
+
+  /* Derived rather than mirrored through an effect: the two were always the
+     same value one render apart. */
+  const matrix = isTimeoutFinished ? currentMatrix : enterMatrix;
   const enterTimeout = useRef<Timer | null>(null);
   const leaveTimeout1 = useRef<Timer | null>(null);
   const leaveTimeout2 = useRef<Timer | null>(null);
@@ -153,7 +159,7 @@ export const AwardBadge = ({ topText, text, link }: AwardBadgeProps) => {
     const matrix = getMatrix(e.clientX, e.clientY);
     const oppositeMatrix = getOppositeMatrix(matrix, e.clientY, true);
 
-    setMatrix(oppositeMatrix);
+    setEnterMatrix(oppositeMatrix);
     setIsTimeoutFinished(false);
     setTimeout(() => {
       setIsTimeoutFinished(true);
@@ -205,12 +211,6 @@ export const AwardBadge = ({ topText, text, link }: AwardBadgeProps) => {
       });
     });
   };
-
-  useEffect(() => {
-    if (isTimeoutFinished) {
-      setMatrix(currentMatrix);
-    }
-  }, [currentMatrix, isTimeoutFinished]);
 
   const overlayAnimations = [...Array(10).keys()]
     .map(

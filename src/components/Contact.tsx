@@ -58,10 +58,31 @@ const ICONS: Record<string, React.ReactNode> = {
 };
 
 /*
+ * The seven rotating layers of the Uiverse button, with the original's delays
+ * and durations kept verbatim — they are prime-ish and deliberately unrelated,
+ * which is the whole reason the sheen never visibly repeats. Rounded or evened
+ * out, seven layers turn into one.
+ */
+const OPEN_LAYERS: [number, number][] = [
+  [0, 25],
+  [0.15, 15.9],
+  [0.53, 26.4],
+  [0.45, 17.8],
+  [1.6, 19.2],
+  [1.6, 29.2],
+  [1.6, 20.2],
+];
+
+/*
  * The one thing that navigates. The card body only expands; opening is this
  * button and nothing else, on every input — so a click or tap anywhere else
  * on an open card never fires a link by accident. Left-aligned under the
  * value, and no trailing arrow: the word carries it.
+ *
+ * Everything except __label is decoration and is hidden from assistive tech.
+ * __face carries a copy of the word only to size the pill — the label is
+ * absolutely positioned and can't do it — so that copy is aria-hidden too,
+ * or the link announces "Open Open".
  */
 function OpenButton({
   href,
@@ -80,9 +101,25 @@ function OpenButton({
       rel="noopener noreferrer"
       aria-label={`Open ${label}`}
       onClick={(e) => e.stopPropagation()}
-      className={`btn-explore ${className ?? ""}`}
+      className={`btn-open ${className ?? ""}`}
     >
-      Open
+      <span className="btn-open__face" aria-hidden="true">
+        Open
+      </span>
+      {OPEN_LAYERS.map(([delay, duration], i) => (
+        <span
+          key={i}
+          aria-hidden="true"
+          className="btn-open__layer"
+          style={{
+            animationDelay: `${delay}s`,
+            animationDuration: `${duration}s`,
+          }}
+        />
+      ))}
+      <span className="btn-open__light" aria-hidden="true" />
+      <span className="btn-open__scrim" aria-hidden="true" />
+      <span className="btn-open__label">Open</span>
     </a>
   );
 }

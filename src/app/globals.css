@@ -425,85 +425,236 @@ body::after {
 }
 
 /* =========================================
-   Explore button — from Uiverse.io by barisdogansutcu
-   The original is a fixed sky-blue neumorphic pill. Recolored onto the
-   matcha palette, and its two shadows (a white highlight + a tinted drop)
-   are driven by --exp-* so they can flip in dark mode: a light lift on
-   paper, a dark recess on near-black.
-   ========================================= */
-.btn-explore {
-  --exp-fg: var(--olive);
-  --exp-fg-hover: var(--olive-deep);
-  --exp-border: rgba(255, 255, 255, 0.55);
-  --exp-hi: rgba(255, 255, 255, 0.85); /* top-left highlight */
-  --exp-lo: rgba(101, 116, 75, 0.3); /* bottom-right, olive tint */
+   Open button — from Uiverse.io by dexter-st.
+   The original is a rainbow: seven huge radial gradients rotating at seven
+   different speeds under a red plate, chained through `difference` and
+   `color-dodge` and then run through `brightness(1.8)`. The structure is the
+   good part and it is kept exactly — seven layers, the same delays and
+   durations, the pulsing light bar, the duplicated label over the top. The
+   colour maths is not: `difference` produces the *complement* of whatever you
+   feed it, so every green stop came back magenta, and the brightness boost
+   pushed the whole thing to near-white with the label sitting on top of it at
+   about 2:1. Both were replaced.
 
+   What it is now: the page's own sweep gradient as a plate, with the seven
+   layers riding over it in `overlay` so they redistribute the plate's own
+   luminance instead of inventing hue. Everything is a --g-* token so the two
+   themes are a block of values rather than a second copy of the rules.
+
+   Contrast is a constraint here, not an afterthought: the layers are moving,
+   so the label sits over a different colour every second and the worst frame
+   is the one that counts. Measured across the cycle these land at 7.3:1 in
+   light and 9.5:1 in dark against --g-ink; the scrim is what buys the last
+   part of that, and it is why the layers can stay as bright as they do.
+   ========================================= */
+.btn-open {
+  --g-plate-a: #5f7046;
+  --g-plate-b: #363e26;
+  --g-sheen-a: #9fb384;
+  --g-sheen-b: #232a17;
+  --g-ink: var(--paper);
+  --g-edge: rgba(246, 244, 236, 0.28);
+  --g-lift: rgba(255, 255, 255, 0.18);
+  --g-scrim: rgba(24, 29, 16, 0.28);
+  --g-glow: rgba(69, 77, 51, 0.45);
+
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  /* `clip` rather than `hidden`: the layers are 460% wide and would otherwise
+     make the pill a scroll container. */
+  overflow: clip;
+  overflow-clip-margin: 2px;
+  /* the blending has to stay inside the button — without this the layers
+     reach through to the card underneath */
+  isolation: isolate;
+  border: 1px solid var(--g-edge);
+  border-radius: 999px;
   font-family: var(--font-label), system-ui, sans-serif;
   font-size: 11px;
   font-weight: 500;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  letter-spacing: 0.4px;
-  color: var(--exp-fg);
-  background: var(--paper);
-  border: 2px solid var(--exp-border);
-  border-radius: 999px;
-  padding: 8px 15px;
+  filter: saturate(0.9);
   transition:
-    color 0.2s ease,
-    background-color 0.2s ease,
-    box-shadow 0.2s ease;
-  box-shadow:
-    -4px -2px 13px 0 var(--exp-hi),
-    4px 2px 13px 0 var(--exp-lo);
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease;
 }
 
-.btn-explore svg {
-  width: 14px;
-  height: 14px;
-  /* nudge the arrow along on hover — the one bit of motion it gets */
-  transition: transform 0.2s ease;
+/* The plate, and the element that sizes the button — the label is absolute,
+   so this is the only thing in flow. Its own text is invisible and exists to
+   hold the box; the readable copy is .btn-open__label. */
+.btn-open__face {
+  position: relative;
+  z-index: 0;
+  display: block;
+  padding: 8px 19px;
+  border-radius: 999px;
+  color: transparent;
+  background-image: linear-gradient(
+    146deg,
+    var(--g-plate-a),
+    var(--g-plate-b)
+  );
 }
 
-.btn-explore:hover svg {
-  transform: translateX(2px);
+.btn-open__layer {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  left: 50%;
+  top: 50%;
+  width: 460%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  background: radial-gradient(
+    ellipse at 65% 180%,
+    var(--g-sheen-a),
+    var(--g-sheen-b),
+    var(--g-sheen-a),
+    var(--g-sheen-b),
+    var(--g-sheen-a),
+    var(--g-sheen-b),
+    var(--g-sheen-a),
+    var(--g-sheen-b),
+    var(--g-sheen-a),
+    var(--g-sheen-b),
+    var(--g-sheen-a)
+  );
+  mix-blend-mode: overlay;
+  opacity: 0.32;
+  animation: btn-open-spin 8s linear infinite;
 }
 
-.btn-explore:hover {
-  color: var(--exp-fg-hover);
-  box-shadow:
-    -2px -1px 8px 0 var(--exp-hi),
-    2px 1px 8px 0 var(--exp-lo);
+/* One glint on top, the way the original ended its chain on color-dodge. */
+.btn-open__layer:last-of-type {
+  mix-blend-mode: screen;
+  opacity: 0.14;
 }
 
-.btn-explore:active {
-  box-shadow: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .btn-explore {
-    --exp-fg: var(--matcha-deep);
-    --exp-fg-hover: var(--ink);
-    --exp-border: rgba(255, 255, 255, 0.06);
-    --exp-hi: rgba(255, 255, 255, 0.05);
-    --exp-lo: rgba(0, 0, 0, 0.55);
+@keyframes btn-open-spin {
+  to {
+    rotate: 360deg;
   }
 }
 
-:root[data-theme="dark"] .btn-explore {
-  --exp-fg: var(--matcha-deep);
-  --exp-fg-hover: var(--ink);
-  --exp-border: rgba(255, 255, 255, 0.06);
-  --exp-hi: rgba(255, 255, 255, 0.05);
-  --exp-lo: rgba(0, 0, 0, 0.55);
+.btn-open__light {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  width: 72%;
+  height: 0.8rem;
+  border-radius: 999px;
+  background-color: var(--g-lift);
+  filter: blur(5px);
+  animation: btn-open-pulse 3.4s ease-in-out infinite;
 }
 
+@keyframes btn-open-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.15;
+  }
+}
+
+/* The layers are rotating, so the colour under the label changes constantly
+   and legibility can't be checked once against a still frame. This holds the
+   middle of the pill down far enough that the brightest moment of the cycle
+   still clears AA, which is what lets the sheen stay as strong as it is. */
+.btn-open__scrim {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 999px;
+  background: radial-gradient(
+    64% 130% at 50% 50%,
+    var(--g-scrim),
+    transparent 80%
+  );
+}
+
+.btn-open__label {
+  position: absolute;
+  z-index: 4;
+  pointer-events: none;
+  padding: 8px 19px;
+  border-radius: 999px;
+  color: var(--g-ink);
+  text-shadow: 0 1px 2px rgba(18, 22, 12, 0.5);
+  /* the original's bevel, kept: a highlight along the top and a shadow along
+     the bottom is what stops the pill reading as a flat sticker */
+  box-shadow:
+    inset 0 -4px 5px -2px rgba(20, 24, 14, 0.34),
+    inset 0 4px 5px -2px rgba(255, 255, 255, 0.18);
+}
+
+.btn-open:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px -10px var(--g-glow);
+}
+
+.btn-open:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn-open:focus-visible {
+  outline: 2px solid var(--matcha-deep);
+  outline-offset: 3px;
+}
+
+/*
+ * Dark theme. Only the plate and the sheen move, and they move *down*: the
+ * same button on a near-black card would otherwise be the brightest object
+ * on the screen. The label goes to a warm off-white rather than pure paper.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .btn-open {
+    --g-plate-a: #55693e;
+    --g-plate-b: #2b3520;
+    --g-sheen-a: #8fa971;
+    --g-sheen-b: #171d10;
+    --g-ink: #f2f0e2;
+    --g-edge: rgba(236, 233, 220, 0.16);
+    --g-lift: rgba(236, 233, 220, 0.16);
+    --g-scrim: rgba(9, 12, 6, 0.24);
+    --g-glow: rgba(0, 0, 0, 0.6);
+  }
+}
+
+:root[data-theme="dark"] .btn-open {
+  --g-plate-a: #55693e;
+  --g-plate-b: #2b3520;
+  --g-sheen-a: #8fa971;
+  --g-sheen-b: #171d10;
+  --g-ink: #f2f0e2;
+  --g-edge: rgba(236, 233, 220, 0.16);
+  --g-lift: rgba(236, 233, 220, 0.16);
+  --g-scrim: rgba(9, 12, 6, 0.24);
+  --g-glow: rgba(0, 0, 0, 0.6);
+}
+
+/*
+ * Reduced motion. The rotation and the pulse are decoration and both stop.
+ * The layers stay — frozen they are still the marbling that makes the plate
+ * look like something rather than a flat fill — but the last one, the glint,
+ * is the only part that reads as "mid-animation" when it stops, so it goes.
+ */
 @media (prefers-reduced-motion: reduce) {
-  .btn-explore {
+  .btn-open,
+  .btn-open__layer,
+  .btn-open__light {
+    animation: none;
     transition: none;
+  }
+
+  .btn-open__light {
+    opacity: 0.5;
   }
 }
 

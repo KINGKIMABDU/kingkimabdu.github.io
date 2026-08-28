@@ -291,7 +291,21 @@ function FluidScene({
  */
 function TickDriver() {
   const advance = useThree((state) => state.advance);
-  useEffect(() => onTick((now) => advance(now)), [advance]);
+
+  useEffect(() => {
+    /* Seconds, counted from the first tick — not `performance.now()`. Under
+       frameloop="never" r3f writes this value straight into clock.elapsedTime
+       and takes delta off the difference, so milliseconds run the shader a
+       thousand times too fast, and a raw clock gives the very first frame a
+       delta of however long the tab had been open. */
+    let origin: number | null = null;
+
+    return onTick((now) => {
+      if (origin === null) origin = now;
+      advance((now - origin) / 1000);
+    });
+  }, [advance]);
+
   return null;
 }
 

@@ -3,7 +3,9 @@ import {
   AUTHOR_NAME,
   GITHUB_URL,
   SITE_DESCRIPTION,
+  SITE_LAST_MODIFIED,
   SITE_NAME,
+  SITE_TITLE,
   SITE_URL,
   VERTISOVA_GITHUB,
   VERTISOVA_PLAY,
@@ -12,6 +14,8 @@ import {
 
 const PERSON_ID = `${SITE_URL}/#person`;
 const APP_ID = `${SITE_URL}/#vertisova`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
+const PROFILE_PAGE_ID = `${SITE_URL}/#profile`;
 
 /* Prose is not evidence. A crawler reading "now out in the open" has no way to
    tell a public store release from an open-sourced repo, so it hedges, and an
@@ -76,13 +80,29 @@ export const STRUCTURED_DATA = {
     },
     {
       "@type": "WebSite",
-      "@id": `${SITE_URL}/#website`,
+      "@id": WEBSITE_ID,
       url: SITE_URL,
       name: SITE_NAME,
       description: SITE_DESCRIPTION,
       inLanguage: "en",
       about: { "@id": PERSON_ID },
       publisher: { "@id": PERSON_ID },
+    },
+    /* This is Google's own recommended shape for a page whose subject is a
+       person (developers.google.com/search/docs/appearance/structured-data/
+       profile-page) — it's the most direct lever for how an AI Overview or
+       knowledge panel introduces someone, which is the actual failure mode:
+       stale bio facts outliving the page content they came from. */
+    {
+      "@type": "ProfilePage",
+      "@id": PROFILE_PAGE_ID,
+      url: SITE_URL,
+      name: SITE_TITLE,
+      inLanguage: "en",
+      dateModified: SITE_LAST_MODIFIED,
+      isPartOf: { "@id": WEBSITE_ID },
+      about: { "@id": PERSON_ID },
+      mainEntity: { "@id": PERSON_ID },
     },
   ],
 };

@@ -36,3 +36,8 @@ export const VERTISOVA_GITHUB = "https://github.com/KINGKIMABDU/Vertisova";
 
 // Public Play Store release. Bumping a build does not change this.
 export const VERTISOVA_RELEASE_DATE = "2026-08-06";
+
+/* Feeds dateModified on the ProfilePage node and lastModified in the sitemap.
+   Bump this by hand when the page content actually changes — not on every
+   rebuild, or it stops meaning anything to a crawler deciding what's fresh. */
+export const SITE_LAST_MODIFIED = "2026-08-29";

@@ -56,15 +56,18 @@ export const metadata: Metadata = {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     locale: "en_US",
+    /* The app icon read as a generic favicon in link previews. This is a
+       page about a person, so the preview should show the person — the
+       same photo the Person node in the JSON-LD already points at. */
     images: [
-      { url: "/icon-512.png", width: 512, height: 512, alt: SITE_NAME },
+      { url: "/profile.png", width: 640, height: 640, alt: AUTHOR_NAME },
     ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: ["/icon-512.png"],
+    images: ["/profile.png"],
   },
 };
 

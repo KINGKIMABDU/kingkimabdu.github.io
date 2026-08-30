@@ -1,7 +1,7 @@
 import { Stagger, StaggerItem, SectionHeading } from "@/components/Reveal";
-import { VERTISOVA_PLAY } from "@/lib/site";
+import { SITE_URL, VERTISOVA_PLAY } from "@/lib/site";
 
-type LinkKind = "github" | "play";
+type LinkKind = "github" | "play" | "demo";
 
 type ProjectLink = {
   kind: LinkKind;
@@ -44,11 +44,16 @@ const PROJECTS: Project[] = [
     links: [
       {
         kind: "github",
-        href: "https://github.com/KINGKIMABDU/Vakuole",
+        href: "https://github.com/KINGKIMABDU/VAKUOLE.github.io",
         label: "Vakuole on GitHub",
       },
+      {
+        kind: "demo",
+        href: `${SITE_URL}/VAKUOLE.github.io/`,
+        label: "Open the Vakuole site",
+      },
     ],
-    linkLabel: "Open Repository",
+    linkLabel: "Repo · Live site",
   },
   {
     n: "03",
@@ -59,11 +64,16 @@ const PROJECTS: Project[] = [
     links: [
       {
         kind: "github",
-        href: "https://github.com/KINGKIMABDU/Mitosis",
+        href: "https://github.com/KINGKIMABDU/MITOSIS",
         label: "Mitosis on GitHub",
       },
+      {
+        kind: "demo",
+        href: `${SITE_URL}/MITOSIS/`,
+        label: "Open the Mitosis simulation",
+      },
     ],
-    linkLabel: "Open Repository",
+    linkLabel: "Repo · Live site",
   },
   {
     n: "04",
@@ -108,6 +118,23 @@ const LINK_ICONS: Record<LinkKind, React.ReactNode> = {
   ),
   // public/google-play.png, masked so it picks up currentColor like the rest
   play: <span className="icon-play-mask h-4 w-4" />,
+  /* These two live on this same domain, so the arrow is the "leaves this
+     card" cue rather than a "leaves the site" one. */
+  demo: (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+      <path d="M15 3h6v6" />
+      <path d="M10 14 21 3" />
+    </svg>
+  ),
 };
 
 /*

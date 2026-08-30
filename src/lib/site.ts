@@ -29,6 +29,10 @@ export const AUTHOR_NAME = "Abdullah Alhariri";
 
 export const GITHUB_URL = "https://github.com/KINGKIMABDU";
 
+/* Same URL, named for the one job it has: everything on this site that points
+   at the profile has to point at the canonical form of it. */
+export const GITHUB_PROFILE = GITHUB_URL;
+
 export const VERTISOVA_PLAY =
   "https://play.google.com/store/apps/details?id=com.kingkimabdu.vertisova";
 

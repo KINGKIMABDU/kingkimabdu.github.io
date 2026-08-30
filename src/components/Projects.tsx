@@ -1,5 +1,5 @@
 import { Stagger, StaggerItem, SectionHeading } from "@/components/Reveal";
-import { SITE_URL, VERTISOVA_PLAY } from "@/lib/site";
+import { GITHUB_PROFILE, SITE_URL, VERTISOVA_PLAY } from "@/lib/site";
 
 type LinkKind = "github" | "play" | "demo";
 
@@ -237,7 +237,10 @@ function ProjectCardShell({ project }: { project: Project }) {
 function GithubProfileSpine() {
   return (
     <a
-      href="https://github.com/KINGKIMABDU?tab=repositories"
+      /* The bare profile URL, not ?tab=repositories: the tab variant carries
+         no canonical of its own, so linking it split the one signal this site
+         sends to my GitHub profile across two URLs. */
+      href={GITHUB_PROFILE}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="View my GitHub profile"

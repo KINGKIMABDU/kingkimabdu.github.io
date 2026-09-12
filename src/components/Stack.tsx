@@ -101,15 +101,11 @@ const ICONS: Record<string, React.ReactNode> = {
       <path d="M11.39.605C10.376 3.092 9.764 4.72 8.635 7.132c.693.734 1.543 1.589 2.923 2.554-1.484-.61-2.496-1.224-3.252-1.86C6.86 10.842 4.596 15.138 0 23.395c3.612-2.085 6.412-3.37 9.021-3.862a6.61 6.61 0 01-.171-1.547l.003-.115c.058-2.315 1.261-4.095 2.687-3.973 1.426.12 2.534 2.096 2.478 4.409a6.52 6.52 0 01-.146 1.243c2.58.505 5.352 1.787 8.914 3.844-.702-1.293-1.33-2.459-1.929-3.57-.943-.73-1.926-1.682-3.933-2.713 1.38.359 2.367.772 3.137 1.234-6.09-11.334-6.582-12.84-8.67-17.74z" />
     </svg>
   ),
-  /* VS Code. Drawn at the family's stroke weight it came out spindly — the
-     real mark is a solid ribbon, so this one is filled rather than stroked.
-     Geometry is the actual logo's: a right-hand bar with two long diagonals
-     running back to it, crossing each other well left of centre. */
+  /* Exact branded VS Code silhouette used by the KINGKIMABDU setup card,
+     colored through currentColor to match the other setup icons. */
   code: (
-    <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
-      <path d="M17.6 1.9a1.2 1.2 0 0 1 1.9-1l2.1 1.5c.3.2.4.5.4.9v17.4c0 .4-.1.7-.4.9l-2.1 1.5a1.2 1.2 0 0 1-1.9-1V1.9Z" />
-      <path d="M17 3.4a1.1 1.1 0 0 1 1.4 1.7L4.6 16.6a1.1 1.1 0 0 1-1.6-.2l-1-1.3a1.1 1.1 0 0 1 .2-1.6L17 3.4Z" />
-      <path d="M17 20.6a1.1 1.1 0 0 0 1.4-1.7L4.6 7.4A1.1 1.1 0 0 0 3 7.6l-1 1.3a1.1 1.1 0 0 0 .2 1.6l14.8 10.1Z" />
+    <svg viewBox="0 0 128 128" fill="currentColor" stroke="none">
+      <path fillRule="evenodd" clipRule="evenodd" d="M90.767 127.126a7.968 7.968 0 0 0 6.35-.244l26.353-12.681a8 8 0 0 0 4.53-7.209V21.009a8 8 0 0 0-4.53-7.21L97.117 1.12a7.97 7.97 0 0 0-9.093 1.548l-50.45 46.026L15.6 32.013a5.328 5.328 0 0 0-6.807.302l-7.048 6.411a5.335 5.335 0 0 0-.006 7.888L20.796 64 1.74 81.387a5.336 5.336 0 0 0 .006 7.887l7.048 6.411a5.327 5.327 0 0 0 6.807.303l21.974-16.68 50.45 46.025a7.96 7.96 0 0 0 2.743 1.793Zm5.252-92.183L57.74 64l38.28 29.058V34.943Z" />
     </svg>
   ),
 };

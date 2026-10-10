@@ -184,19 +184,22 @@ function ProjectCard({ project }: { project: Project }) {
         </filter>
       </svg>
 
-      {/* oversized so the displaced edges never show the card behind them */}
-      <div
-        className="project-arc absolute -inset-[5%]"
-        style={{ filter: `url(#${filterId})` }}
-        aria-hidden="true"
-      />
+      {/* oversized so the displaced edges never show the card behind them;
+          the wrapper carries the hover brightness, since the arc's own
+          filter is already the noise */}
+      <div className="project-arc-glow absolute inset-0" aria-hidden="true">
+        <div
+          className="project-arc absolute -inset-[5%]"
+          style={{ filter: `url(#${filterId})` }}
+        />
+      </div>
 
       <div className="relative flex h-full flex-col p-5">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-[var(--project-fg-soft)]/70">
           {project.kind}
         </span>
         <span
-          className={`mt-2 font-serif leading-tight break-words hyphens-auto text-[var(--project-fg)] transition-[letter-spacing,translate] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:-translate-y-0.5 group-hover/card:tracking-[0.01em] ${titleSize(
+          className={`mt-2 font-serif leading-tight break-words hyphens-auto text-[var(--project-fg)] transition-[letter-spacing] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:tracking-[0.01em] ${titleSize(
             project.title
           )}`}
         >
@@ -238,13 +241,12 @@ function ProjectCard({ project }: { project: Project }) {
  * tiny size: it takes the largest scale that still fits two across at each
  * width — ~148px on a 360, up past 184px on a large phone — then locks to full
  * size from md up. Box height tracks 340/240 of the width so the scaled card
- * fills it exactly. The lift stays on this element so scale and hover compose
- * in one transform.
+ * fills it exactly.
  */
 function ProjectCardShell({ project }: { project: Project }) {
   return (
     <div className="h-[210px] w-[148px] min-[384px]:h-[230px] min-[384px]:w-[162px] min-[430px]:h-[261px] min-[430px]:w-[184px] md:h-[340px] md:w-[240px]">
-      <div className="origin-top-left scale-[0.6167] transition-transform duration-[520ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 min-[384px]:scale-[0.675] min-[430px]:scale-[0.7667] md:scale-100">
+      <div className="origin-top-left scale-[0.6167] min-[384px]:scale-[0.675] min-[430px]:scale-[0.7667] md:scale-100">
         <ProjectCard project={project} />
       </div>
     </div>
@@ -288,9 +290,9 @@ export default function Projects() {
     >
       <SectionHeading title="Selected work from GitHub." />
 
-      {/* the one lift left on the page — these cards are objects on a surface,
-          so picking one up reads; the buttons aren't. Two-up on phones via the
-          scaled shell, gap tightened to match. */}
+      {/* No lift on hover any more: the card stays put and the arc inside it
+          rises (globals.css, .project-arc). Two-up on phones via the scaled
+          shell, gap tightened to match. */}
       <Stagger className="flex flex-wrap justify-center gap-2 md:justify-start md:gap-6">
         {PROJECTS.slice(0, -1).map((project) => (
           <StaggerItem key={project.n}>

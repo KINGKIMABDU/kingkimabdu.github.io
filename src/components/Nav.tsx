@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { SECTIONS, goToSection, useActiveSection } from "@/lib/sections";
 import {
   motion,
   AnimatePresence,
@@ -8,97 +9,6 @@ import {
   useMotionValueEvent,
 } from "framer-motion";
 import { isHoverPointer } from "@/lib/utils";
-
-type MenuItem = {
-  id: string;
-  label: string;
-  href: string;
-  external?: boolean;
-  icon: React.ReactNode;
-};
-
-const stroke = {
-  fill: "none",
-  stroke: "currentColor",
-  strokeWidth: 1.7,
-  strokeLinecap: "round" as const,
-  strokeLinejoin: "round" as const,
-};
-
-const ITEMS: MenuItem[] = [
-  {
-    id: "home",
-    label: "Home",
-    href: "#home",
-    icon: (
-      <svg viewBox="0 0 24 24" {...stroke}>
-        <path d="M3 10.5 12 3l9 7.5" />
-        <path d="M5 9.5V21h14V9.5" />
-        <path d="M10 21v-6h4v6" />
-      </svg>
-    ),
-  },
-  {
-    id: "about",
-    label: "About",
-    href: "#about",
-    icon: (
-      <svg viewBox="0 0 24 24" {...stroke}>
-        <circle cx="12" cy="8" r="4" />
-        <path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5" />
-      </svg>
-    ),
-  },
-  {
-    id: "projects",
-    label: "Projects",
-    href: "#projects",
-    icon: (
-      <svg viewBox="0 0 24 24" {...stroke}>
-        <path d="M21 8 12 3 3 8v8l9 5 9-5V8Z" />
-        <path d="M3 8l9 5 9-5" />
-        <path d="M12 13v8" />
-      </svg>
-    ),
-  },
-  {
-    id: "stack",
-    label: "Stack",
-    href: "#stack",
-    icon: (
-      <svg viewBox="0 0 24 24" {...stroke}>
-        <rect x="4" y="4" width="7" height="7" rx="1.5" />
-        <rect x="13" y="4" width="7" height="7" rx="1.5" />
-        <rect x="4" y="13" width="7" height="7" rx="1.5" />
-        <rect x="13" y="13" width="7" height="7" rx="1.5" />
-      </svg>
-    ),
-  },
-  {
-    id: "timeline",
-    label: "Timeline",
-    href: "#timeline",
-    icon: (
-      <svg viewBox="0 0 24 24" {...stroke}>
-        <path d="M3 12h4l3-8 4 16 3-8h4" />
-      </svg>
-    ),
-  },
-  {
-    id: "contact",
-    label: "Contact",
-    href: "#contact",
-    icon: (
-      <svg viewBox="0 0 24 24" {...stroke}>
-        <rect x="3" y="5" width="18" height="14" rx="2" />
-        <path d="m3 7 9 6 9-6" />
-      </svg>
-    ),
-  },
-  /* GitHub isn't here: the Projects section, the profile spine beside it and
-     the Contact row all already lead there, and a nav should be a map of the
-     page rather than a place to park outbound links. */
-];
 
 /* The EMV contact plate, drawn rather than imaged so it recolors with the
    theme and stays crisp at any density. The engraving is the real smart-card
@@ -298,45 +208,115 @@ function LogoWithCard() {
   );
 }
 
+/* Touch screens have no hover to open the rail index, and phones have no
+   room for the rail at all, so they get this: one word in the corner that
+   opens the same list, drawn the same way, a line with a tick per section. */
+function TouchIndex() {
+  const active = useActiveSection();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: PointerEvent) => {
+      if (!ref.current?.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    document.addEventListener("pointerdown", onDown);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onDown);
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  return (
+    <div ref={ref} className="relative hidden max-sm:block pointer-coarse:block">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        aria-controls="touch-index"
+        className="flex items-center gap-2.5 py-2 text-[15px] font-medium text-ink"
+        style={{
+          textShadow:
+            "0 0 12px var(--paper), 0 0 4px var(--paper), 0 0 2px var(--paper)",
+        }}
+      >
+        Index
+        <span
+          className={`block h-px bg-matcha-deep transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            open ? "w-6" : "w-3.5"
+          }`}
+          aria-hidden="true"
+        />
+      </button>
+
+      <AnimatePresence>
+        {open ? (
+          <motion.nav
+            id="touch-index"
+            aria-label="Sections"
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute right-0 top-full mt-2 w-56 rounded-2xl bg-paper-2 py-4 pr-5 pl-6 shadow-[0_18px_40px_-18px_rgba(46,50,38,0.5)]"
+          >
+            <ul className="relative space-y-1 border-l border-line">
+              {SECTIONS.map((s) => (
+                <li key={s.id}>
+                  <a
+                    href={`#${s.id}`}
+                    onClick={(e) => {
+                      setOpen(false);
+                      goToSection(e, s.id);
+                    }}
+                    aria-current={active === s.id ? "location" : undefined}
+                    className={`flex items-center gap-4 py-2 font-serif text-2xl ${
+                      active === s.id ? "text-ink" : "text-ink-soft"
+                    }`}
+                  >
+                    <span
+                      className={`-ml-px h-px shrink-0 ${
+                        active === s.id
+                          ? "w-5 bg-matcha-deep"
+                          : "w-2.5 bg-ink-soft/60"
+                      }`}
+                      aria-hidden="true"
+                    />
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </motion.nav>
+        ) : null}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export default function Nav() {
   return (
-    <motion.nav
+    <motion.header
       initial={{ opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.8, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-x-0 top-0 z-40"
+      className="pointer-events-none fixed inset-x-0 top-0 z-40"
     >
-      {/* Same `shell` as every <section> on the page, and that is the whole
-          reason it looks placed: the wordmark lands exactly above the hero
-          avatar and the pill lands exactly on the right edge of the hero text
-          column. Insetting either end further would read as tidier in
-          isolation and misaligned in context — which is also why the gutter
-          has to be one shared token rather than a number repeated in eight
-          files. */}
-      <div className="shell flex items-center justify-between gap-3 py-4">
-        <LogoWithCard />
-
-        <div className="flex items-center gap-1 rounded-full border border-line bg-paper/80 p-1.5 shadow-lg shadow-olive-deep/10 backdrop-blur-md sm:gap-1.5">
-          {ITEMS.map((item) => (
-            <a
-              key={item.id}
-              href={item.href}
-              target={item.external ? "_blank" : undefined}
-              rel={item.external ? "noopener noreferrer" : undefined}
-              aria-label={item.label}
-              className="nav-orb group flex h-8 w-8 items-center justify-center rounded-full text-olive sm:h-10 sm:w-10"
-            >
-              {/* the fill is its own clipped layer so the label below can
-                  still escape the button's bounds */}
-              <span className="nav-orb__fill" aria-hidden="true" />
-              <span className="relative z-[1] h-[46%] w-[46%]">{item.icon}</span>
-              <span className="pointer-events-none absolute top-full left-1/2 z-[1] mt-2 -translate-x-1/2 whitespace-nowrap rounded-md bg-ink px-2.5 py-1 font-label font-medium text-[10px] uppercase tracking-widest text-paper opacity-0 transition-all duration-300 group-hover:translate-y-0.5 group-hover:opacity-100">
-                {item.label}
-              </span>
-            </a>
-          ))}
+      {/* Only the wordmark up here now; the section index lives on the
+          scroll rail (ScrollRail.tsx). Same `shell` as every <section>, so
+          the wordmark lands exactly above the hero avatar. pointer-events go
+          back on per object so the empty width never eats a click. */}
+      <div className="shell flex items-start justify-between gap-3 py-4">
+        <div className="pointer-events-auto pt-1.5">
+          <LogoWithCard />
+        </div>
+        <div className="pointer-events-auto">
+          <TouchIndex />
         </div>
       </div>
-    </motion.nav>
+    </motion.header>
   );
 }

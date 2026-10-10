@@ -603,8 +603,6 @@ body::after {
     rgba(46, 50, 38, 0.2) 0px 18px 26px -18px inset;
 }
 
-/* Slow spin for the project-card orb */
-
 /* =========================================
    Scroll rail — the custom bar on the right
    ========================================= */
@@ -615,7 +613,7 @@ body::after {
   top: 50%;
   right: 6px;
   z-index: 45;
-  height: 34vh;
+  height: 46vh;
   width: 20px;
   translate: 0 -50%;
   display: flex;
@@ -671,7 +669,98 @@ body::after {
   width: 11px;
 }
 
-@media (max-width: 640px) {
+/* Section ticks. Anchored on the track's centre line, with the name to the
+   left of the tick, since the rail hugs the right edge of the window. */
+.rail-mark {
+  position: absolute;
+  right: 50%;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 12px;
+  translate: 5px -50%;
+  padding: 6px 0 6px 8px;
+  cursor: pointer;
+}
+
+.rail-mark__tick {
+  height: 1.5px;
+  width: 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink-soft) 70%, transparent);
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.3s ease;
+}
+
+.rail-mark[data-active="true"] .rail-mark__tick {
+  background: var(--matcha-deep);
+}
+
+.rail-mark__label {
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--ink-soft);
+  /* the names float over whatever section is behind them; a paper halo
+     keeps them legible without putting a chip around each one */
+  text-shadow:
+    0 0 10px var(--paper),
+    0 0 4px var(--paper),
+    0 0 2px var(--paper);
+  opacity: 0;
+  translate: 8px 0;
+  pointer-events: none;
+  transition:
+    opacity 0.35s ease,
+    translate 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.3s ease;
+}
+
+.rail-mark[data-active="true"] .rail-mark__label {
+  color: var(--ink);
+}
+
+.rail-mark[data-flash="true"] .rail-mark__label,
+.scroll-rail:hover .rail-mark__label,
+.rail-mark:focus-visible .rail-mark__label {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.scroll-rail:hover .rail-mark__label {
+  pointer-events: auto;
+}
+
+/* stagger the names out top to bottom, like a list being read */
+.scroll-rail:hover .rail-mark:nth-child(2) .rail-mark__label { transition-delay: 0.03s; }
+.scroll-rail:hover .rail-mark:nth-child(3) .rail-mark__label { transition-delay: 0.06s; }
+.scroll-rail:hover .rail-mark:nth-child(4) .rail-mark__label { transition-delay: 0.09s; }
+.scroll-rail:hover .rail-mark:nth-child(5) .rail-mark__label { transition-delay: 0.12s; }
+
+.rail-mark:hover .rail-mark__tick,
+.rail-mark:focus-visible .rail-mark__tick {
+  width: 18px;
+  background: var(--matcha-deep);
+}
+
+.rail-mark:hover .rail-mark__label {
+  color: var(--ink);
+}
+
+.rail-mark:focus-visible {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rail-mark__label,
+  .rail-mark__tick {
+    transition: none;
+  }
+}
+
+/* No hover to open it and no room on a phone: touch screens get the
+   Index button in the nav instead (Nav.tsx). */
+@media (max-width: 640px), (pointer: coarse) {
   .scroll-rail {
     display: none;
   }
@@ -1037,53 +1126,6 @@ body::after {
 
 @media (prefers-reduced-motion: reduce) {
   .card-sweep::before {
-    transition: none;
-  }
-}
-
-/* =========================================
-   Nav orb — the round menu buttons.
-   Same wipe as the hero buttons, but the fill needs its own clipped layer:
-   the label tooltip hangs below the button, so overflow:hidden can't live
-   on the button itself.
-   ========================================= */
-.nav-orb {
-  position: relative;
-  transition: color 0.32s ease 0.14s;
-}
-
-.nav-orb__fill {
-  position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  overflow: hidden;
-  background: var(--paper-2);
-}
-
-.nav-orb__fill::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  transform: scaleX(0);
-  transform-origin: 0 50%;
-  background: linear-gradient(82.3deg, var(--sweep-a) 10.8%, var(--sweep-b) 94.3%);
-  transition: transform 0.62s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
-}
-
-.nav-orb:hover .nav-orb__fill::before,
-.nav-orb:focus-visible .nav-orb__fill::before {
-  transform: scaleX(1);
-}
-
-.nav-orb:hover,
-.nav-orb:focus-visible {
-  color: var(--sweep-fg);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .nav-orb__fill::before {
     transition: none;
   }
 }

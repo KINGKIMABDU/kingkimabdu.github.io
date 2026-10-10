@@ -76,31 +76,24 @@ export function StaggerItem({
 }
 
 export function SectionHeading({
-  label,
   title,
   intro,
 }: {
-  label: string;
   title: ReactNode;
   intro?: string;
 }) {
   return (
     <div className="mb-14 max-w-2xl">
+      {/* No caps label above the heading any more. Even pulled in to 0.2em it
+          was the templated-portfolio eyebrow, and it only repeated what the
+          nav and the heading already say. The heading carries the section. */}
       <Reveal>
-        {/* 0.3em was part of the problem — caps plus tracking that wide is the
-            templated-portfolio eyebrow. Pulled in to 0.2em; the mono it used
-            to be set in is gone too. */}
-        <p className="mb-4 font-label font-medium text-xs uppercase tracking-[0.2em] text-matcha-deep">
-          {label}
-        </p>
-      </Reveal>
-      <Reveal delay={0.08}>
         <h2 className="font-serif text-4xl leading-tight text-ink md:text-5xl">
           {title}
         </h2>
       </Reveal>
       {intro ? (
-        <Reveal delay={0.16}>
+        <Reveal delay={0.08}>
           <p className="mt-5 text-lg leading-relaxed text-ink-soft">{intro}</p>
         </Reveal>
       ) : null}

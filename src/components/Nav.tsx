@@ -207,8 +207,8 @@ function HandleCard() {
             The Korean rendering of{" "}
             <span className="font-medium text-[var(--card-fg)]">
               KINGKIMABDU
-            </span>{" "}
-            — the username I go by everywhere online.
+            </span>
+            , the username I go by everywhere online.
           </p>
         </div>
       </div>

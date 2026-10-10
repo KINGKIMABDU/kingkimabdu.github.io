@@ -3,10 +3,10 @@
 import { Reveal, Stagger, StaggerItem, SectionHeading } from "@/components/Reveal";
 
 const PRINCIPLES = [
-  { n: "01", a: "Curiosity", b: "over assumptions" },
-  { n: "02", a: "Discipline", b: "over motivation" },
-  { n: "03", a: "Creativity", b: "over convention" },
-  { n: "04", a: "Consistency", b: "over intensity" },
+  { a: "Curiosity", b: "over assumptions" },
+  { a: "Discipline", b: "over motivation" },
+  { a: "Creativity", b: "over convention" },
+  { a: "Consistency", b: "over intensity" },
 ];
 
 /*
@@ -40,7 +40,6 @@ export default function About() {
       className="shell shell-y scroll-mt-24"
     >
       <SectionHeading
-        label="About"
         title={
           <>
             More than a student.
@@ -59,7 +58,7 @@ export default function About() {
               I&apos;m Abdullah, a student from Germany, born in Damascus, with
               a passion for technology, science, and creating things that solve
               real problems. My curiosity has always pushed me to explore how
-              things work — from software and artificial intelligence to the
+              things work, from software and artificial intelligence to the
               complexity of the human body and the world of medicine.
             </p>
           </Reveal>
@@ -93,7 +92,7 @@ export default function About() {
           <Reveal delay={0.2}>
             <p>
               I&apos;m still at the beginning of my journey, but I&apos;m
-              focused on building things that matter — combining technology,
+              focused on building things that matter, combining technology,
               science, and innovation to shape the future.
             </p>
           </Reveal>
@@ -111,21 +110,19 @@ export default function About() {
           <Stagger className="space-y-3">
             {PRINCIPLES.map((p) => (
               <StaggerItem
-                key={p.n}
+                key={p.a}
                 className="card-inset card-sweep group flex items-baseline gap-5 px-6 py-5"
               >
-                <span className="font-label text-xs font-medium tracking-[0.14em] text-matcha-deep">
-                  {p.n}
-                </span>
+                {/* no 01–04 in front: the four are a set, not a sequence */}
                 <span className="font-serif text-xl text-ink">{p.a}</span>
                 <span className="ml-auto text-sm text-ink-soft">{p.b}</span>
               </StaggerItem>
             ))}
 
             <StaggerItem className="card-inset card-sweep group px-6 py-5">
-              <p className="font-label text-[11px] font-medium uppercase tracking-[0.18em] text-matcha-deep">
+              <h3 className="text-sm font-medium text-matcha-deep">
                 Off the clock
-              </p>
+              </h3>
               {/*
                * A wrapping list, not one long inline run. As a single <p> of
                * sibling <span>s there was no break opportunity anywhere in the
@@ -151,7 +148,7 @@ export default function About() {
               {/* a short mark, not a full-width hairline across the card */}
               <hr className="rule-mark mt-5 text-matcha" aria-hidden="true" />
               <p className="mt-4 text-sm leading-relaxed text-ink-soft">
-                Matcha and coffee, roughly in that order. Green — as you may
+                Matcha and coffee, roughly in that order. Green, as you may
                 have noticed.
               </p>
             </StaggerItem>

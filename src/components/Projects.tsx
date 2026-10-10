@@ -161,14 +161,14 @@ function ProjectCard({ project }: { project: Project }) {
         <div className="h-full w-full rounded-xl rounded-tr-[100px] rounded-br-[40px] bg-[var(--project-fill)]" />
       </div>
 
-      {/* slow-spinning orb behind the glass */}
-      <div className="relative flex h-full w-full items-center justify-center rounded-2xl backdrop-blur-lg">
-        <div className="animate-spin-slow h-36 w-36 rounded-full bg-gradient-to-tr from-matcha via-matcha-soft to-[var(--project-fill)] opacity-70" />
-      </div>
+      {/* There used to be a slow-spinning gradient orb here, seen through a
+          frosted panel. Both came with the Uiverse template and neither said
+          anything about the project; the cut corner is the card's identity,
+          so that stays and the decoration goes. */}
 
       {/* content overlay */}
       <div className="absolute inset-0 flex h-full w-full justify-between p-2">
-        <div className="flex w-[68%] flex-col rounded-xl bg-[var(--project-fg)]/10 p-3 pt-4 font-label backdrop-blur-lg">
+        <div className="flex w-[68%] flex-col rounded-xl bg-[var(--project-fg)]/[0.07] p-3 pt-4 font-label">
           <span
             className={`font-serif leading-tight break-words hyphens-auto text-[var(--project-fg)] ${titleSize(
               project.title
@@ -188,7 +188,6 @@ function ProjectCard({ project }: { project: Project }) {
 
         <div className="flex h-full flex-col items-end pt-2 pr-1 text-[var(--project-fg)]/60">
           <span className="text-[10px] leading-[13px]">{project.kind}</span>
-          <span className="text-[10px] leading-[13px]">· {project.n}</span>
           <div className="mt-auto flex flex-col items-end gap-2">
             {project.links.map((link) => (
               <a
@@ -197,7 +196,7 @@ function ProjectCard({ project }: { project: Project }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={link.label}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--project-fg)]/20 backdrop-blur-lg transition-all duration-300 hover:bg-matcha hover:text-[var(--project-fill)]"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--project-fg)]/15 transition-colors duration-300 hover:bg-matcha hover:text-[var(--project-fill)]"
               >
                 {LINK_ICONS[link.kind]}
               </a>
@@ -265,7 +264,7 @@ export default function Projects() {
       id="projects"
       className="shell shell-y scroll-mt-24"
     >
-      <SectionHeading label="Projects" title="Selected work from GitHub." />
+      <SectionHeading title="Selected work from GitHub." />
 
       {/* the one lift left on the page — these cards are objects on a surface,
           so picking one up reads; the buttons aren't. Two-up on phones via the

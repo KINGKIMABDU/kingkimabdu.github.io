@@ -171,7 +171,6 @@ export default function Contact() {
       className="shell shell-y scroll-mt-24"
     >
       <SectionHeading
-        label="Contact"
         title="Say hello."
         intro="If you want to work on something together, or you just have a question about one of these projects, email is the easiest way to reach me. I read everything."
       />

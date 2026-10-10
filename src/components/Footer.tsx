@@ -20,7 +20,7 @@ export default function Footer() {
           {/* This is a sentence, not a label — it was only in mono because
               everything small was. */}
           <p className="mt-2 text-sm text-ink-soft">
-            © {new Date().getFullYear()} Abdullah Alhariri — built with care,
+            © {new Date().getFullYear()} Abdullah Alhariri. Built with care,
             coffee, and discipline.
           </p>
         </div>

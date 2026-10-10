@@ -253,6 +253,19 @@ body {
   color: var(--ink);
 }
 
+/* The parts of the page nobody draws. Every link and button used to fall back
+   to the browser's blue focus ring, the one thing on the page outside the
+   palette. */
+:focus-visible {
+  outline: 2px solid var(--matcha-deep);
+  outline-offset: 3px;
+}
+
+input,
+textarea {
+  caret-color: var(--matcha-deep);
+}
+
 /* Subtle paper grain over everything */
 body::after {
   content: "";
@@ -535,15 +548,6 @@ body::after {
 }
 
 /* Slow spin for the project-card orb */
-@keyframes spin-slow {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-spin-slow {
-  animation: spin-slow 12s linear infinite;
-}
 
 /* =========================================
    Scroll rail — the custom bar on the right
@@ -646,8 +650,8 @@ body::after {
   --stars-color: #f6f4ec;
   --clouds-color: #eef3e2;
   --back-clouds-color: #b9c9a3;
-  --sw-transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25);
-  --circle-transition: 0.3s cubic-bezier(0, -0.02, 0.35, 1.17);
+  --sw-transition: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  --circle-transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 
   display: inline-block;
   border: none;

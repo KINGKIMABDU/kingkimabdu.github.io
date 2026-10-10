@@ -134,7 +134,7 @@ const MACHINES = [
     icon: "phone",
     tag: "Daily phone",
     name: "Samsung Galaxy S22 Ultra",
-    blurb: "My main phone — notes, photos, and everything in between.",
+    blurb: "My main phone: notes, photos, and everything in between.",
     specs: ["Exynos 2200", "256 GB storage", "12 GB RAM"],
   },
 ];
@@ -168,9 +168,8 @@ export default function Stack() {
       className="shell shell-y scroll-mt-24"
     >
       <SectionHeading
-        label="Stack & Setup"
         title="The stack I build on."
-        intro="The devices and tools I actually use every day — from the machines I build on to the software I live in."
+        intro="The devices and tools I actually use every day, from the machines I build on to the software I live in."
       />
 
       <Stagger className="grid gap-5 md:grid-cols-3">

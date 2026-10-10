@@ -38,7 +38,7 @@ const STEPS: Step[] = [
   {
     n: "01",
     title: "Taking things apart",
-    text: "As a child, I learned by exploring, testing, and taking things apart. That curiosity shaped how I think. I never liked only accepting that something works — I wanted to know how.",
+    text: "As a child, I learned by exploring, testing, and taking things apart. That curiosity shaped how I think. I never liked only accepting that something works. I wanted to know how.",
   },
   {
     n: "02",
@@ -58,22 +58,22 @@ const STEPS: Step[] = [
   {
     n: "03",
     title: "Tinkering with real hardware",
-    text: "I started using my father's old laptop and experimenting seriously — software, hardware, settings, systems, tools. I learned by trying, breaking, fixing, and understanding more each time.",
+    text: "I started using my father's old laptop and experimenting seriously: software, hardware, settings, systems, tools. I learned by trying, breaking, fixing, and understanding more each time.",
   },
   {
     n: "04",
     title: "Finding my own machine",
-    text: "A turning point: finding and rebuilding my MSI laptop. I upgraded it, installed different systems, and learned Linux, Windows, drivers, performance — how computers really work beyond the surface.",
+    text: "A turning point: finding and rebuilding my MSI laptop. I upgraded it, installed different systems, and learned Linux, Windows, drivers, performance, and how computers really work beyond the surface.",
   },
   {
     n: "05",
     title: "Becoming an Android & Samsung fan",
-    text: "I grew deeply interested in Android, Samsung, and the freedom of customizing devices. Technology became more than a hobby — a way to express creativity and build my own setup.",
+    text: "I grew deeply interested in Android, Samsung, and the freedom of customizing devices. Technology became more than a hobby. It became a way to express creativity and build my own setup.",
   },
   {
     n: "06",
     title: "Going deeper",
-    text: "Today I code, tinker, study, build websites, explore AI, and use Linux. I'm fully on Arch — my MSI as main machine, my ThinkPad X270 for outdoor work and mobility.",
+    text: "Today I code, tinker, study, build websites, explore AI, and use Linux. I'm fully on Arch, with my MSI as main machine, my ThinkPad X270 for outdoor work and mobility.",
   },
   {
     n: "07",
@@ -83,7 +83,7 @@ const STEPS: Step[] = [
   {
     n: "08",
     title: "My father's influence",
-    text: "A huge part of who I am comes from my father. His intelligence, his support, and his work as a doctor inspired me — he showed me how powerful knowledge, discipline, and helping people can be.",
+    text: "A huge part of who I am comes from my father. His intelligence, his support, and his work as a doctor inspired me. He showed me how powerful knowledge, discipline, and helping people can be.",
     link: {
       href: "https://www.linkedin.com/in/muhammad-ameen-alhariri-a6267998/",
       label: "Muhammad Ameen Alhariri",
@@ -103,7 +103,6 @@ export default function Timeline() {
       className="shell shell-y scroll-mt-24 [--shell-cap:52rem]"
     >
       <SectionHeading
-        label="Timeline"
         title="How curiosity became direction."
         intro="The path from taking things apart as a kid to building real projects today."
       />
@@ -162,10 +161,10 @@ export default function Timeline() {
                 </span>
 
                 <div>
-                  <p className="font-label text-xs font-medium tracking-[0.14em] text-matcha-deep">
-                    {step.n}
-                  </p>
-                  <h3 className="mt-2 font-serif text-2xl text-ink">
+                  {/* The step number used to sit above each title. The line
+                      and the order already say "this came next"; 01–09 only
+                      repeated it in a label. */}
+                  <h3 className="font-serif text-2xl text-ink">
                     <GooeyReveal>{step.title}</GooeyReveal>
                   </h3>
                   <p className="mt-3 leading-relaxed text-ink-soft">

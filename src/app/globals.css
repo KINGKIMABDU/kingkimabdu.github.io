@@ -17,6 +17,10 @@
   --project-edge: #a7bc8f;
   --project-fg: #f6f4ec;
   --project-fg-soft: #edebdf;
+  /* the arc: pale core, matcha band, then the card's own fill */
+  --project-arc-core: #eef0e2;
+  --project-arc-band: #a7bc8f;
+  --project-arc-ink: #2e3226;
   /* hover sweep shared by the hero buttons and the plain cards */
   --sweep-a: #7e9765;
   --sweep-b: #454d33;
@@ -101,6 +105,9 @@
     --project-edge: #4a5936;
     --project-fg: #ece9dc;
     --project-fg-soft: #c9cdb8;
+    --project-arc-core: #c9d4b4;
+    --project-arc-band: #7e9765;
+    --project-arc-ink: #1c2016;
     --sweep-a: #4a5c38;
     --sweep-b: #26301b;
     --sweep-fg: #ece9dc;
@@ -137,6 +144,9 @@
   --project-edge: #4a5936;
   --project-fg: #ece9dc;
   --project-fg-soft: #c9cdb8;
+  --project-arc-core: #c9d4b4;
+  --project-arc-band: #7e9765;
+  --project-arc-ink: #1c2016;
   --sweep-a: #4a5c38;
   --sweep-b: #26301b;
   --sweep-fg: #ece9dc;
@@ -246,6 +256,17 @@ body {
   html {
     scroll-behavior: auto;
   }
+}
+
+/* Project card art, filtered per card in Projects.tsx */
+.project-arc {
+  background: radial-gradient(
+      circle at 50% 118%,
+      var(--project-arc-core) 20%,
+      var(--project-arc-band) 40% 50%,
+      var(--project-fill) 55%
+    )
+    no-repeat center / auto;
 }
 
 ::selection {

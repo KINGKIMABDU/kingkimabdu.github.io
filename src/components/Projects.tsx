@@ -33,7 +33,7 @@ const PROJECTS: Project[] = [
       },
       { kind: "play", href: VERTISOVA_PLAY, label: "Vertisova on Google Play" },
     ],
-    linkLabel: "GitHub · Google Play",
+    linkLabel: "GitHub · Play",
   },
   {
     n: "02",
@@ -150,45 +150,67 @@ function titleSize(title: string) {
   return "text-2xl";
 }
 
-/* Card layout adapted from Uiverse.io by monkey_8812, recolored to matcha.
+/* Card adapted from Uiverse.io by ashif_6672, recoloured to matcha. The art is
+   a radial arc rising from the bottom edge, pushed through turbulence so its
+   rings come out torn and organic, the same family as the blob behind the
+   page. Each card gets its own seed, so no two arcs tear the same way. The
+   original's gradient-filled title is gone: the arc is the colour, the type
+   stays solid.
+
    Built on --project-* rather than the page tokens: these stay dark tiles
    with light labels in both themes instead of inverting in dark mode. */
 function ProjectCard({ project }: { project: Project }) {
+  const filterId = `project-noise-${project.n}`;
+
   return (
-    <div className="relative h-[340px] w-[240px] overflow-hidden rounded-2xl border border-olive/25">
-      {/* backdrop layer with the signature cut corner */}
-      <div className="absolute h-full w-full bg-[var(--project-edge)] p-1">
-        <div className="h-full w-full rounded-xl rounded-tr-[100px] rounded-br-[40px] bg-[var(--project-fill)]" />
-      </div>
+    <div className="group/card relative h-[340px] w-[240px] overflow-hidden rounded-2xl border border-olive/25 bg-[var(--project-fill)] shadow-[0_18px_32px_-18px_rgba(46,50,38,0.55)]">
+      <svg className="absolute h-0 w-0" aria-hidden="true" focusable="false">
+        <filter id={filterId}>
+          <feTurbulence
+            type="turbulence"
+            baseFrequency="0.9"
+            numOctaves="2"
+            seed={Number(project.n)}
+            stitchTiles="stitch"
+            result="turbulence"
+          />
+          <feDisplacementMap
+            in="SourceGraphic"
+            in2="turbulence"
+            scale="30"
+            xChannelSelector="R"
+            yChannelSelector="G"
+          />
+        </filter>
+      </svg>
 
-      {/* There used to be a slow-spinning gradient orb here, seen through a
-          frosted panel. Both came with the Uiverse template and neither said
-          anything about the project; the cut corner is the card's identity,
-          so that stays and the decoration goes. */}
+      {/* oversized so the displaced edges never show the card behind them */}
+      <div
+        className="project-arc absolute -inset-[5%]"
+        style={{ filter: `url(#${filterId})` }}
+        aria-hidden="true"
+      />
 
-      {/* content overlay */}
-      <div className="absolute inset-0 flex h-full w-full justify-between p-2">
-        <div className="flex w-[68%] flex-col rounded-xl bg-[var(--project-fg)]/[0.07] p-3 pt-4 font-label">
-          <span
-            className={`font-serif leading-tight break-words hyphens-auto text-[var(--project-fg)] ${titleSize(
-              project.title
-            )}`}
-          >
-            {project.title}
+      <div className="relative flex h-full flex-col p-5">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-[var(--project-fg-soft)]/70">
+          {project.kind}
+        </span>
+        <span
+          className={`mt-2 font-serif leading-tight break-words hyphens-auto text-[var(--project-fg)] transition-[letter-spacing,translate] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:-translate-y-0.5 group-hover/card:tracking-[0.01em] ${titleSize(
+            project.title
+          )}`}
+        >
+          {project.title}
+        </span>
+        <span className="mt-2.5 text-[11.5px] leading-relaxed text-[var(--project-fg-soft)]/85">
+          {project.blurb}
+        </span>
+
+        <div className="mt-auto flex items-end justify-between">
+          <span className="pb-1 text-[10px] font-medium uppercase tracking-[0.12em] text-[var(--project-arc-ink)]">
+            {project.linkLabel}
           </span>
-          <span className="mt-2 text-[11px] leading-relaxed text-[var(--project-fg-soft)]/80">
-            {project.blurb}
-          </span>
-          <div className="mt-auto flex w-full items-center justify-center">
-            <span className="text-[10px] font-medium uppercase tracking-widest text-[var(--project-fg-soft)]/60">
-              {project.linkLabel}
-            </span>
-          </div>
-        </div>
-
-        <div className="flex h-full flex-col items-end pt-2 pr-1 text-[var(--project-fg)]/60">
-          <span className="text-[10px] leading-[13px]">{project.kind}</span>
-          <div className="mt-auto flex flex-col items-end gap-2">
+          <div className="flex gap-2">
             {project.links.map((link) => (
               <a
                 key={link.kind}
@@ -196,7 +218,7 @@ function ProjectCard({ project }: { project: Project }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={link.label}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--project-fg)]/15 transition-colors duration-300 hover:bg-matcha hover:text-[var(--project-fill)]"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--project-fill)] text-[var(--project-fg)] transition-colors duration-300 hover:bg-[var(--project-arc-ink)]"
               >
                 {LINK_ICONS[link.kind]}
               </a>

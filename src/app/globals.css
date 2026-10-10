@@ -632,7 +632,7 @@ body::after {
   transition: width 0.2s ease, background-color 0.2s ease;
 }
 
-.scroll-rail:hover .scroll-rail__track,
+.scroll-rail[data-open="true"] .scroll-rail__track,
 .scroll-rail[data-dragging="true"] .scroll-rail__track {
   width: 4px;
   background: color-mix(in srgb, var(--line) 100%, transparent);
@@ -663,36 +663,47 @@ body::after {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--paper) 80%, transparent);
 }
 
-.scroll-rail:hover .scroll-rail__bead,
+.scroll-rail[data-open="true"] .scroll-rail__bead,
 .scroll-rail[data-dragging="true"] .scroll-rail__bead {
   height: 11px;
   width: 11px;
 }
 
-/* Section ticks. Anchored on the track's centre line, with the name to the
-   left of the tick, since the rail hugs the right edge of the window. */
+/* Section ticks. They sit *beside* the line, ending a few px short of it,
+   never across it: when the bead arrives at a section it lands next to its
+   tick instead of on top of it, which is what made the two look like they
+   were colliding. The name sits left of the tick, since the rail hugs the
+   right edge of the window. */
 .rail-mark {
   position: absolute;
-  right: 50%;
+  right: calc(50% + 9px);
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  gap: 12px;
-  translate: 5px -50%;
-  padding: 6px 0 6px 8px;
+  gap: 10px;
+  translate: 0 -50%;
+  padding: 6px 0 6px 10px;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .rail-mark__tick {
   height: 1.5px;
-  width: 10px;
+  width: 8px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--ink-soft) 70%, transparent);
-  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+  background: color-mix(in srgb, var(--ink-soft) 55%, transparent);
+  transition:
+    width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
     background-color 0.3s ease;
 }
 
+/* sections behind you take the colour of the filled part of the rail */
+.rail-mark[data-passed="true"] .rail-mark__tick {
+  background: color-mix(in srgb, var(--matcha) 80%, transparent);
+}
+
 .rail-mark[data-active="true"] .rail-mark__tick {
+  width: 14px;
   background: var(--matcha-deep);
 }
 
@@ -711,7 +722,7 @@ body::after {
   translate: 8px 0;
   pointer-events: none;
   transition:
-    opacity 0.35s ease,
+    opacity 0.3s ease,
     translate 0.5s cubic-bezier(0.22, 1, 0.36, 1),
     color 0.3s ease;
 }
@@ -721,34 +732,60 @@ body::after {
 }
 
 .rail-mark[data-flash="true"] .rail-mark__label,
-.scroll-rail:hover .rail-mark__label,
+.scroll-rail[data-open="true"] .rail-mark__label,
 .rail-mark:focus-visible .rail-mark__label {
   opacity: 1;
   translate: 0 0;
 }
 
-.scroll-rail:hover .rail-mark__label {
+.scroll-rail[data-open="true"] .rail-mark__label {
   pointer-events: auto;
 }
 
-/* stagger the names out top to bottom, like a list being read */
-.scroll-rail:hover .rail-mark:nth-child(2) .rail-mark__label { transition-delay: 0.03s; }
-.scroll-rail:hover .rail-mark:nth-child(3) .rail-mark__label { transition-delay: 0.06s; }
-.scroll-rail:hover .rail-mark:nth-child(4) .rail-mark__label { transition-delay: 0.09s; }
-.scroll-rail:hover .rail-mark:nth-child(5) .rail-mark__label { transition-delay: 0.12s; }
+/* the names come out top to bottom, like a list being read */
+.scroll-rail[data-open="true"] .rail-mark:nth-child(2) .rail-mark__label { transition-delay: 0.03s; }
+.scroll-rail[data-open="true"] .rail-mark:nth-child(3) .rail-mark__label { transition-delay: 0.06s; }
+.scroll-rail[data-open="true"] .rail-mark:nth-child(4) .rail-mark__label { transition-delay: 0.09s; }
+.scroll-rail[data-open="true"] .rail-mark:nth-child(5) .rail-mark__label { transition-delay: 0.12s; }
 
-.rail-mark:hover .rail-mark__tick,
-.rail-mark:focus-visible .rail-mark__tick {
-  width: 18px;
-  background: var(--matcha-deep);
+/* Pointing at one name: only where something can actually hover (mouse,
+   trackpad, an Apple Pencil over an iPad), so a finger never leaves it
+   stuck on after a tap. :focus-visible covers the keyboard. */
+@media (any-hover: hover) {
+  .rail-mark:hover .rail-mark__tick {
+    width: 20px;
+    background: var(--matcha-deep);
+  }
+
+  .rail-mark:hover .rail-mark__label {
+    color: var(--ink);
+  }
 }
 
-.rail-mark:hover .rail-mark__label {
-  color: var(--ink);
+.rail-mark:focus-visible .rail-mark__tick {
+  width: 20px;
+  background: var(--matcha-deep);
 }
 
 .rail-mark:focus-visible {
   outline: none;
+}
+
+/* Fingers. The hit area grows to a real touch target (the painted line
+   stays a hairline), and each name gets a taller row. */
+@media (pointer: coarse) {
+  .scroll-rail {
+    width: 44px;
+    right: 0;
+  }
+
+  .rail-mark {
+    padding: 11px 0 11px 14px;
+  }
+
+  .rail-mark__label {
+    font-size: 15px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -758,9 +795,9 @@ body::after {
   }
 }
 
-/* No hover to open it and no room on a phone: touch screens get the
-   Index button in the nav instead (Nav.tsx). */
-@media (max-width: 640px), (pointer: coarse) {
+/* Phones only: no room for a rail beside the text, so they get the Index
+   in the corner instead (Nav.tsx). Tablets keep the rail; it opens on tap. */
+@media (max-width: 640px) {
   .scroll-rail {
     display: none;
   }

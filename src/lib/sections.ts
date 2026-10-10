@@ -55,3 +55,44 @@ export function goToSection(e: React.MouseEvent<HTMLAnchorElement>, id: string) 
   el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
   history.pushState(null, "", `#${id}`);
 }
+
+export type Mark = { id: SectionId; label: string; at: number };
+
+/* Where each section starts, as a fraction of the scrollable height, which
+   is the same unit the rail's bead rides on, so a tick sits exactly where the
+   bead will be when that section reaches the top. Re-measured whenever the
+   page changes height (fonts landing, images, the viewport resizing). */
+export function useSectionMarks() {
+  const [marks, setMarks] = useState<Mark[]>([]);
+
+  useEffect(() => {
+    const measure = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (max <= 0) return;
+      setMarks(
+        SECTIONS.map((s) => {
+          const el = document.getElementById(s.id);
+          const top = el ? el.getBoundingClientRect().top + window.scrollY : 0;
+          return { ...s, at: Math.min(1, Math.max(0, top / max)) };
+        })
+      );
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(document.body);
+    /* The intro holds the page still with overflow:hidden on <body>, and
+       while it does there is nothing to scroll, so nothing to measure.
+       Lifting it changes no element's size, so the ResizeObserver never
+       hears about it; watching the style attribute does. */
+    const mo = new MutationObserver(measure);
+    mo.observe(document.body, { attributes: true, attributeFilter: ["style"] });
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      mo.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
+
+  return marks;
+}

@@ -3,52 +3,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useScroll, useSpring, useTransform, motion } from "framer-motion";
 import {
-  SECTIONS,
   goToSection,
   useActiveSection,
+  useSectionMarks,
   type SectionId,
 } from "@/lib/sections";
-
-type Mark = { id: SectionId; label: string; at: number };
-
-/* Where each section starts, as a fraction of the scrollable height, which
-   is the same unit the bead rides on, so a tick sits exactly where the bead
-   will be when that section is at the top. Re-measured whenever the page
-   changes height (fonts landing, images, the viewport resizing). */
-function useSectionMarks() {
-  const [marks, setMarks] = useState<Mark[]>([]);
-
-  useEffect(() => {
-    const measure = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      if (max <= 0) return;
-      setMarks(
-        SECTIONS.map((s) => {
-          const el = document.getElementById(s.id);
-          const top = el ? el.getBoundingClientRect().top + window.scrollY : 0;
-          return { ...s, at: Math.min(1, Math.max(0, top / max)) };
-        })
-      );
-    };
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(document.body);
-    /* The intro holds the page still with overflow:hidden on <body>, and
-       while it does there is nothing to scroll, so nothing to measure.
-       Lifting it changes no element's size, so the ResizeObserver never
-       hears about it; watching the style attribute does. */
-    const mo = new MutationObserver(measure);
-    mo.observe(document.body, { attributes: true, attributeFilter: ["style"] });
-    window.addEventListener("resize", measure);
-    return () => {
-      ro.disconnect();
-      mo.disconnect();
-      window.removeEventListener("resize", measure);
-    };
-  }, []);
-
-  return marks;
-}
+import { isHoverPointer } from "@/lib/utils";
 
 /* Entering a section says its name once, beside the rail, then lets it go.
    It's the only place the page tells you where you are without being asked. */
@@ -85,20 +45,33 @@ function useScrollingFlag() {
   }, []);
 }
 
+/* How far a finger has to travel on the rail before it counts as a drag.
+   Under that it's a tap, and a tap opens the index instead of jumping. */
+const TAP_SLOP = 8;
+
 /**
  * Replaces the native scrollbar (hidden in globals.css) with a hairline rail
  * in the site's own palette: a matcha fill that grows top-down, plus a bead
- * that rides the current position. Click or drag anywhere along it to scrub.
+ * that rides the current position. Drag along it to scrub.
  *
- * It is also the menu. Each section is a tick on the rail; hover the rail and
- * their names slide out beside the ticks, click one to go there. There is no
- * bar across the top of the page any more, only the wordmark.
+ * It is also the menu. Each section is a tick beside the rail; open the rail
+ * and their names slide out next to the ticks, pick one to go there.
+ *
+ * "Open" is state, not :hover, because the ways in differ by input:
+ *  - mouse, trackpad, and an Apple Pencil hovering over an iPad: pointer
+ *    enters, it opens; pointer leaves, it closes.
+ *  - a finger: tap the rail to open, tap a name to go, tap anywhere else to
+ *    close. A finger *dragging* the rail still scrubs; only a tap opens.
+ * CSS :hover can't tell those apart: iPadOS fires it on a tap and then never
+ * lets go, which left the names stuck out over the page.
  */
 export default function ScrollRail() {
   useScrollingFlag();
   const marks = useSectionMarks();
   const active = useActiveSection();
   const flash = useFlash(active);
+  const activeIndex = marks.findIndex((m) => m.id === active);
+
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, {
     stiffness: 220,
@@ -109,6 +82,24 @@ export default function ScrollRail() {
 
   const railRef = useRef<HTMLDivElement>(null);
   const [dragging, setDragging] = useState(false);
+  const [open, setOpen] = useState(false);
+  /* a finger that has touched down but not yet moved far enough to drag */
+  const touchStart = useRef<number | null>(null);
+
+  // a tap anywhere off the rail puts the names away again
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: PointerEvent) => {
+      if (!railRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    document.addEventListener("pointerdown", onDown);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onDown);
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
 
   const scrubTo = useCallback((clientY: number) => {
     const rail = railRef.current;
@@ -123,29 +114,51 @@ export default function ScrollRail() {
     window.scrollTo({ top: fraction * max });
   }, []);
 
-  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    e.preventDefault();
+  const startDrag = (e: React.PointerEvent<HTMLDivElement>) => {
     // html has scroll-behavior: smooth, which would make every drag frame
     // animate and lag a long way behind the pointer
     document.documentElement.style.scrollBehavior = "auto";
+    setDragging(true);
+    scrubTo(e.clientY);
+  };
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.preventDefault();
     // capture can legitimately fail (stale pointer id); the drag still works
     // off the element's own move events, so never let it throw
     try {
       railRef.current?.setPointerCapture(e.pointerId);
     } catch {}
-    setDragging(true);
-    scrubTo(e.clientY);
+    if (e.pointerType === "touch") {
+      touchStart.current = e.clientY;
+      return;
+    }
+    startDrag(e);
   };
 
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (dragging) scrubTo(e.clientY);
+    if (dragging) {
+      scrubTo(e.clientY);
+    } else if (
+      touchStart.current !== null &&
+      Math.abs(e.clientY - touchStart.current) > TAP_SLOP
+    ) {
+      touchStart.current = null;
+      setOpen(false);
+      startDrag(e);
+    }
   };
 
   const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!dragging) return;
     try {
       railRef.current?.releasePointerCapture(e.pointerId);
     } catch {}
+    if (touchStart.current !== null) {
+      // never became a drag: it was a tap
+      touchStart.current = null;
+      if (e.type === "pointerup") setOpen((o) => !o);
+    }
+    if (!dragging) return;
     setDragging(false);
     document.documentElement.style.scrollBehavior = "";
   };
@@ -155,6 +168,9 @@ export default function ScrollRail() {
       ref={railRef}
       className="scroll-rail"
       data-dragging={dragging}
+      data-open={open}
+      onPointerEnter={(e) => isHoverPointer(e) && setOpen(true)}
+      onPointerLeave={(e) => isHoverPointer(e) && !dragging && setOpen(false)}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={endDrag}
@@ -168,18 +184,22 @@ export default function ScrollRail() {
         <motion.span className="scroll-rail__bead" style={{ top: beadTop }} />
 
         <nav aria-label="Sections">
-          {marks.map((m) => (
+          {marks.map((m, i) => (
             <a
               key={m.id}
               href={`#${m.id}`}
               className="rail-mark"
               style={{ top: `${m.at * 100}%` }}
               data-active={active === m.id}
+              data-passed={activeIndex >= 0 && i < activeIndex}
               data-flash={flash === m.id}
               aria-current={active === m.id ? "location" : undefined}
               /* a press on a name is a jump, not the start of a scrub */
               onPointerDown={(e) => e.stopPropagation()}
-              onClick={(e) => goToSection(e, m.id)}
+              onClick={(e) => {
+                setOpen(false);
+                goToSection(e, m.id);
+              }}
             >
               <span className="rail-mark__tick" aria-hidden="true" />
               <span className="rail-mark__label">{m.label}</span>

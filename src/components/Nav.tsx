@@ -1,12 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { SECTIONS, goToSection, useActiveSection } from "@/lib/sections";
+import {
+  goToSection,
+  useActiveSection,
+  useSectionMarks,
+} from "@/lib/sections";
 import {
   motion,
   AnimatePresence,
   useScroll,
   useMotionValueEvent,
+  useTransform,
 } from "framer-motion";
 import { isHoverPointer } from "@/lib/utils";
 
@@ -74,6 +79,8 @@ function HandleCard() {
       data-flipped={flipped}
       onPointerEnter={(e) => isHoverPointer(e) && setFlipped(true)}
       onPointerLeave={(e) => isHoverPointer(e) && setFlipped(false)}
+      /* a finger can't hover, so a tap turns it over instead */
+      onPointerUp={(e) => e.pointerType === "touch" && setFlipped((f) => !f)}
     >
       <div className="handle-card__inner">
         <div className="handle-card__face">
@@ -85,7 +92,8 @@ function HandleCard() {
               </span>
             </div>
             <p className="font-label font-medium text-[9px] uppercase tracking-[0.28em] text-[var(--card-fg-soft)]">
-              Hover on me
+              <span className="pointer-coarse:hidden">Hover on me</span>
+              <span className="hidden pointer-coarse:inline">Tap me</span>
             </p>
           </div>
 
@@ -128,6 +136,19 @@ function HandleCard() {
 
 function LogoWithCard() {
   const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  /* set on touchdown, read on click: was this press a finger? */
+  const touched = useRef(false);
+
+  // a tap anywhere off the wordmark and card puts the card away
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: PointerEvent) => {
+      if (!wrapRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
+  }, [open]);
   const [scrolled, setScrolled] = useState(false);
   const { scrollY } = useScroll();
 
@@ -138,6 +159,7 @@ function LogoWithCard() {
 
   return (
     <div
+      ref={wrapRef}
       className="relative"
       onPointerEnter={(e) => isHoverPointer(e) && setOpen(true)}
       onPointerLeave={(e) => isHoverPointer(e) && setOpen(false)}
@@ -152,6 +174,20 @@ function LogoWithCard() {
           copies crossfade instead, which does. */}
       <a
         href="#home"
+        onPointerDown={(e) => {
+          touched.current = e.pointerType === "touch";
+        }}
+        /* With a mouse or Pencil the card is already open from hovering, so
+           a click just goes home. A finger has no hover: its first tap shows
+           the card, and a second tap, with the card up, goes home. */
+        onClick={(e) => {
+          if (touched.current && !open) {
+            e.preventDefault();
+            setOpen(true);
+          } else {
+            setOpen(false);
+          }
+        }}
         className={`relative inline-flex font-kr text-xl tracking-wide transition-colors duration-500 ease-out hover:text-matcha-deep ${
           scrolled ? "text-ink" : "text-ink-soft"
         }`}
@@ -208,42 +244,53 @@ function LogoWithCard() {
   );
 }
 
-/* Touch screens have no hover to open the rail index, and phones have no
-   room for the rail at all, so they get this: one word in the corner that
-   opens the same list, drawn the same way, a line with a tick per section. */
-function TouchIndex() {
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+/* Phones. There's no room for the rail beside the text, so the rail comes
+   to them instead: "Index" in the corner opens the page drawn as a map, one
+   tall line down the right with each section's name set at its real place
+   along it (the same fractions the desktop rail uses), the filled part and
+   the bead showing how far down you are. Same object as on a laptop, just
+   big enough for a thumb. */
+function PhoneIndex() {
   const active = useActiveSection();
+  const marks = useSectionMarks();
   const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll();
+  const beadTop = useTransform(scrollYProgress, (v) => `${v * 100}%`);
 
   useEffect(() => {
     if (!open) return;
-    const onDown = (e: PointerEvent) => {
-      if (!ref.current?.contains(e.target as Node)) setOpen(false);
-    };
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
-    document.addEventListener("pointerdown", onDown);
+    const root = document.documentElement;
+    const prev = root.style.overflow;
+    root.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
     return () => {
-      document.removeEventListener("pointerdown", onDown);
+      root.style.overflow = prev;
       window.removeEventListener("keydown", onKey);
     };
   }, [open]);
 
   return (
-    <div ref={ref} className="relative hidden max-sm:block pointer-coarse:block">
+    <div className="sm:hidden">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        aria-controls="touch-index"
-        className="flex items-center gap-2.5 py-2 text-[15px] font-medium text-ink"
+        aria-controls="phone-index"
+        className="relative z-[2] flex h-11 items-center gap-2.5 text-[15px] font-medium text-ink"
         style={{
           textShadow:
             "0 0 12px var(--paper), 0 0 4px var(--paper), 0 0 2px var(--paper)",
         }}
       >
-        Index
+        <span className="relative">
+          <span className={open ? "invisible" : ""}>Index</span>
+          <span className={`absolute inset-0 ${open ? "" : "invisible"}`}>
+            Close
+          </span>
+        </span>
         <span
           className={`block h-px bg-matcha-deep transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
             open ? "w-6" : "w-3.5"
@@ -255,41 +302,78 @@ function TouchIndex() {
       <AnimatePresence>
         {open ? (
           <motion.nav
-            id="touch-index"
+            id="phone-index"
             aria-label="Sections"
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute right-0 top-full mt-2 w-56 rounded-2xl bg-paper-2 py-4 pr-5 pl-6 shadow-[0_18px_40px_-18px_rgba(46,50,38,0.5)]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.25 } }}
+            transition={{ duration: 0.35, ease: EASE }}
+            className="fixed inset-0 z-[1] bg-paper"
           >
-            <ul className="relative space-y-1 border-l border-line">
-              {SECTIONS.map((s) => (
-                <li key={s.id}>
-                  <a
-                    href={`#${s.id}`}
-                    onClick={(e) => {
-                      setOpen(false);
-                      goToSection(e, s.id);
-                    }}
-                    aria-current={active === s.id ? "location" : undefined}
-                    className={`flex items-center gap-4 py-2 font-serif text-2xl ${
-                      active === s.id ? "text-ink" : "text-ink-soft"
-                    }`}
-                  >
-                    <span
-                      className={`-ml-px h-px shrink-0 ${
-                        active === s.id
-                          ? "w-5 bg-matcha-deep"
-                          : "w-2.5 bg-ink-soft/60"
-                      }`}
-                      aria-hidden="true"
-                    />
-                    {s.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <div className="shell flex h-full flex-col pt-24 pb-12">
+              <a
+                href="#home"
+                onClick={(e) => {
+                  setOpen(false);
+                  goToSection(e, "home");
+                }}
+                className="self-end text-sm text-ink-soft"
+              >
+                Back to the top
+              </a>
+
+              {/* the map: a line the height of the screen, the page laid on it */}
+              <div className="relative mt-8 mr-1 flex-1 self-stretch">
+                <motion.div
+                  className="absolute top-0 right-0 bottom-0 w-px origin-top bg-line"
+                  initial={{ scaleY: 0 }}
+                  animate={{ scaleY: 1 }}
+                  transition={{ duration: 0.7, ease: EASE }}
+                />
+                <motion.div
+                  className="absolute top-0 right-0 w-px origin-top bg-matcha-deep"
+                  style={{ height: beadTop }}
+                  aria-hidden="true"
+                />
+                <motion.span
+                  className="absolute right-0 h-2 w-2 translate-x-[3.5px] -translate-y-1/2 rounded-full bg-matcha-deep shadow-[0_0_0_4px_var(--paper)]"
+                  style={{ top: beadTop }}
+                  aria-hidden="true"
+                />
+
+                {marks.map((m, i) => {
+                  const here = active === m.id;
+                  return (
+                    <motion.a
+                      key={m.id}
+                      href={`#${m.id}`}
+                      onClick={(e) => {
+                        setOpen(false);
+                        goToSection(e, m.id);
+                      }}
+                      aria-current={here ? "location" : undefined}
+                      initial={{ opacity: 0, x: 16 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.15 + i * 0.05, duration: 0.6, ease: EASE }}
+                      className="absolute right-3.5 flex -translate-y-1/2 items-center gap-4 py-1 pl-6"
+                      style={{ top: `${m.at * 100}%` }}
+                    >
+                      <span
+                        className={`font-serif text-[2.4rem] leading-none ${
+                          here ? "text-ink" : "text-ink-soft"
+                        }`}
+                      >
+                        {m.label}
+                      </span>
+                      <span
+                        className={`h-px ${here ? "w-7 bg-matcha-deep" : "w-3 bg-ink-soft/50"}`}
+                        aria-hidden="true"
+                      />
+                    </motion.a>
+                  );
+                })}
+              </div>
+            </div>
           </motion.nav>
         ) : null}
       </AnimatePresence>
@@ -314,7 +398,7 @@ export default function Nav() {
           <LogoWithCard />
         </div>
         <div className="pointer-events-auto">
-          <TouchIndex />
+          <PhoneIndex />
         </div>
       </div>
     </motion.header>

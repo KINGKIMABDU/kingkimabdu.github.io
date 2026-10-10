@@ -157,13 +157,13 @@ function titleSize(title: string) {
    original's gradient-filled title is gone: the arc is the colour, the type
    stays solid.
 
-   Built on --project-* rather than the page tokens: these stay dark tiles
-   with light labels in both themes instead of inverting in dark mode. */
+   Built on --project-* rather than the page tokens, so each theme can give
+   the card its own arc instead of a straight inversion. */
 function ProjectCard({ project }: { project: Project }) {
   const filterId = `project-noise-${project.n}`;
 
   return (
-    <div className="group/card relative h-[340px] w-[240px] overflow-hidden rounded-2xl border border-olive/25 bg-[var(--project-fill)] shadow-[0_18px_32px_-18px_rgba(46,50,38,0.55)]">
+    <div className="group/card relative h-[340px] w-[240px] overflow-hidden rounded-2xl bg-[var(--project-fill)] shadow-[0_18px_32px_-18px_rgba(46,50,38,0.45)]">
       <svg className="absolute h-0 w-0" aria-hidden="true" focusable="false">
         <filter id={filterId}>
           <feTurbulence
@@ -221,7 +221,7 @@ function ProjectCard({ project }: { project: Project }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={link.label}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--project-fill)] text-[var(--project-fg)] transition-colors duration-300 hover:bg-[var(--project-arc-ink)]"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--project-btn-bg)] text-[var(--project-btn-fg)] transition-colors duration-300 hover:bg-[var(--project-arc-ink)]"
               >
                 {LINK_ICONS[link.kind]}
               </a>

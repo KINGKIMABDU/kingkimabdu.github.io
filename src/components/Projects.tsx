@@ -37,6 +37,26 @@ const PROJECTS: Project[] = [
   },
   {
     n: "02",
+    kind: "Web Explorer",
+    title: "SILEX",
+    blurb:
+      "A laptop drawn down to the atom. An explorable patent-style drawing that zooms from chassis to die to crystal lattice, with a real simulation on every sheet.",
+    links: [
+      {
+        kind: "github",
+        href: "https://github.com/KINGKIMABDU/SILEX",
+        label: "SILEX on GitHub",
+      },
+      {
+        kind: "demo",
+        href: `${SITE_URL}/SILEX/`,
+        label: "Open SILEX",
+      },
+    ],
+    linkLabel: "Repo · Live site",
+  },
+  {
+    n: "03",
     kind: "School Project",
     title: "Vakuole",
     blurb:
@@ -56,7 +76,7 @@ const PROJECTS: Project[] = [
     linkLabel: "Repo · Live site",
   },
   {
-    n: "03",
+    n: "04",
     kind: "School Project",
     title: "Mitosis",
     blurb:
@@ -76,7 +96,7 @@ const PROJECTS: Project[] = [
     linkLabel: "Repo · Live site",
   },
   {
-    n: "04",
+    n: "05",
     kind: "Personal Site",
     title: "Personal Website",
     blurb:
@@ -91,7 +111,7 @@ const PROJECTS: Project[] = [
     linkLabel: "Open Repository",
   },
   {
-    n: "05",
+    n: "06",
     kind: "Profile Repo",
     title: "KINGKIMABDU",
     blurb:

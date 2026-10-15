@@ -11,7 +11,7 @@ export const dynamic = "force-static";
    an unchanged date is itself the signal that nothing worth recrawling
    happened, so a rebuild timestamp here would just spend priority for
    nothing. */
-/* The two school projects are separate GitHub Pages repos, but Pages serves
+/* The project sites are separate GitHub Pages repos, but Pages serves
    every repo of this account under this same host — so they are pages of this
    site, not other sites, and leaving them out was telling Google this domain
    is one URL wide. Their dates are the last time each project itself was
@@ -19,6 +19,7 @@ export const dynamic = "force-static";
 const PROJECT_PAGES = [
   { path: "VAKUOLE.github.io", lastModified: "2026-06-21" },
   { path: "MITOSIS", lastModified: "2026-05-21" },
+  { path: "SILEX", lastModified: "2026-10-15" },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

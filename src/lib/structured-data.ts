@@ -1,7 +1,7 @@
 import {
   AUTHOR_BIO,
   AUTHOR_NAME,
-  GITHUB_URL,
+  PROFILE_URLS,
   SITE_DESCRIPTION,
   SITE_LAST_MODIFIED,
   SITE_NAME,
@@ -52,7 +52,12 @@ export const STRUCTURED_DATA = {
         "Robotics",
         "Embedded systems",
       ],
-      sameAs: [GITHUB_URL, VERTISOVA_PLAY],
+      /* The name on this node is the real one and the alternateName is the
+         handle, but a claim made only here is a claim with one witness. Each
+         sameAs is a second one: a page that already exists, already carries the
+         handle, and can be checked. That is what an ambiguous real name needs —
+         not more assertions of the name, but more places the pair co-occurs. */
+      sameAs: [...PROFILE_URLS, VERTISOVA_PLAY],
     },
     {
       "@type": "MobileApplication",

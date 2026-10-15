@@ -29,6 +29,32 @@ export const AUTHOR_NAME = "Abdullah Alhariri";
 
 export const GITHUB_URL = "https://github.com/KINGKIMABDU";
 
+export const KOFI_URL = "https://ko-fi.com/kingkimabdu";
+
+export const SPOTIFY_URL = "https://open.spotify.com/user/kingkimabdu";
+
+export const DUOLINGO_URL = "https://www.duolingo.com/profile/KINGKIMABDU";
+
+export const LINKEDIN_URL =
+  "https://www.linkedin.com/in/abdullah-alhariri-655b63426/";
+
+export const REDDIT_URL = "https://www.reddit.com/user/KINGKIMABDU5090/";
+
+/* Every one of these is a page carrying the handle, and the two names sit
+   together on this site, so each is one more edge tying the handle back to the
+   person. They are not links for a reader — they are the sameAs list, which is
+   the only place a machine goes looking for "which other profiles are also
+   him". The list was two entries long, which is why the identity only holds
+   together under the handle. */
+export const PROFILE_URLS = [
+  GITHUB_URL,
+  LINKEDIN_URL,
+  KOFI_URL,
+  SPOTIFY_URL,
+  DUOLINGO_URL,
+  REDDIT_URL,
+];
+
 /* Same URL, named for the one job it has: everything on this site that points
    at the profile has to point at the canonical form of it. */
 export const GITHUB_PROFILE = GITHUB_URL;
@@ -44,4 +70,4 @@ export const VERTISOVA_RELEASE_DATE = "2026-08-06";
 /* Feeds dateModified on the ProfilePage node and lastModified in the sitemap.
    Bump this by hand when the page content actually changes — not on every
    rebuild, or it stops meaning anything to a crawler deciding what's fresh. */
-export const SITE_LAST_MODIFIED = "2026-08-29";
+export const SITE_LAST_MODIFIED = "2026-10-15";
